@@ -1,8 +1,8 @@
 # Extra
 .vscode/
-.idea
-cmake*
-Cmake*
+.idea/
+CMakeLists.txt
+cmake-build-debug/
 
 # Prerequisites
 *.d

@@ -6,11 +6,17 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 20:01:56 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/08/27 20:25:55 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/08/28 03:04:25 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../includes/asm.h"
+
+void	terminate(char *message)
+{
+	ft_printf("ERROR: %s\n", message);
+	exit(0);
+}
 
 bool	check_file_extension(char *file, char *ext)
 {
@@ -21,10 +27,7 @@ bool	check_file_extension(char *file, char *ext)
 	return (ft_strequ(last_point + 1, ext));
 }
 
-int		ass_to_bytecode(char *file)
-{
-	return (ft_printf("File valid\n"));
-}
+
 
 int		bytecode_to_ass(char *file)
 {

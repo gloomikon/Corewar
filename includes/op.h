@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2013/10/04 11:33:27 by zaz               #+#    #+#             */
-/*   Updated: 2019/08/28 22:12:16 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/08/28 22:14:04 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@
 #define ANOTHER_COMMENT_CHAR	';'
 #define LABEL_CHAR		':'
 #define DIRECT_CHAR		'%'
+# define COMMAND_CHAR	'.'
+
 #define SEPARATOR_CHAR	','
 
 #define LABEL_CHARS				"abcdefghijklmnopqrstuvwxyz_0123456789"

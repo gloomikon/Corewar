@@ -16,7 +16,6 @@
 # include "header.h"
 
 # define REGISTER_SYMB	'r'
-# define COMMAND_SYMB	'.'
 
 int		ass_to_bytecode(char *file);
 void	terminate(char *message);

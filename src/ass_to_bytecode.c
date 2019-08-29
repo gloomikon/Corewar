@@ -6,12 +6,27 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 01:58:09 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/08/28 23:25:40 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/08/29 07:23:02 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 //#include "ass_to_bytecode.h"
 #include "../includes/ass_to_bytecode.h"
+
+bool	is_delimiter(char c)
+{
+	return (ft_isspace(c) || c == '"' || c == '\0'
+		|| c == COMMAND_CHAR
+		|| c == DIRECT_CHAR
+		|| c == SEPARATOR_CHAR
+		|| c == COMMENT_CHAR || c == ANOTHER_COMMENT_CHAR);
+}
+
+void	terminate_lexical(size_t row, size_t col)
+{
+	ft_printf("Lexical error at [%u:%u]\n", row, col);
+	exit(1);
+}
 
 t_pars	*init_pars(int fd)
 {
@@ -119,10 +134,98 @@ void	add_entity(t_entity **lst, t_entity *new)
 	}
 }
 
-//void	parse_characters(t_pars *pars, char *row, size_t start, t_entity *ent)
-//{
-//
-//}
+void	parse_chars(t_pars *pars, char *row, size_t start, t_entity *entity)
+{
+	size_t	col;
+
+	entity->col = start;
+	col = pars->col;
+	while (row[pars->col] != '\0' && ft_strchr(LABEL_CHARS, row[pars->col]))
+		++(pars->col);
+	if ((pars->col - col) && row[pars->col] == LABEL_CHAR && (++(pars->col)))
+	{
+		// dopisat'
+	}
+	else if ((pars->col - col) && is_delimiter(row[pars->col]))
+	{
+		entity->content = ft_strsub(row, start, pars->col - start);
+		//dopisat'
+		add_entity(&(pars->entities), entity);
+	}
+	else
+		terminate_lexical(pars->row, pars->col);
+}
+
+void	parse_int(t_pars *pars, char *row, size_t start, t_entity *entity)
+{
+	size_t	col;
+
+	entity->col = start;
+	row[pars->col] == '-' ? ++(pars->col) : 0;
+	col = pars->col;
+	while (ft_isdigit(row[pars->col]))
+		++(pars->col);
+	if ((pars->col - col)
+	&& (entity->class == DIRECT /* || dopisat'*/))
+	{
+		entity->content = ft_strsub(row, start, pars->col - start);
+		add_entity(&(pars->entities), entity);
+	}
+	else if (entity->class != DIRECT)
+	{
+		// dopisat'
+	}
+	else
+		terminate_lexical(pars->row, pars->col);
+}
+
+char	*join_str(char **s1, char **s2)
+{
+	char	*res;
+
+	res = ft_strjoin(*s1, *s2);
+	ft_strdel(s1);
+	ft_strdel(s2);
+	return (res);
+}
+
+void	upd_pars_row_and_col(t_pars *pars, char *row)
+{
+	size_t	i;
+
+	i = (pars->col)++;
+	while (row[++i]!= '\0' && row[i] != '"')
+		row[i] == '\n' ? (++(pars->row)) && (pars->col = 0) : (++(pars->col));
+}
+
+void	upd_row(char **row, char *ptr)
+{
+	char	*new;
+
+	new = ft_strdup(ptr);
+	ft_strdel(row);
+	*row = new;
+}
+
+void	parse_str(t_pars *pars, char **row, size_t start, t_entity *entity)
+{
+	long long	size;
+	char		*str;
+	char		*end;
+
+	entity->col = start;
+	size = 1;
+	while (!(end = ft_strchr(*row + start + 1, '"'))
+		&& (size = get_row(pars->fd, &str)))
+		*row = join_str(row, &str);
+	upd_pars_row_and_col(pars, *row);
+	if (!size)
+		terminate_lexical(pars->row, pars->col);
+	entity->content = ft_strsub(*row, start, end + 1 - (*row) - start);
+	(end - pars->col != *row) ? upd_row(row, end - pars->col) : 0;
+	++(pars->col);
+	add_entity(&(pars->entities), entity);
+}
 
 int		get_entities(t_pars *pars, char **row)
 {
@@ -130,10 +233,15 @@ int		get_entities(t_pars *pars, char **row)
 		add_entity(&(pars->entities), new_entity(pars, NEW_LINE));
 	else if ((*row)[pars->col] == SEPARATOR_CHAR && (++(pars->col)))
 		add_entity(&(pars->entities), new_entity(pars, SEPARATOR));
+	else if ((*row)[pars->col] == '.')
+		parse_chars(pars, *row, ++(pars->col), new_entity(pars, COMMAND));
+	else if ((*row)[pars->col] == DIRECT_CHAR && (++(pars->col)))
+		(*row)[pars->col] == LABEL_CHAR && (++(pars->col)) ?
+		parse_chars(pars, *row, pars->col - 2, new_entity(pars, DIRECT_LABEL)) :
+		parse_int(pars, *row, pars->col - 1, new_entity(pars, DIRECT));
+	else if ((*row)[pars->col] == '"')
+		parse_str(pars, row, pars->col, new_entity(pars, STRING));
 	else (++(pars->col));
-//	else if ((*row)[pars->col] == '.')
-//		parse_characters(pars, *row, (pars->col)++, new_entity(pars, COMMAND));
-
 	return (1);
 }
 
@@ -167,8 +275,9 @@ int		ass_to_bytecode(char *file)
 	parse_ass(pars);
 	while (pars->entities)
 	{
-		ft_printf("%s: row = %d, col = %d\n",
+		ft_printf("{magenta}%-14s{off} content = %s, row = %d, col = %d\n",
 				g_class[pars->entities->class],
+				pars->entities->content,
 				pars->entities->row,
 				pars->entities->col);
 		pars->entities = pars->entities->next;

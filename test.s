@@ -1,0 +1,10 @@
+.name
+"Batman"
+label:
+,
+%5
+%:label
+5
+:label
+r01
+live

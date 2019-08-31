@@ -76,7 +76,7 @@ long long	get_row(int fd, char **row)
 		buff[size] = '\0';
 		tmp = str;
 		str = ft_strjoin(str, buff);
-		ft_strdel(&tmp);
+        ft_strdel(&tmp);
 //		if (str == NULL)
 //			return (-1);
 	};
@@ -134,6 +134,23 @@ void	add_entity(t_entity **lst, t_entity *new)
 	}
 }
 
+bool	class_is_register(char *str)
+{
+	int i;
+	int len;
+
+	len = ft_strlen(str);
+	if ((len == 2 || len == 3) && str[0] == 'r') // is there a define for r ?
+	{
+		i = 1;
+		while (ft_isdigit(str[i]))
+			i++;
+		if (str[i] == '\0' && ft_atoi(&str[1]) > 0)
+			return(true);
+	}
+	return (false);
+}
+
 void	parse_chars(t_pars *pars, char *row, size_t start, t_entity *entity)
 {
 	size_t	col;
@@ -144,12 +161,16 @@ void	parse_chars(t_pars *pars, char *row, size_t start, t_entity *entity)
 		++(pars->col);
 	if ((pars->col - col) && row[pars->col] == LABEL_CHAR && (++(pars->col)))
 	{
-		// dopisat'
+		entity->content =  ft_strsub(row, start, pars->col - start);
+		entity->class = LABEL;
+		add_entity(&(pars->entities), entity);
 	}
 	else if ((pars->col - col) && is_delimiter(row[pars->col]))
 	{
 		entity->content = ft_strsub(row, start, pars->col - start);
-		//dopisat'
+		if (entity->class == INDIRECT)
+			entity->class = class_is_register(entity->content) ?
+					REGISTER : OPERATOR;
 		add_entity(&(pars->entities), entity);
 	}
 	else
@@ -166,14 +187,15 @@ void	parse_int(t_pars *pars, char *row, size_t start, t_entity *entity)
 	while (ft_isdigit(row[pars->col]))
 		++(pars->col);
 	if ((pars->col - col)
-	&& (entity->class == DIRECT /* || dopisat'*/))
+	&& (entity->class == DIRECT || is_delimiter(row[pars->col])))
 	{
 		entity->content = ft_strsub(row, start, pars->col - start);
 		add_entity(&(pars->entities), entity);
 	}
 	else if (entity->class != DIRECT)
 	{
-		// dopisat'
+		pars->col = start;
+		parse_chars(pars, row, start, entity);
 	}
 	else
 		terminate_lexical(pars->row, pars->col);
@@ -241,7 +263,12 @@ int		get_entities(t_pars *pars, char **row)
 		parse_int(pars, *row, pars->col - 1, new_entity(pars, DIRECT));
 	else if ((*row)[pars->col] == '"')
 		parse_str(pars, row, pars->col, new_entity(pars, STRING));
-	else (++(pars->col));
+	else if ((*row)[pars->col] == LABEL_CHAR)
+		parse_chars(pars, *row, ++(pars->col),
+				new_entity(pars, INDIRECT_LABEL));
+	else
+		parse_int(pars, *row, pars->col, new_entity(pars, INDIRECT));
+//		(++(pars->col));
 	return (1);
 }
 
@@ -254,6 +281,7 @@ void	parse_ass(t_pars *pars)
 		&& (++pars->row)
 		&& (size = get_row(pars->fd, &row)) > 0)
 	{
+		ft_printf("%s\n", row);
 		while (row[pars->col])
 		{
 			skip_whitespaces(&(pars->col), row)
@@ -275,7 +303,7 @@ int		ass_to_bytecode(char *file)
 	parse_ass(pars);
 	while (pars->entities)
 	{
-		ft_printf("{magenta}%-14s{off} content = %s, row = %d, col = %d\n",
+		ft_printf("%-14s content = %s, row = %d, col = %d\n",
 				g_class[pars->entities->class],
 				pars->entities->content,
 				pars->entities->row,

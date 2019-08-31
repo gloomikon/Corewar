@@ -112,7 +112,7 @@ typedef	struct		s_list
 
 typedef struct		s_gnl
 {
-	char	*rests[INT_MAX];
+	char	*rests[256];
 	char	**curr;
 	char	*buf;
 }					t_gnl;

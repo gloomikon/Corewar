@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/asm.h"
+#include "asm.h"
 
 void	terminate(char *message)
 {

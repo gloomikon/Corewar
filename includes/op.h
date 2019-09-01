@@ -10,11 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-** Toutes les tailles sont en octets.
-** On part du principe qu'un int fait 32 bits. Est-ce vrai chez vous ?
-*/
-
 #define IND_SIZE	2
 #define REG_SIZE	4
 #define DIR_SIZE	REG_SIZE

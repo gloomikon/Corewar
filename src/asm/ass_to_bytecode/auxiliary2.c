@@ -45,3 +45,12 @@ int		skip_comment(int *col, char const *row)
 			++(*col);
 	return (1);
 }
+
+bool	is_command(t_pars *pars, char *row)
+{
+	return ((!ft_strncmp(row + pars->col, NAME_CMD_STRING, ft_strlen(NAME_CMD_STRING))
+			 && is_delimiter(row[pars->col + ft_strlen(NAME_CMD_STRING)]))
+			|| (!ft_strncmp(row + pars->col, COMMENT_CMD_STRING, ft_strlen(COMMENT_CMD_STRING))
+				&& is_delimiter(row[pars->col + ft_strlen(COMMENT_CMD_STRING)])));
+}
+

@@ -1,10 +1,3 @@
-.name
-"Batman"
+.name "Batman"
+.comment "Hello WORKD!!!"
 label:
-,
-%5
-%:label
-5
-:label
-r01
-live

@@ -17,3 +17,10 @@ void	terminate_lexical(int row, int col)
 	ft_printf("Lexical error at [%d:%d]\n", row, col);
 	exit(1);
 }
+
+void	terminate_entity(t_entity *entity)
+{
+	ft_printf("Unexpected token \"%s\" %s at [%d:%d]\n",
+			entity->content, g_class[entity->class], entity->row, entity->col);
+	exit(1);
+}

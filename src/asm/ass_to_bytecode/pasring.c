@@ -12,30 +12,14 @@
 
 #include "ass_to_bytecode.h"
 
-void	read_file(t_pars *pars)
-{
-	char	*line;
-	int		res;
-
-	while (!(pars->col = 0)
-		   && (++pars->row)
-		   && (res = read_next_line(pars->fd, &line)) > 0)
-		while (line[pars->col])
-			skip_whitespaces(&(pars->col), line)
-			&& skip_comment(&(pars->col), line)
-			&& (line[pars->col] != '\0')
-			&& get_entities(pars, &line);
-	res == -1 ? terminate("An error occurred while opening file") : 0;
-}
-
 int		get_entities(t_pars *pars, char **row)
 {
 	if ((*row)[pars->col] == '\n' && (++(pars->col)))
 		add_entity(&(pars->entities), new_entity(pars, NEW_LINE));
 	else if ((*row)[pars->col] == SEPARATOR_CHAR && (++(pars->col)))
 		add_entity(&(pars->entities), new_entity(pars, SEPARATOR));
-	else if ((*row)[pars->col] == '.')
-		parse_chars(pars, *row, ++(pars->col), new_entity(pars, COMMAND));
+	else if (is_command(pars, *row))
+		parse_command(pars, *row, new_entity(pars, COMMAND));
 	else if ((*row)[pars->col] == DIRECT_CHAR && (++(pars->col)))
 		(*row)[pars->col] == LABEL_CHAR && (++(pars->col)) ?
 		parse_chars(pars, *row, pars->col - 2, new_entity(pars, DIRECT_LABEL)) :
@@ -60,7 +44,7 @@ void	parse_chars(t_pars *pars, char *row, int start, t_entity *entity)
 		++(pars->col);
 	if ((pars->col - col) && row[pars->col] == LABEL_CHAR && (++(pars->col)))
 	{
-		entity->content =  ft_strsub(row, start, pars->col - start);
+		entity->content =  ft_strsub(row, start, pars->col - start - 1);
 		entity->class = LABEL;
 		add_entity(&(pars->entities), entity);
 	}
@@ -114,8 +98,28 @@ void	parse_str(t_pars *pars, char **row, int start, t_entity *entity)
 	upd_pars_row_and_col(pars, *row);
 	if (!size)
 		terminate_lexical(pars->row, pars->col);
-	entity->content = ft_strsub(*row, start, end + 1 - (*row) - start);
+	entity->content = ft_strsub(*row, start + 1, end - (*row) - start - 1);
 	(end - pars->col != *row) ? upd_row(row, end - pars->col) : 0;
 	++(pars->col);
+	add_entity(&(pars->entities), entity);
+}
+
+void	parse_command(t_pars *pars, char *row, t_entity *entity)
+{
+	entity->col = pars->col + 1;
+	if (!ft_strncmp(row + pars->col, NAME_CMD_STRING, ft_strlen(NAME_CMD_STRING)))
+	{
+		entity->content = ft_strsub(row, pars->col, ft_strlen(NAME_CMD_STRING));
+		pars->col += ft_strlen(NAME_CMD_STRING);
+		if (ft_strlen(entity->content) > PROG_NAME_LENGTH)
+			terminate("Champion's name is too long");
+	}
+	else
+	{
+		entity->content = ft_strsub(row, pars->col, ft_strlen(COMMENT_CMD_STRING));
+		pars->col += ft_strlen(COMMENT_CMD_STRING);
+		if (ft_strlen(entity->content) > COMMENT_LENGTH)
+			terminate("Champion's comment is too long");
+	}
 	add_entity(&(pars->entities), entity);
 }

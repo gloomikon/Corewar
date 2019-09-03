@@ -30,7 +30,6 @@
 #define ANOTHER_COMMENT_CHAR	';'
 #define LABEL_CHAR		':'
 #define DIRECT_CHAR		'%'
-# define COMMAND_CHAR	'.'
 
 #define SEPARATOR_CHAR	','
 

@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 01:59:40 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/08/28 22:22:51 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/03 15:14:18 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "asm.h"
 # include "op.h"
+# include "asm_instructions.h"
 
 # define NAME		1
 # define COMMENT	2
@@ -23,9 +24,11 @@
 typedef enum
 {
 	COMMAND,
+	COMMAND_NAME,
+	COMMAND_COMMENT,
 	STRING,
 	LABEL,
-	OPERATOR,
+	INSTRUCTION,
 	REGISTER,
 	DIRECT,
 	DIRECT_LABEL,
@@ -38,9 +41,11 @@ typedef enum
 
 static char				*g_class[] = {
 	"COMMAND",
+	"COMMAND_NAME",
+	"COMMAND_COMMENT",
 	"STRING",
 	"LABEL",
-	"OPERATOR",
+	"INSTRUCTION",
 	"REGISTER",
 	"DIRECT",
 	"DIRECT_LABEL",
@@ -89,6 +94,7 @@ struct			s_pars
 	int			row;
 	int			col;
 	t_entity	*entities;
+	t_label		*labels;
 	char		*name;
 	char		*comment;
 	int			pos;
@@ -111,6 +117,8 @@ void		upd_pars_row_and_col(t_pars *pars, char const *row);
 int			skip_whitespaces(int *col, char *row);
 int			skip_comment(int *col, char const *row);
 bool		is_command(t_pars *pars, char *row);
+int			upd_buffer(t_pars *pars);
+
 
 /*
 **	PARSING
@@ -132,10 +140,20 @@ void		add_entity(t_entity **lst, t_entity *new);
 t_entity	*new_entity(t_pars *pars, t_class class);
 
 /*
+**	DATA PROCESSING
+*/
+
+void	get_data(t_pars *pars, t_entity **curr, int type);
+void	get_champ_bio(t_pars *pars, t_entity **curr);
+
+/*
 **	TERMINATE
 */
 
 void		terminate_lexical(int row, int col);
 void		terminate_entity(t_entity *entity);
+void		terminate_syntax(int row, int col, t_entity *entity);
+void		terminate_big_bio(int type);
+
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 14:27:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/01 14:27:00 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/03 14:16:40 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 bool	is_delimiter(char c)
 {
 	return (ft_isspace(c) || c == '"' || c == '\0'
-			|| c == COMMAND_CHAR
 			|| c == DIRECT_CHAR
 			|| c == SEPARATOR_CHAR
 			|| c == COMMENT_CHAR || c == ANOTHER_COMMENT_CHAR);
@@ -41,10 +40,10 @@ int		divide_str(char **str, char **row)
 
 int		read_next_line(int fd, char **row)
 {
-	char	*tmp;
-	char	buff[BUFF_SIZE + 1];
-	static char *str = NULL;
-	int		size;
+	char		*tmp;
+	char		buff[BUFF_SIZE + 1];
+	static char	*str = NULL;
+	int			size;
 
 	if (read(fd, buff, 0) < 0)
 		return (-1);
@@ -61,9 +60,7 @@ int		read_next_line(int fd, char **row)
 		tmp = str;
 		str = ft_strjoin(str, buff);
 		ft_strdel(&tmp);
-//		if (str == NULL)
-//			return (-1);
-	};
+	}
 	return (divide_str(&str, row));
 }
 
@@ -83,13 +80,13 @@ bool	class_is_register(char *str)
 	int len;
 
 	len = ft_strlen(str);
-	if ((len == 2 || len == 3) && str[0] == 'r') // is there a define for r ?
+	if ((len == 2 || len == 3) && str[0] == 'r')
 	{
 		i = 1;
 		while (ft_isdigit(str[i]))
 			i++;
 		if (str[i] == '\0' && ft_atoi(&str[1]) > 0)
-			return(true);
+			return (true);
 	}
 	return (false);
 }

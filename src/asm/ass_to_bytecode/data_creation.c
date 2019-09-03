@@ -19,8 +19,9 @@ t_entity	*new_entity(t_pars *pars, t_class class)
 	entity = ft_memalloc(sizeof(t_entity));
 	entity->class = class;
 	entity->row = pars->row;
-	entity->col = pars->col -
-				  ((class == SEPARATOR || class == NEW_LINE) ? 1 : 0);
+	entity->col = pars->col;
+	if (entity->class == SEPARATOR)
+		entity->content = ft_strdup(",");
 	return (entity);
 }
 

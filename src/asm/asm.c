@@ -27,8 +27,6 @@ bool	check_file_extension(char *file, char *ext)
 	return (ft_strequ(last_point + 1, ext));
 }
 
-
-
 int		bytecode_to_ass(char *file)
 {
 	return (ft_printf("File valid\n"));

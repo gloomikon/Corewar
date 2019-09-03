@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 14:44:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/01 14:44:00 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/03 14:14:38 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	upd_pars_row_and_col(t_pars *pars, char const *row)
 	size_t	i;
 
 	i = (pars->col)++;
-	while (row[++i]!= '\0' && row[i] != '"')
+	while (row[++i] != '\0' && row[i] != '"')
 		row[i] == '\n' ? (++(pars->row)) && (pars->col = 0) : (++(pars->col));
 }
 
@@ -48,9 +48,10 @@ int		skip_comment(int *col, char const *row)
 
 bool	is_command(t_pars *pars, char *row)
 {
-	return ((!ft_strncmp(row + pars->col, NAME_CMD_STRING, ft_strlen(NAME_CMD_STRING))
-			 && is_delimiter(row[pars->col + ft_strlen(NAME_CMD_STRING)]))
-			|| (!ft_strncmp(row + pars->col, COMMENT_CMD_STRING, ft_strlen(COMMENT_CMD_STRING))
-				&& is_delimiter(row[pars->col + ft_strlen(COMMENT_CMD_STRING)])));
+	return ((!ft_strncmp(row + pars->col, NAME_CMD_STRING,
+								ft_strlen(NAME_CMD_STRING))
+			&& is_delimiter(row[pars->col + ft_strlen(NAME_CMD_STRING)]))
+			|| (!ft_strncmp(row + pars->col, COMMENT_CMD_STRING,
+								ft_strlen(COMMENT_CMD_STRING))
+			&& is_delimiter(row[pars->col + ft_strlen(COMMENT_CMD_STRING)])));
 }
-

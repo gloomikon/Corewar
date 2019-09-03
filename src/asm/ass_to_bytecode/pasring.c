@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 14:40:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/01 14:40:00 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/03 14:19:18 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ void	parse_chars(t_pars *pars, char *row, int start, t_entity *entity)
 {
 	size_t	col;
 
-	entity->col = start;
+	entity->col = start + 1;
 	col = pars->col;
 	while (row[pars->col] != '\0' && ft_strchr(LABEL_CHARS, row[pars->col]))
 		++(pars->col);
 	if ((pars->col - col) && row[pars->col] == LABEL_CHAR && (++(pars->col)))
 	{
-		entity->content =  ft_strsub(row, start, pars->col - start - 1);
-		entity->class = LABEL;
+		entity->content = ft_strsub(row, start, pars->col - start);
+		(entity->class = LABEL);
 		add_entity(&(pars->entities), entity);
 	}
 	else if ((pars->col - col) && is_delimiter(row[pars->col]))
@@ -53,18 +53,18 @@ void	parse_chars(t_pars *pars, char *row, int start, t_entity *entity)
 		entity->content = ft_strsub(row, start, pars->col - start);
 		if (entity->class == INDIRECT)
 			entity->class = class_is_register(entity->content) ?
-							REGISTER : OPERATOR;
+							REGISTER : INSTRUCTION;
 		add_entity(&(pars->entities), entity);
 	}
 	else
-		terminate_lexical(pars->row, pars->col);
+		terminate_lexical(entity->row, entity->col);
 }
 
 void	parse_int(t_pars *pars, char *row, int start, t_entity *entity)
 {
 	size_t	col;
 
-	entity->col = start;
+	entity->col = start + 1;
 	row[pars->col] == '-' ? ++(pars->col) : 0;
 	col = pars->col;
 	while (ft_isdigit(row[pars->col]))
@@ -81,7 +81,7 @@ void	parse_int(t_pars *pars, char *row, int start, t_entity *entity)
 		parse_chars(pars, row, start, entity);
 	}
 	else
-		terminate_lexical(pars->row, pars->col);
+		terminate_lexical(pars->row, start);
 }
 
 void	parse_str(t_pars *pars, char **row, int start, t_entity *entity)
@@ -93,7 +93,7 @@ void	parse_str(t_pars *pars, char **row, int start, t_entity *entity)
 	entity->col = start;
 	size = 1;
 	while (!(end = ft_strchr(*row + start + 1, '"'))
-		   && (size = read_next_line(pars->fd, &str)))
+		&& (size = read_next_line(pars->fd, &str)))
 		*row = join_str(row, &str);
 	upd_pars_row_and_col(pars, *row);
 	if (!size)
@@ -107,19 +107,23 @@ void	parse_str(t_pars *pars, char **row, int start, t_entity *entity)
 void	parse_command(t_pars *pars, char *row, t_entity *entity)
 {
 	entity->col = pars->col + 1;
-	if (!ft_strncmp(row + pars->col, NAME_CMD_STRING, ft_strlen(NAME_CMD_STRING)))
+	if (!ft_strncmp(row + pars->col, NAME_CMD_STRING,
+			ft_strlen(NAME_CMD_STRING)))
 	{
+		entity->class = COMMAND_NAME;
 		entity->content = ft_strsub(row, pars->col, ft_strlen(NAME_CMD_STRING));
 		pars->col += ft_strlen(NAME_CMD_STRING);
 		if (ft_strlen(entity->content) > PROG_NAME_LENGTH)
-			terminate("Champion's name is too long");
+			terminate_big_bio(NAME);
 	}
 	else
 	{
-		entity->content = ft_strsub(row, pars->col, ft_strlen(COMMENT_CMD_STRING));
+		entity->class = COMMAND_COMMENT;
+		entity->content = ft_strsub(row, pars->col,
+				ft_strlen(COMMENT_CMD_STRING));
 		pars->col += ft_strlen(COMMENT_CMD_STRING);
 		if (ft_strlen(entity->content) > COMMENT_LENGTH)
-			terminate("Champion's comment is too long");
+			terminate_big_bio(COMMENT);
 	}
 	add_entity(&(pars->entities), entity);
 }

@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 01:58:09 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/08/29 07:23:02 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/03 14:17:44 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,32 @@
 
 void	get_data(t_pars *pars, t_entity **curr, int type)
 {
+	if ((type == NAME && pars->name != NULL)
+	|| (type == COMMENT && pars->comment != NULL))
+		terminate_syntax(0, 0, (*curr));
 	if (!((*curr) = (*curr)->next))
-		terminate("gg");
+		terminate_syntax(pars->row, pars->col + 1, NULL);
 	if ((*curr)->class != STRING)
-		terminate_entity(*curr);
+		terminate_syntax(0, 0, *curr);
 	if (type == NAME)
 		pars->name = ft_strdup((*curr)->content);
-	else
+	else if (type == COMMENT)
 		pars->comment = ft_strdup((*curr)->content);
 	if (!((*curr) = (*curr)->next))
-		terminate("gg");
+		terminate_syntax(pars->row, pars->col + 1, NULL);
 	if ((*curr)->class != NEW_LINE)
-		terminate_entity(*curr);
+		terminate_syntax(0, 0, *curr);
 }
 
-void get_champ_bio(t_pars *pars, t_entity **curr)
+void	get_champ_bio(t_pars *pars, t_entity **curr)
 {
 	while (pars->name == NULL || pars->comment == NULL)
 	{
 		if (!(*curr))
-			terminate("gg");
-		else if ((*curr)->class == COMMAND
-				&& ft_strequ((*curr)->content, NAME_CMD_STRING)
-				&& (pars->name == NULL))
+			terminate_syntax(pars->row, pars->col + 1, NULL);
+		else if ((*curr)->class == COMMAND_NAME)
 			get_data(pars, curr, NAME);
-		else if ((*curr)->class == COMMAND
-				 && ft_strequ((*curr)->content, COMMENT_CMD_STRING)
-				 && (pars->comment == NULL))
+		else if ((*curr)->class == COMMAND_COMMENT)
 			get_data(pars, curr, COMMENT);
 		else
 			terminate_entity(*curr);
@@ -53,9 +52,9 @@ void	read_file(t_pars *pars)
 	char	*line;
 	int		res;
 
-	while (!(pars->col = 0)
-			&& (++pars->row)
-			&& (res = read_next_line(pars->fd, &line)) > 0)
+	while ((res = read_next_line(pars->fd, &line)) > 0
+			&& !(pars->col = 0)
+			&& (++pars->row))
 		while (line[pars->col])
 			skip_whitespaces(&(pars->col), line)
 			&& skip_comment(&(pars->col), line)
@@ -71,7 +70,7 @@ int		upd_buffer(t_pars *pars)
 	return (1);
 }
 
-void	proc_label(t_pars *pars,  t_entity **curr)
+void	proc_label(t_pars *pars, t_entity **curr)
 {
 	char	*name;
 	t_label	*label;
@@ -80,7 +79,7 @@ void	proc_label(t_pars *pars,  t_entity **curr)
 	// stopped here
 }
 
-void	proc_op(t_pars *pars,  t_entity **curr)
+void	proc_op(t_pars *pars, t_entity **curr)
 {
 
 }
@@ -93,7 +92,7 @@ void	qhjvufej(t_pars *pars, t_entity **curr)
 		pars->op_pos = pars->pos;
 		if ((*curr) && (*curr)->class == LABEL)
 			proc_label(pars, curr);
-		if ((*curr) && (*curr)->class == OPERATOR)
+		if ((*curr) && (*curr)->class == INSTRUCTION)
 			proc_op(pars, curr);
 		if ((*curr) && (*curr)->class == NEW_LINE)
 			*curr = (*curr)->next;

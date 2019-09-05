@@ -12,42 +12,6 @@
 
 #include "ass_to_bytecode.h"
 
-t_label	*find_label(t_label *labels, char *name)
-{
-	while (labels)
-	{
-		if (ft_strequ(labels->name, name))
-			return (labels);
-		labels = labels->next;
-	}
-	return (NULL);
-}
-
-t_label	*new_label(int op_pos, char *name)
-{
-	t_label *label;
-
-	label = ft_memalloc(sizeof(t_label));
-	label->op_pos = op_pos;
-	label->name = ft_strdup(name);
-	return (label);
-}
-
-void	add_label(t_label **labels, t_label *new)
-{
-	t_label *tmp;
-
-	if (!(*labels))
-		*labels = new;
-	else
-	{
-		tmp = *labels;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
-	}
-}
-
 void	proc_label(t_pars *pars, t_entity **curr)
 {
 	char	*name;
@@ -61,16 +25,7 @@ void	proc_label(t_pars *pars, t_entity **curr)
 	*curr = (*curr)->next;
 }
 
-t_inst	*get_instruction(char *name)
-{
-	int	i;
 
-	i = -1;
-	while (++i < 16)
-		if (ft_strequ(g_inst[i].name, name))
-			return (&(g_inst[i]));
-	return (NULL);
-}
 
 int8_t	get_arg_class(t_class class)
 {
@@ -81,6 +36,25 @@ int8_t	get_arg_class(t_class class)
 	return (T_IND);
 }
 
+void	write_to_bytecode(t_pars *pars, int8_t data, size_t size)
+{
+	int	i;
+
+	i = 0;
+	while (size)
+	{
+		pars->code[pars->pos + (size - 1)] = (data >> i) & 0xFF;
+		--size;
+		i += 8;
+	}
+}
+
+void	proc_reg(t_pars *pars, char *reg_number)
+{
+	write_to_bytecode(pars, ft_atoi(reg_number), 1);
+	++(pars->pos);
+}
+
 int8_t	get_one_arg(t_pars *pars, t_entity **curr, t_inst *inst, int arg_num)
 {
 	int8_t	class;
@@ -88,7 +62,12 @@ int8_t	get_one_arg(t_pars *pars, t_entity **curr, t_inst *inst, int arg_num)
 	class = get_arg_class((*curr)->class);
 	if ((inst->args_classes[arg_num] & class) == 0)
 		terminate_invalid_argument(inst, arg_num + 1, *curr);
-
+	if (class == T_REG)
+		proc_reg(pars, (*curr)->content + 1);
+	if ((*curr)->class == LABEL || (*curr)->class == INDIRECT_LABEL)
+		proc_mention();
+	if ((*curr)->class == DIRECT || (*curr)->class == INDIRECT)
+		proc_ind();
 }
 
 int8_t	get_args(t_pars *pars, t_entity **curr, t_inst *inst)
@@ -121,7 +100,7 @@ void	proc_instruction(t_pars *pars, t_entity **curr)
 		terminate_instruction(*curr);
 	pars->code[(pars->pos)++] = inst->code;
 	*curr = (*curr)->next;
-	(inst->args_classes_code) && ++(pars->pos); //why ++ ???
+	(inst->args_classes_code) && ++(pars->pos);
 	types_code = get_args(pars, curr, inst);
 }
 

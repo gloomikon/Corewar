@@ -48,6 +48,31 @@ void		add_entity(t_entity **lst, t_entity *new)
 	}
 }
 
+t_label		*new_label(int op_pos, char *name)
+{
+	t_label *label;
+
+	label = ft_memalloc(sizeof(t_label));
+	label->op_pos = op_pos;
+	label->name = ft_strdup(name);
+	return (label);
+}
+
+void		add_label(t_label **labels, t_label *new)
+{
+	t_label *tmp;
+
+	if (!(*labels))
+		*labels = new;
+	else
+	{
+		tmp = *labels;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+	}
+}
+
 t_pars		*init_pars(int fd)
 {
 	t_pars	*pars;

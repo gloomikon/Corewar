@@ -101,7 +101,7 @@ struct			s_pars
 	int			pos;
 	int			op_pos;
 	int			code_size;
-	char		*code;
+	int8_t		*code;
 };
 
 /*
@@ -119,7 +119,8 @@ int			skip_whitespaces(int *col, char *row);
 int			skip_comment(int *col, char const *row);
 bool		is_command(t_pars *pars, char *row);
 int			upd_buffer(t_pars *pars);
-
+t_label		*find_label(t_label *labels, char *name);
+t_inst		*get_instruction(char *name);
 
 /*
 **	PARSING
@@ -139,6 +140,8 @@ void		parse_command(t_pars *pars, char *row, t_entity *entity);
 t_pars		*init_pars(int fd);
 void		add_entity(t_entity **lst, t_entity *new);
 t_entity	*new_entity(t_pars *pars, t_class class);
+t_label		*new_label(int op_pos, char *name);
+void		add_label(t_label **labels, t_label *new);
 
 /*
 **	DATA PROCESSING

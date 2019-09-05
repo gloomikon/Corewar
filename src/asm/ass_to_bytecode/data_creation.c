@@ -73,6 +73,35 @@ void		add_label(t_label **labels, t_label *new)
 	}
 }
 
+t_mention	*new_mention(t_pars *pars, t_entity *entity, size_t size)
+{
+	t_mention *mention;
+
+	mention = malloc(sizeof(t_mention));
+	mention->size = size;
+	mention->pos = pars->pos;
+	mention->op_pos = pars->op_pos;
+	mention->row = entity->row;
+	mention->col = entity->col;
+	mention->next = NULL;
+	return (mention);
+}
+
+void		add_mention(t_mention **mentions, t_mention *new)
+{
+	t_mention *tmp;
+
+	if (!(*mentions))
+		*mentions = new;
+	else
+	{
+		tmp = *mentions;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+	}
+}
+
 t_pars		*init_pars(int fd)
 {
 	t_pars	*pars;

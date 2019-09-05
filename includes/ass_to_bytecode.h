@@ -121,6 +121,7 @@ bool		is_command(t_pars *pars, char *row);
 int			upd_buffer(t_pars *pars);
 t_label		*find_label(t_label *labels, char *name);
 t_inst		*get_instruction(char *name);
+int8_t		get_code(int8_t class);
 
 /*
 **	PARSING
@@ -142,6 +143,8 @@ void		add_entity(t_entity **lst, t_entity *new);
 t_entity	*new_entity(t_pars *pars, t_class class);
 t_label		*new_label(int op_pos, char *name);
 void		add_label(t_label **labels, t_label *new);
+t_mention	*new_mention(t_pars *pars, t_entity *entity, size_t size);
+void		add_mention(t_mention **mentions, t_mention *new);
 
 /*
 **	DATA PROCESSING

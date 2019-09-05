@@ -27,7 +27,7 @@ void	proc_label(t_pars *pars, t_entity **curr)
 
 
 
-int8_t	get_arg_class(t_class class)
+int8_t	get_arg_type(t_class class)
 {
 	if (class == REGISTER)
 		return (T_REG);
@@ -55,29 +55,61 @@ void	proc_reg(t_pars *pars, char *reg_number)
 	++(pars->pos);
 }
 
+void	proc_mention(t_pars *pars, t_entity *curr, t_inst *inst)
+{
+	t_label *label;
+	char	*name;
+	int		start;
+	size_t	size;
+
+	start = (curr->class == INDIRECT_LABEL) ? 1 : 2;
+	size = (curr->class == INDIRECT_LABEL) ? IND_SIZE : inst->t_dir_size;
+	name = ft_strsub(curr->content, start, ft_strlen(curr->content) - size);
+	if (!(label = find_label(pars->labels, name)))
+	{
+		label = new_label(-1, name);
+		add_label(&(pars->labels), label);
+	}
+	add_mention(&(label->mentions), new_mention(pars, curr, size));
+	pars->pos += size;
+	ft_strdel(&name);
+}
+
+void	proc_int(t_pars *pars, t_entity *curr, t_inst *inst)
+{
+	int		start;
+	size_t	size;
+
+	start = (curr->class == INDIRECT) ? 0 : 1;
+	size = (curr->class == INDIRECT) ? IND_SIZE : inst->t_dir_size;
+	write_to_bytecode(pars, ft_atoi(&(curr->content[start])), size);
+	pars->pos += size;
+}
+
 int8_t	get_one_arg(t_pars *pars, t_entity **curr, t_inst *inst, int arg_num)
 {
 	int8_t	class;
 
-	class = get_arg_class((*curr)->class);
+	class = get_arg_type((*curr)->class);
 	if ((inst->args_classes[arg_num] & class) == 0)
 		terminate_invalid_argument(inst, arg_num + 1, *curr);
 	if (class == T_REG)
 		proc_reg(pars, (*curr)->content + 1);
 	if ((*curr)->class == LABEL || (*curr)->class == INDIRECT_LABEL)
-		proc_mention();
+		proc_mention(pars, *curr, inst);
 	if ((*curr)->class == DIRECT || (*curr)->class == INDIRECT)
-		proc_ind();
+		proc_int(pars, *curr, inst);
+	return (class);
 }
 
-int8_t	get_args(t_pars *pars, t_entity **curr, t_inst *inst)
+int8_t	read_and_code_args(t_pars *pars, t_entity **curr, t_inst *inst)
 {
-	int8_t	types_code;
+	int8_t	code;
 	int8_t	class;
 	int		arg_num;
 
 	arg_num = 0;
-	types_code = 0;
+	code = 0;
 	while (arg_num < inst->args_num)
 	{
 		if ((*curr)->class == REGISTER || (*curr)->class == DIRECT
@@ -85,26 +117,39 @@ int8_t	get_args(t_pars *pars, t_entity **curr, t_inst *inst)
 		||	(*curr)->class == INDIRECT)
 		{
 			class = get_one_arg(pars, curr, inst, arg_num);
+			code |= get_code(class) << (2 * (3 - arg_num));
+			*curr = (*curr)->next;
 		}
 		else
 			terminate_entity(*curr);
+		if (arg_num++ < inst->args_num - 1)
+		{
+			if ((*curr)->class == SEPARATOR)
+				*curr = (*curr)->next;
+			else
+				terminate_entity(*curr);
+		}
 	}
+	return (code);
 }
 
 void	proc_instruction(t_pars *pars, t_entity **curr)
 {
-	int8_t	types_code;
+	int8_t	code;
 	t_inst	*inst;
 
 	if (!(inst = get_instruction((*curr)->content)))
 		terminate_instruction(*curr);
 	pars->code[(pars->pos)++] = inst->code;
 	*curr = (*curr)->next;
-	(inst->args_classes_code) && ++(pars->pos);
-	types_code = get_args(pars, curr, inst);
+	(inst->args_need_code) && ++(pars->pos);
+	code = read_and_code_args(pars, curr, inst);
+	if (inst->args_need_code)
+		pars->code[pars->op_pos + 1] = code;
+	*curr = (*curr)->next;
 }
 
-void	qhjvufej(t_pars *pars, t_entity **curr)
+void	read_and_proc_entities(t_pars *pars, t_entity **curr)
 {
 	while ((*curr)->class != END)
 	{
@@ -167,7 +212,7 @@ int		ass_to_bytecode(char *file)
 	ft_printf("%s = %s\n%s = %s\n", NAME_CMD_STRING, pars->name,
 								COMMENT_CMD_STRING, pars->comment);
 
-	qhjvufej(pars, &curr);
+	read_and_proc_entities(pars, &curr);
 
 	return (1);
 }

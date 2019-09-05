@@ -40,3 +40,12 @@ t_inst	*get_instruction(char *name)
 			return (&(g_inst[i]));
 	return (NULL);
 }
+
+int8_t	get_code(int8_t class)
+{
+	if (class == T_REG)
+		return (REG_CODE);
+	else if (class == T_DIR)
+		return (DIR_CODE);
+	return (IND_CODE);
+}

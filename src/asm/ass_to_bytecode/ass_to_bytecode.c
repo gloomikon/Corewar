@@ -72,6 +72,46 @@ t_inst	*get_instruction(char *name)
 	return (NULL);
 }
 
+int8_t	get_arg_class(t_class class)
+{
+	if (class == REGISTER)
+		return (T_REG);
+	if (class == DIRECT_LABEL || class == DIRECT)
+		return (T_DIR);
+	return (T_IND);
+}
+
+int8_t	get_one_arg(t_pars *pars, t_entity **curr, t_inst *inst, int arg_num)
+{
+	int8_t	class;
+
+	class = get_arg_class((*curr)->class);
+	if ((inst->args_classes[arg_num] & class) == 0)
+		terminate_invalid_argument(inst, arg_num + 1, *curr);
+
+}
+
+int8_t	get_args(t_pars *pars, t_entity **curr, t_inst *inst)
+{
+	int8_t	types_code;
+	int8_t	class;
+	int		arg_num;
+
+	arg_num = 0;
+	types_code = 0;
+	while (arg_num < inst->args_num)
+	{
+		if ((*curr)->class == REGISTER || (*curr)->class == DIRECT
+		|| (*curr)->class == DIRECT_LABEL || (*curr)->class == INDIRECT
+		||	(*curr)->class == INDIRECT)
+		{
+			class = get_one_arg(pars, curr, inst, arg_num);
+		}
+		else
+			terminate_entity(*curr);
+	}
+}
+
 void	proc_instruction(t_pars *pars, t_entity **curr)
 {
 	int8_t	types_code;
@@ -81,24 +121,24 @@ void	proc_instruction(t_pars *pars, t_entity **curr)
 		terminate_instruction(*curr);
 	pars->code[(pars->pos)++] = inst->code;
 	*curr = (*curr)->next;
-	(inst->args_types_code) && ++(pars->pos);
+	(inst->args_classes_code) && ++(pars->pos); //why ++ ???
 	types_code = get_args(pars, curr, inst);
 }
 
 void	qhjvufej(t_pars *pars, t_entity **curr)
 {
-	while (*curr)
+	while ((*curr)->class != END)
 	{
 		(pars->pos >= pars->code_size) && upd_buffer(pars);
 		pars->op_pos = pars->pos;
-		if ((*curr) && (*curr)->class == LABEL)
+		if ((*curr)->class == LABEL)
 			proc_label(pars, curr);
-		if ((*curr) && (*curr)->class == INSTRUCTION)
+		if ((*curr)->class == INSTRUCTION)
 			proc_instruction(pars, curr);
-		if ((*curr) && (*curr)->class == NEW_LINE)
+		if ((*curr)->class == NEW_LINE)
 			*curr = (*curr)->next;
 		else
-			terminate_entity(*curr);
+			terminate_syntax(pars, pars->end);	//what should be here ?
 	}
 }
 
@@ -107,6 +147,7 @@ void	read_file(t_pars *pars)
 	char	*line;
 	int		res;
 
+	pars->end = new_entity(pars, END);
 	while ((res = read_next_line(pars->fd, &line)) > 0
 		   && !(pars->col = 0)
 		   && (++pars->row))
@@ -115,6 +156,7 @@ void	read_file(t_pars *pars)
 			&& skip_comment(&(pars->col), line)
 			&& (line[pars->col] != '\0')
 			&& get_entities(pars, &line);
+	add_entity(&(pars->entities), pars->end);
 	res == -1 ? terminate("An error occurred while opening file") : 0;
 }
 

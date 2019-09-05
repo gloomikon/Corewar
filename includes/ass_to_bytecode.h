@@ -94,6 +94,7 @@ struct			s_pars
 	int			row;
 	int			col;
 	t_entity	*entities;
+	t_entity	*end;
 	t_label		*labels;
 	char		*name;
 	char		*comment;
@@ -152,8 +153,10 @@ void	get_champ_bio(t_pars *pars, t_entity **curr);
 
 void		terminate_lexical(int row, int col);
 void		terminate_entity(t_entity *entity);
-void		terminate_syntax(int row, int col, t_entity *entity);
+void		terminate_syntax(t_pars *pars, t_entity *entity);
 void		terminate_big_bio(int type);
-
+void 		terminate_instruction(t_entity *entity);
+void		terminate_invalid_argument(t_inst *inst, int arg_num,
+												t_entity *entity);
 
 #endif

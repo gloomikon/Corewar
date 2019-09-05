@@ -25,14 +25,12 @@ void	terminate_entity(t_entity *entity)
 	exit(1);
 }
 
-void	terminate_syntax(int row, int col, t_entity *entity)
+void	terminate_syntax(t_pars *pars, t_entity *entity)
 {
-	if (entity == NULL)
-		ft_printf("Syntax error at token [TOKEN][%03d:%03d] END \"(null)\"\n",
-			row, col);
-	else
-		ft_printf("Syntax error at token [TOKEN][%03d:%03d] %s \"%s\"\n",
-			entity->row, entity->col, g_class[entity->class], entity->content);
+	pars->end->col = pars->col;
+	pars->end->row = pars->row;
+	ft_printf("Syntax error at token [TOKEN][%03d:%03d] %s \"%s\"\n",
+		entity->row, entity->col, g_class[entity->class], entity->content);
 	exit(1);
 }
 
@@ -41,4 +39,17 @@ void	terminate_big_bio(int type)
 	ft_printf("Champion %s too long (Max length %d)\n",
 			type == NAME ? "name" : "comment",
 			type == NAME ? PROG_NAME_LENGTH : COMMENT_LENGTH);
+}
+
+void	terminate_instruction(t_entity *entity)
+{
+	ft_printf("unknown instruction\n");
+	exit(1);
+}
+
+void	terminate_invalid_argument(t_inst *inst, int arg_num, t_entity *entity)
+{
+	ft_printf("Invalid type of parameter #%d for instruction \"%s\" at "
+		"[%03d:%03d]\n", arg_num, inst->name, entity->row, entity->col);
+	exit(1);
 }

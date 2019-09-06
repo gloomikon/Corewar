@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 14:40:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/03 14:19:18 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/06 19:52:06 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		get_entities(t_pars *pars, char **row)
 	else if ((*row)[pars->col] == '"')
 		parse_str(pars, row, pars->col, new_entity(pars, STRING));
 	else if ((*row)[pars->col] == LABEL_CHAR)
-		parse_chars(pars, *row, ++(pars->col),
+		parse_chars(pars, *row, (pars->col)++,
 					new_entity(pars, INDIRECT_LABEL));
 	else
 		parse_int(pars, *row, pars->col, new_entity(pars, INDIRECT));

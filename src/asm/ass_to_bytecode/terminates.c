@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 14:46:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/03 13:35:06 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/06 19:07:07 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,18 @@ void	terminate_entity(t_entity *entity)
 	exit(1);
 }
 
-void	terminate_syntax(t_pars *pars, t_entity *entity)
+void	terminate_syntax(t_pars *pars, t_entity *entity, bool suggestion)
 {
-	pars->end->col = pars->col;
-	pars->end->row = pars->row;
-	ft_printf("Syntax error at token [TOKEN][%03d:%03d] %s \"%s\"\n",
-		entity->row, entity->col, g_class[entity->class], entity->content);
+	if (suggestion)
+		ft_printf("Syntax error - unexpected end of input "
+			"(Perhaps you forgot to end with a newline ?)");
+	else
+	{
+		pars->end->col = pars->col + 1;
+		pars->end->row = pars->row;
+		ft_printf("Syntax error at token [TOKEN][%03d:%03d] %s \"%s\"\n",
+			entity->row, entity->col, g_class[entity->class], entity->content);
+	}
 	exit(1);
 }
 
@@ -43,13 +49,40 @@ void	terminate_big_bio(int type)
 
 void	terminate_instruction(t_entity *entity)
 {
-	ft_printf("unknown instruction\n");
+	ft_printf("Invalid instruction at token [TOKEN][%03d:%03d] "
+		"INSTRUCTION \"%s\"", entity->row, entity->col, entity->content);
 	exit(1);
+}
+
+char	*ft_str_tolower(char *str)
+{
+	char	*new;
+	int		i;
+
+	if (!str)
+		return (NULL);
+	new = ft_memalloc(ft_strlen(str) + 1);
+	i = -1;
+	while (str[++i])
+		new[i] = ft_tolower(str[i]);
+	return (new);
 }
 
 void	terminate_invalid_argument(t_inst *inst, int arg_num, t_entity *entity)
 {
-	ft_printf("Invalid type of parameter #%d for instruction \"%s\" at "
-		"[%03d:%03d]\n", arg_num, inst->name, entity->row, entity->col);
+	char	*str;
+
+	str = ft_str_tolower(g_class[entity->class]);
+	ft_printf("Invalid parameter %d type %s for instruction \"%s\"",
+			arg_num, str, inst->name);
+	ft_strdel(&str);
+	exit(1);
+}
+
+void	terminate_label(t_label *label)
+{
+	ft_printf("No such label %s while attempting to dereference token "
+		"[TOKEN][%03d:%03d] DIRECT_LABEL \"%:%s\"",
+		label->name, label->mentions->row, label->mentions->col, label->name);
 	exit(1);
 }

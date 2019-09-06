@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 01:59:40 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/03 15:14:18 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/06 19:08:46 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ struct			s_pars
 	int			pos;
 	int			op_pos;
 	int			code_size;
-	int8_t		*code;
+	char		*code;
 };
 
 /*
@@ -121,7 +121,10 @@ bool		is_command(t_pars *pars, char *row);
 int			upd_buffer(t_pars *pars);
 t_label		*find_label(t_label *labels, char *name);
 t_inst		*get_instruction(char *name);
-int8_t		get_code(int8_t class);
+int8_t		get_type_code(int8_t type);
+int			get_arg_type(t_class class);
+void		insert_ints_instead_mentions(t_pars *pars);
+
 
 /*
 **	PARSING
@@ -150,8 +153,23 @@ void		add_mention(t_mention **mentions, t_mention *new);
 **	DATA PROCESSING
 */
 
-void	get_data(t_pars *pars, t_entity **curr, int type);
-void	get_champ_bio(t_pars *pars, t_entity **curr);
+void		get_data(t_pars *pars, t_entity **curr, int type);
+void		get_champ_bio(t_pars *pars, t_entity **curr);
+void		read_and_proc_entities(t_pars *pars, t_entity **curr);
+void		proc_label(t_pars *pars, t_entity **curr);
+void		proc_instruction(t_pars *pars, t_entity **curr);
+int8_t		read_and_code_args(t_pars *pars, t_entity **curr, t_inst *inst);
+int8_t		get_one_arg(t_pars *pars, t_entity **curr,
+								t_inst *inst, int arg_num);
+void		proc_reg(t_pars *pars, char *reg_number);
+void		proc_mention(t_pars *pars, t_entity *curr, t_inst *inst);
+void		proc_int(t_pars *pars, t_entity *curr, t_inst *inst);
+
+/*
+**	WRITING
+*/
+
+void		write_to_bytecode(char *code, int pos, int8_t data, size_t size);
 
 /*
 **	TERMINATE
@@ -159,10 +177,12 @@ void	get_champ_bio(t_pars *pars, t_entity **curr);
 
 void		terminate_lexical(int row, int col);
 void		terminate_entity(t_entity *entity);
-void		terminate_syntax(t_pars *pars, t_entity *entity);
+void		terminate_syntax(t_pars *pars, t_entity *entity, bool suggestion);
 void		terminate_big_bio(int type);
 void 		terminate_instruction(t_entity *entity);
 void		terminate_invalid_argument(t_inst *inst, int arg_num,
 												t_entity *entity);
+void		terminate_label(t_label *label);
+
 
 #endif

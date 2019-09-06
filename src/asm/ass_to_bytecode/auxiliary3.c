@@ -41,11 +41,20 @@ t_inst	*get_instruction(char *name)
 	return (NULL);
 }
 
-int8_t	get_code(int8_t class)
+int8_t	get_type_code(int8_t type)
 {
-	if (class == T_REG)
+	if (type == T_REG)
 		return (REG_CODE);
-	else if (class == T_DIR)
+	else if (type == T_DIR)
 		return (DIR_CODE);
 	return (IND_CODE);
+}
+
+int		get_arg_type(t_class class)
+{
+	if (class == REGISTER)
+		return (T_REG);
+	if (class == DIRECT_LABEL || class == DIRECT)
+		return (T_DIR);
+	return (T_IND);
 }

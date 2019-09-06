@@ -184,4 +184,4 @@ add_executable(corewar
     src/asm/ass_to_bytecode/data_processing.c
     src/asm/ass_to_bytecode/pasring.c
     src/asm/ass_to_bytecode/terminates.c
-    src/asm/asm.c libft/src/ft_atoi32.c)
+    src/asm/asm.c libft/src/ft_atoi32.c src/asm/ass_to_bytecode/writing.c src/asm/ass_to_bytecode/data_processing_classes.c src/asm/ass_to_bytecode/data_processing_arguments.c)

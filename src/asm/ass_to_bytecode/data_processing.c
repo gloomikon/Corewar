@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 14:26:45 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/06 19:34:02 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/07 20:30:18 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	get_data(t_pars *pars, t_entity **curr, int type)
 	else if (type == COMMENT)
 		pars->comment = ft_strdup((*curr)->content);
 	*curr = (*curr)->next;
-	if ((*curr)->class != NEW_LINE)
+	if ((*curr)->class != ENDLINE)
 		terminate_syntax(pars, *curr, false);
 }
 
@@ -38,7 +38,7 @@ void	get_champ_bio(t_pars *pars, t_entity **curr)
 		else if ((*curr)->class == COMMAND_COMMENT)
 			get_data(pars, curr, COMMENT);
 		else
-			terminate_entity(*curr);
+			terminate_syntax(pars, *curr, false);
 		*curr = (*curr)->next;
 	}
 }
@@ -53,10 +53,13 @@ void	read_and_proc_entities(t_pars *pars, t_entity **curr)
 			proc_label(pars, curr);
 		if ((*curr)->class == INSTRUCTION)
 			proc_instruction(pars, curr);
-		if ((*curr)->class == NEW_LINE)
+		else if ((*curr)->class != ENDLINE)
+			break ;
+		if ((*curr)->class == ENDLINE)
 			*curr = (*curr)->next;
 		else
-			terminate_syntax(pars, pars->end, true);
+			(*curr)->class == END ? terminate_syntax(pars, pars->end, true) :
+			terminate_entity(*curr);
 	}
 	insert_ints_instead_mentions(pars);
 }

@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 14:42:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/01 14:42:00 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/07 17:44:53 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ void		add_entity(t_entity **lst, t_entity *new)
 		tmp = *lst;
 		while (tmp->next)
 			tmp = tmp->next;
-		if (!(new->class == NEW_LINE && tmp->class == NEW_LINE))
+		if (!(new->class == ENDLINE && tmp->class == ENDLINE))
 			tmp->next = new;
 		else
 			free(new);
 	}
 	else
 	{
-		if (!(new->class == NEW_LINE))
+		if (!(new->class == ENDLINE))
 			*lst = new;
 		else
 			free(new);

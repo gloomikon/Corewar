@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 01:58:09 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/06 19:34:53 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/07 20:29:56 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@ void	insert_ints_instead_mentions(t_pars *pars)
 			mention = label->mentions;
 			while (mention)
 			{
-				printf("dbg = %d\n", label->op_pos - mention->op_pos);
 				write_to_bytecode(pars->code, mention->pos,
 						(label->op_pos - mention->op_pos), mention->size);
 				mention = mention->next;
@@ -33,6 +32,7 @@ void	insert_ints_instead_mentions(t_pars *pars)
 		}
 		else
 			terminate_label(label);
+		label = label->next;
 	}
 }
 
@@ -66,5 +66,6 @@ int		ass_to_bytecode(char *file)
 	curr = pars->entities;
 	get_champ_bio(pars, &curr);
 	read_and_proc_entities(pars, &curr);
+	printf("OK\n");
 	return (1);
 }

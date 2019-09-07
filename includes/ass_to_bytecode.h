@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 01:59:40 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/06 19:08:46 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/07 20:09:28 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef enum
 	INDIRECT,
 	INDIRECT_LABEL,
 	SEPARATOR,
-	NEW_LINE,
+	ENDLINE,
 	END
 }	t_class;
 
@@ -52,7 +52,7 @@ static char				*g_class[] = {
 	"INDIRECT",
 	"INDIRECT_LABEL",
 	"SEPARATOR",
-	"NEW_LINE",
+	"ENDLINE",
 	"END"
 };
 
@@ -183,6 +183,6 @@ void 		terminate_instruction(t_entity *entity);
 void		terminate_invalid_argument(t_inst *inst, int arg_num,
 												t_entity *entity);
 void		terminate_label(t_label *label);
-
+void		terminate_invalid_parameter_count(t_inst *inst);
 
 #endif

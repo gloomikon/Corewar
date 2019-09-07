@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 17:48:57 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/06 19:42:34 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/07 20:28:21 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ int8_t	read_and_code_args(t_pars *pars, t_entity **curr, t_inst *inst)
 			*curr = (*curr)->next;
 		}
 		else
-			terminate_syntax(pars, (*curr), false);
+			terminate_syntax(pars, *curr, false);
 		if (arg_num++ < inst->args_num - 1)
 			(*curr)->class == SEPARATOR ?
-			*curr = (*curr)->next : terminate_entity(*curr);
+			*curr = (*curr)->next : terminate_invalid_parameter_count(inst);
 	}
 	return (code);
 }
@@ -71,7 +71,6 @@ void	proc_mention(t_pars *pars, t_entity *curr, t_inst *inst)
 	start = (curr->class == INDIRECT_LABEL) ? 1 : 2;
 	size = (curr->class == INDIRECT_LABEL) ? IND_SIZE : inst->t_dir_size;
 	name = ft_strsub(curr->content, start, ft_strlen(curr->content) - start);
-	ft_printf("%s  %s\n", curr->content, name);
 	if (!(label = find_label(pars->labels, name)))
 	{
 		label = new_label(-1, name);
@@ -89,6 +88,7 @@ void	proc_int(t_pars *pars, t_entity *curr, t_inst *inst)
 
 	start = (curr->class == INDIRECT) ? 0 : 1;
 	size = (curr->class == INDIRECT) ? IND_SIZE : inst->t_dir_size;
-	write_to_bytecode(pars->code, pars->pos, ft_atoi(&(curr->content[start])), size);
+	write_to_bytecode(pars->code, pars->pos,
+			ft_atoi(&(curr->content[start])), size);
 	pars->pos += size;
 }

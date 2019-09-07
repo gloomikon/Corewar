@@ -1,7 +1,5 @@
-.name "Batman"
- .comment "comment"
+.name       "Batman"
+.comment    "This city needs me"
 
+ld
 
- ld %:tr, r11
- tr:
-  ld %3, r11

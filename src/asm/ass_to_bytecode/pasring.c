@@ -15,7 +15,7 @@
 int		get_entities(t_pars *pars, char **row)
 {
 	if ((*row)[pars->col] == '\n' && (++(pars->col)))
-		add_entity(&(pars->entities), new_entity(pars, NEW_LINE));
+		add_entity(&(pars->entities), new_entity(pars, ENDLINE));
 	else if ((*row)[pars->col] == SEPARATOR_CHAR && (++(pars->col)))
 		add_entity(&(pars->entities), new_entity(pars, SEPARATOR));
 	else if (is_command(pars, *row))

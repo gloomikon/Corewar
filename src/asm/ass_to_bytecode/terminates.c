@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 14:46:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/06 19:07:07 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/07 20:10:09 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	terminate_syntax(t_pars *pars, t_entity *entity, bool suggestion)
 	else
 	{
 		pars->end->col = pars->col + 1;
-		pars->end->row = pars->row;
+		pars->end->row = pars->row + (pars->row == 0);
 		ft_printf("Syntax error at token [TOKEN][%03d:%03d] %s \"%s\"\n",
 			entity->row, entity->col, g_class[entity->class], entity->content);
 	}
@@ -84,5 +84,11 @@ void	terminate_label(t_label *label)
 	ft_printf("No such label %s while attempting to dereference token "
 		"[TOKEN][%03d:%03d] DIRECT_LABEL \"%:%s\"",
 		label->name, label->mentions->row, label->mentions->col, label->name);
+	exit(1);
+}
+
+void	terminate_invalid_parameter_count(t_inst *inst)
+{
+	ft_printf("Invalid parameter count for instruction %s\n", inst->name);
 	exit(1);
 }

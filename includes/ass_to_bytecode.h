@@ -169,7 +169,7 @@ void		proc_int(t_pars *pars, t_entity *curr, t_inst *inst);
 **	WRITING
 */
 
-void		write_to_bytecode(char *code, int pos, int8_t data, size_t size);
+void		write_to_bytecode(char *code, int pos, int data, size_t size);
 
 /*
 **	TERMINATE

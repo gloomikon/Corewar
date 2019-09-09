@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 15:11:45 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/03 15:13:35 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/09 20:52:52 by ozhadaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include "libft.h"
 # include "op.h"
-
 
 typedef struct s_inst	t_inst;
 
@@ -37,7 +36,7 @@ static t_inst	g_inst[16] = {
 	{
 		.name = "live",
 		.code = 0x01,
-		 .args_num = 1,
+		.args_num = 1,
 		.args_need_code = false,
 		.args_classes = {T_DIR, 0, 0},
 		.t_dir_size = 4,

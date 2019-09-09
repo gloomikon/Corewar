@@ -29,7 +29,7 @@ SRC =	ft_memset.c ft_bzero.c ft_memcpy.c ft_memccpy.c ft_memmove.c\
 		ft_striteri.c ft_striter.c ft_putarr.c get_next_line.c ft_splitdel.c\
 		ft_max.c ft_min.c ft_isspace.c ft_isdigit_base.c ft_has_prefix.c\
 		ft_atoi_base.c ft_isnumber.c ft_abs.c ft_strsplit_len.c\
-		ft_free_split_array.c
+		ft_free_split_array.c ft_atoi32.c
 
 SRC1 =	check_base_prec.c check_digit_prec.c check_digit_sign.c check_form.c\
 		check_settings.c delete_zero.c ft_printf.c ft_str_prec.c\

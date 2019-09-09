@@ -101,6 +101,12 @@ int		ass_to_bytecode(char *file)
 	pars = init_pars(fd);
 	read_file(pars);
 	curr = pars->entities;
+	while (curr)
+	{
+		ft_printf("%15s, %s\n", g_class[curr->class], curr->content);
+		curr = curr->next;
+	}
+	curr = pars->entities;
 	get_champ_bio(pars, &curr);
 	read_and_proc_entities(pars, &curr);
 	fd = reverse_file_fd(file);

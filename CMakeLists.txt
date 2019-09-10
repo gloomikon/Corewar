@@ -187,4 +187,4 @@ add_executable(cw
         src/asm/data_processing_classes.c
         src/asm/pasring.c
         src/asm/terminates.c
-        src/asm/writing.c libft/src/ft_str_tolower.c)
+        src/asm/writing.c libft/src/ft_str_tolower.c src/asm/data_add_to_lst.c src/asm/terminates1.c src/asm/data_free.c)

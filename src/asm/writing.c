@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 17:44:52 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/09 21:15:03 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/10 16:36:41 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,28 @@ void	write_to_bytecode(char *code, int pos, int32_t data, size_t size)
 	int8_t	i;
 
 	i = 0;
-	printf("pos = %d data = %d size = %lu\n", pos, data, size);
 	while (size)
 	{
 		code[pos + (size - 1)] = (uint8_t)((data >> i) & 0xFF);
 		--size;
 		i += 8;
 	}
+}
+
+void	write_code_to_bytecode(t_pars *pars, int fd)
+{
+	char	*bcode;
+	int		len;
+
+	len = 4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4 + pars->pos;
+	bcode = ft_memalloc(sizeof(char) * (len + 1));
+	write_to_bytecode(bcode, 0, COREWAR_EXEC_MAGIC, 4);
+	ft_memcpy(&(bcode[4]), pars->name, ft_strlen(pars->name));
+	write_to_bytecode(bcode, 4 + PROG_NAME_LENGTH + 4, pars->pos, 4);
+	ft_memcpy(&(bcode[4 + PROG_NAME_LENGTH + 4 + 4]), pars->comment,
+			ft_strlen(pars->comment));
+	ft_memcpy(&(bcode[4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4]),
+			pars->code, pars->pos);
+	write(fd, bcode, len);
+	ft_strdel(&bcode);
 }

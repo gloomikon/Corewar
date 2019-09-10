@@ -6,7 +6,7 @@
 #    By: ozhadaie <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/09 19:17:27 by ozhadaie          #+#    #+#              #
-#    Updated: 2019/09/09 21:01:37 by ozhadaie         ###   ########.fr        #
+#    Updated: 2019/09/10 19:13:08 by mzhurba          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,9 @@ ASMH:=	$(addprefix $(INCD)/, asm.h asm_instructions.h ass_to_bytecode.h op.h)
 ASMSD:=	$(SRCD)/$(ASMB)
 ASMOD:=	$(OBJD)/$(ASMB)
 ASMS:=	asm.c ass_to_bytecode.c auxiliary.c auxiliary2.c auxiliary3.c\
-		data_creation.c data_processing.c data_processing_arguments.c\
-		data_processing_classes.c pasring.c terminates.c writing.c
+		data_creation.c data_add_to_lst.c data_processing.c\
+		data_processing_arguments.c data_processing_classes.c pasring.c\
+		terminates.c terminates1.c writing.c data_free.c
 ASMO:=	$(addprefix $(ASMOD)/, $(patsubst %.c, %.o, $(ASMS)))
 
 CMPL:=	gcc #$(addprefix -W, all extra error)

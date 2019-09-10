@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 01:59:40 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/07 20:09:28 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/10 16:38:29 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 # define NAME		1
 # define COMMENT	2
-# define MAX_STATEMENT_SIZE 14 // ???
+//# define MAX_STATEMENT_SIZE 14 // ???
 
 typedef enum
 {
@@ -125,7 +125,6 @@ int8_t		get_type_code(int8_t type);
 int			get_arg_type(t_class class);
 void		insert_ints_instead_mentions(t_pars *pars);
 
-
 /*
 **	PARSING
 */
@@ -141,13 +140,21 @@ void		parse_command(t_pars *pars, char *row, t_entity *entity);
 **	DATA CREATION
 */
 
-t_pars		*init_pars(int fd);
+t_pars		*new_pars(int fd);
 void		add_entity(t_entity **lst, t_entity *new);
 t_entity	*new_entity(t_pars *pars, t_class class);
 t_label		*new_label(int op_pos, char *name);
 void		add_label(t_label **labels, t_label *new);
 t_mention	*new_mention(t_pars *pars, t_entity *entity, size_t size);
 void		add_mention(t_mention **mentions, t_mention *new);
+
+/*
+**	DATA FREE
+*/
+
+void		free_pars(t_pars **pars);
+void		free_label(t_label **label);
+void		free_entity(t_entity **entity);
 
 /*
 **	DATA PROCESSING
@@ -169,8 +176,8 @@ void		proc_int(t_pars *pars, t_entity *curr, t_inst *inst);
 **	WRITING
 */
 
-void	write_to_bytecode(char *code, int pos, int32_t data, size_t size);
-
+void		write_to_bytecode(char *code, int pos, int32_t data, size_t size);
+void		write_code_to_bytecode(t_pars *pars, int fd);
 
 /*
 **	TERMINATE
@@ -180,7 +187,7 @@ void		terminate_lexical(int row, int col);
 void		terminate_entity(t_entity *entity);
 void		terminate_syntax(t_pars *pars, t_entity *entity, bool suggestion);
 void		terminate_big_bio(int type);
-void 		terminate_instruction(t_entity *entity);
+void		terminate_instruction(t_entity *entity);
 void		terminate_invalid_argument(t_inst *inst, int arg_num,
 												t_entity *entity);
 void		terminate_label(t_label *label);

@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 01:58:09 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/10 16:18:16 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/10 19:12:29 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,24 +76,6 @@ int		reverse_file_fd(char *file)
 	return (fd);
 }
 
-void	write_code_to_bytecode(t_pars *pars, int fd)
-{
-	char	*bcode;
-	int		len;
-
-	len = 4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4 + pars->pos;
-	bcode = ft_memalloc(sizeof(char) * (len + 1));
-	write_to_bytecode(bcode, 0, COREWAR_EXEC_MAGIC, 4);
-	ft_memcpy(&(bcode[4]), pars->name, ft_strlen(pars->name));
-	write_to_bytecode(bcode, 4 + PROG_NAME_LENGTH + 4, pars->pos, 4);
-	ft_memcpy(&(bcode[4 + PROG_NAME_LENGTH + 4 + 4]), pars->comment,
-									ft_strlen(pars->comment));
-	ft_memcpy(&(bcode[4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4]),
-			pars->code, pars->pos);
-	write(fd, bcode, len);
-	ft_strdel(&bcode);
-}
-
 int		ass_to_bytecode(char *file)
 {
 	t_entity	*curr;
@@ -101,18 +83,13 @@ int		ass_to_bytecode(char *file)
 	int			fd;
 
 	(fd = open(file, O_RDONLY)) < 0 ? terminate("Invalid file") : 0;
-	pars = init_pars(fd);
+	pars = new_pars(fd);
 	read_file(pars);
-	curr = pars->entities;
-	while (curr)
-	{
-		ft_printf("%15s, %s\n", g_class[curr->class], curr->content);
-		curr = curr->next;
-	}
 	curr = pars->entities;
 	get_champ_bio(pars, &curr);
 	read_and_proc_entities(pars, &curr);
 	fd = reverse_file_fd(file);
 	write_code_to_bytecode(pars, fd);
+	free_pars(&pars);
 	return (1);
 }

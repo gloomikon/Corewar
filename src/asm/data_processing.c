@@ -56,7 +56,7 @@ void	read_and_proc_entities(t_pars *pars, t_entity **curr)
 			proc_label(pars, curr);
 		if (was_label && (*curr)->class != INSTRUCTION
 		&& (*curr)->class != ENDLINE)
-			break;
+			break ;
 		if ((*curr)->class == INSTRUCTION)
 			proc_instruction(pars, curr);
 		if ((*curr)->class == ENDLINE)

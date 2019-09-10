@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/26 15:17:22 by mzhurba           #+#    #+#             */
-/*   Updated: 2018/10/31 17:37:30 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/10 16:23:41 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*ft_strchr(const char *s, int c)
 	size_t	i;
 
 	if (!s)
-	    return (NULL);
+		return (NULL);
 	i = -1;
 	while (s[++i])
 	{

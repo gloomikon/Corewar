@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/05 19:25:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/09 21:21:38 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/10 16:24:45 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int32_t		ft_atoi32(const char *str)
 			&& sign == 1)
 			return (-1);
 		else if ((result > border || (result == border && (str[i] - '0') > 8))
-				 && sign == -1)
+				&& sign == -1)
 			return (0);
 		result = result * 10 + (str[i++] - '0');
 	}

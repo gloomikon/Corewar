@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 14:46:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/10 15:46:54 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/10 16:44:14 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	terminate_lexical(int row, int col)
 {
 	ft_printf("Lexical error at [%d:%d]\n", row, col);
-	system("leaks asm");
+	system("leaks -q asm");
 	exit(1);
 }
 
@@ -23,7 +23,7 @@ void	terminate_entity(t_entity *entity)
 {
 	ft_printf("Unexpected token \"%s\" %s at [%d:%d]\n",
 			entity->content, g_class[entity->class], entity->row, entity->col);
-	system("leaks asm");
+	system("leaks -q asm");
 	exit(1);
 }
 
@@ -39,7 +39,7 @@ void	terminate_syntax(t_pars *pars, t_entity *entity, bool suggestion)
 		ft_printf("Syntax error at token [TOKEN][%03d:%03d] %s \"%s\"\n",
 			entity->row, entity->col, g_class[entity->class], entity->content);
 	}
-	system("leaks asm");
+	system("leaks -q asm");
 	exit(1);
 }
 
@@ -56,34 +56,6 @@ void	terminate_instruction(t_entity *entity)
 {
 	ft_printf("Invalid instruction at token [TOKEN][%03d:%03d] "
 		"INSTRUCTION \"%s\"", entity->row, entity->col, entity->content);
-	system("leaks asm");
-	exit(1);
-}
-
-void	terminate_invalid_argument(t_inst *inst, int arg_num, t_entity *entity)
-{
-	char	*str;
-
-	str = ft_str_tolower(g_class[entity->class]);
-	ft_printf("Invalid parameter %d type %s for instruction \"%s\"",
-			arg_num, str, inst->name);
-	ft_strdel(&str);
-	system("leaks asm");
-	exit(1);
-}
-
-void	terminate_label(t_label *label)
-{
-	ft_printf("No such label %s while attempting to dereference token "
-		"[TOKEN][%03d:%03d] DIRECT_LABEL \"%:%s\"",
-		label->name, label->mentions->row, label->mentions->col, label->name);
-	system("leaks asm");
-	exit(1);
-}
-
-void	terminate_invalid_parameter_count(t_inst *inst)
-{
-	ft_printf("Invalid parameter count for instruction %s\n", inst->name);
 	system("leaks asm");
 	exit(1);
 }

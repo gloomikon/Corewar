@@ -15,7 +15,7 @@
 int		upd_buffer(t_pars *pars)
 {
 	pars->code_size += CHAMP_MAX_SIZE;
-	pars->code = realloc(pars->code, pars->code_size + MAX_STATEMENT_SIZE);
+	pars->code = realloc(pars->code, pars->code_size);
 	return (1);
 }
 

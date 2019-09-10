@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/28 01:58:09 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/08 18:48:36 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/10 16:18:16 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,14 @@ void	read_file(t_pars *pars)
 	while ((res = read_next_line(pars->fd, &line)) > 0
 		&& !(pars->col = 0)
 		&& (++pars->row))
+	{
 		while (line[pars->col])
 			skip_whitespaces(&(pars->col), line)
 			&& skip_comment(&(pars->col), line)
 			&& (line[pars->col] != '\0')
 			&& get_entities(pars, &line);
+		ft_strdel(&line);
+	}
 	add_entity(&(pars->entities), pars->end);
 	res == -1 ? terminate("An error occurred while opening file") : 0;
 }

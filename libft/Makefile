@@ -6,7 +6,7 @@
 #    By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/02 13:46:35 by mzhurba           #+#    #+#              #
-#    Updated: 2019/09/10 15:17:53 by mzhurba          ###   ########.fr        #
+#    Updated: 2019/09/10 15:44:04 by mzhurba          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ FILE =	ft_memset ft_bzero ft_memcpy ft_memccpy ft_memmove\
 		ft_striteri ft_striter ft_putarr get_next_line ft_splitdel\
 		ft_max ft_min ft_isspace ft_isdigit_base ft_has_prefix\
 		ft_atoi_base ft_isnumber ft_abs ft_strsplit_len\
-		ft_free_split_array\
+		ft_free_split_array ft_atoi32 ft_str_tolower\
 		check_base_prec check_digit_prec check_digit_sign check_form\
 		check_settings delete_zero ft_printf ft_str_prec\
 		ftoa_prec_e ftoa_prec_eg ftoa_prec_f ftoa_prec_fg\
@@ -49,6 +49,7 @@ FILE =	ft_memset ft_bzero ft_memcpy ft_memccpy ft_memmove\
 		spec_percent spec_precision spec_ptraddr spec_return\
 		spec_unsint spec_wchar
 
+SRCD	=	src
 OBJD	=	obj
 INCD	=	inc
 

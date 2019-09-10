@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 14:26:45 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/07 20:30:18 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/10 15:59:15 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,20 @@ void	get_champ_bio(t_pars *pars, t_entity **curr)
 
 void	read_and_proc_entities(t_pars *pars, t_entity **curr)
 {
+	bool	was_label;
+
+	was_label = false;
 	while ((*curr)->class != END)
 	{
 		(pars->pos >= pars->code_size) && upd_buffer(pars);
 		pars->op_pos = pars->pos;
-		if ((*curr)->class == LABEL)
+		if ((*curr)->class == LABEL && (was_label = true))
 			proc_label(pars, curr);
+		if (was_label && (*curr)->class != INSTRUCTION
+		&& (*curr)->class != ENDLINE)
+			break;
 		if ((*curr)->class == INSTRUCTION)
 			proc_instruction(pars, curr);
-		else if ((*curr)->class != ENDLINE)
-			break ;
 		if ((*curr)->class == ENDLINE)
 			*curr = (*curr)->next;
 		else

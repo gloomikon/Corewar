@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 20:01:56 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/09 19:53:05 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/10 15:49:30 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	terminate(char *message)
 {
 	ft_printf("ERROR: %s\n", message);
+	system("leaks asm");
 	exit(0);
 }
 
@@ -37,11 +38,16 @@ int		main(int argc, char **argv)
 		if (check_file_extension(argv[1]) && ass_to_bytecode(argv[1]))
 			file = true;
 		if (file == false)
-			return (ft_printf("Invalid filename\n"));
+		{
+			system("leaks asm");
+			return (ft_printf("ERROR :Invalid filename\n"));
+		}
 	}
 	if (file == false)
-		return (ft_printf("Usage: ./asm champ.s | champ.cor\n"
-				"\tchamp.s:   assembly -> bytecode\n"
-				"\tchamp.cor: bytecode -> assembly\n"));
+	{
+		system("leaks asm");
+		return (ft_printf("Usage: ./asm champ.s\n"));
+	}
+	system("leaks asm");
 	return (0);
 }

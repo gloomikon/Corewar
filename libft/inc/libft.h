@@ -70,6 +70,7 @@ int					ft_isupper(int c);
 int					ft_has_prefix(const char *str, int base);
 int					ft_isdigit_base(char c, int base);
 void				ft_strlower(char *s);
+char				*ft_str_tolower(char *str);
 char				*ft_strsub(char const *s, int start, int len);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s);

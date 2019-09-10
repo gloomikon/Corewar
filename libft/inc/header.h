@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 14:20:53 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/07 17:36:00 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/09 19:56:14 by ozhadaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <wchar.h>
 # include <limits.h>
 # include <stdint.h>
-# include "../../includes/libft.h"
+# include "libft.h"
 # define FLAGS		"# +-0*.123456789Lhjltz"
 # define HEX		"boxBOX"
 # define PREC		"fgeFGE"

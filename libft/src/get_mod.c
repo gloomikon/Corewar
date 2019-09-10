@@ -6,11 +6,11 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/07/02 13:57:37 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/07/03 00:47:46 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/09 19:54:32 by ozhadaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/header.h"
+#include "header.h"
 
 void	get_mod(const char *restrict format, t_pf_env *e)
 {

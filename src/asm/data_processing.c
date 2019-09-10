@@ -48,6 +48,8 @@ void	read_and_proc_entities(t_pars *pars, t_entity **curr)
 	bool	was_label;
 
 	was_label = false;
+	if ((*curr)->class == END)
+		terminate_syntax(pars, *curr, false);
 	while ((*curr)->class != END)
 	{
 		(pars->pos >= pars->code_size) && upd_buffer(pars);

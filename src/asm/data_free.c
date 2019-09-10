@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 19:11:49 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/10 19:12:11 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/10 19:12:29 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	free_pars(t_pars **pars)
 {
-	t_entity *entity_next;
-	t_label	*label_next;
+	t_entity	*entity_next;
+	t_label		*label_next;
 
 	ft_strdel(&((*pars)->name));
 	ft_strdel(&((*pars)->comment));

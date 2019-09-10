@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 17:48:57 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/07 20:28:21 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/09 21:23:24 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ void	proc_int(t_pars *pars, t_entity *curr, t_inst *inst)
 
 	start = (curr->class == INDIRECT) ? 0 : 1;
 	size = (curr->class == INDIRECT) ? IND_SIZE : inst->t_dir_size;
+	printf("%s, %d\n", curr->content, ft_atoi32(&(curr->content[start])));
 	write_to_bytecode(pars->code, pars->pos,
-			ft_atoi(&(curr->content[start])), size);
+					  ft_atoi32(&(curr->content[start])), size);
 	pars->pos += size;
 }

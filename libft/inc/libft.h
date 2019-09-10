@@ -43,6 +43,7 @@ char				*ft_ultoa(unsigned long n);
 char				*ft_ultoa_base(unsigned long n, int base);
 char				*ft_ltoa_base(long n, int base);
 long long			ft_atoi(const char *str);
+int32_t				ft_atoi32(const char *str);
 int					ft_atoi_base(const char *str, int base);
 void				*ft_memalloc(size_t size);
 void				ft_memdel(void **ap);

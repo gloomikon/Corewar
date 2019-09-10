@@ -6,7 +6,7 @@
 #    By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/02 13:46:35 by mzhurba           #+#    #+#              #
-#    Updated: 2019/09/09 20:46:57 by ozhadaie         ###   ########.fr        #
+#    Updated: 2019/09/10 15:17:53 by mzhurba          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,8 +49,6 @@ FILE =	ft_memset ft_bzero ft_memcpy ft_memccpy ft_memmove\
 		spec_percent spec_precision spec_ptraddr spec_return\
 		spec_unsint spec_wchar
 
-
-SRCD	=	src
 OBJD	=	obj
 INCD	=	inc
 

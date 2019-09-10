@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 14:26:45 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/10 15:59:15 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/10 19:39:58 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	read_and_proc_entities(t_pars *pars, t_entity **curr)
 		pars->op_pos = pars->pos;
 		if ((*curr)->class == LABEL && (was_label = true))
 			proc_label(pars, curr);
+		if (was_label && (*curr)->class == END)
+			terminate_syntax(pars, *curr, false);
 		if (was_label && (*curr)->class != INSTRUCTION
 		&& (*curr)->class != ENDLINE)
 			break ;

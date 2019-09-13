@@ -1,14 +1,12 @@
 cmake_minimum_required(VERSION 3.14)
-project(cw C)
+project(corewar C)
 
 set(CMAKE_C_STANDARD 11)
 
 include_directories(inc)
 include_directories(libft/inc)
-include_directories(resources)
-include_directories(resources/vm_champs)
 
-add_executable(cw
+add_executable(corewar
         inc/asm.h
         inc/asm_instructions.h
         inc/ass_to_bytecode.h
@@ -73,6 +71,7 @@ add_executable(cw
         libft/src/ft_putstr_fd.c
         libft/src/ft_splitdel.c
         libft/src/ft_str_prec.c
+        libft/src/ft_str_tolower.c
         libft/src/ft_strcat.c
         libft/src/ft_strchr.c
         libft/src/ft_strchri.c
@@ -172,19 +171,20 @@ add_executable(cw
         libft/src/spec_return.c
         libft/src/spec_unsint.c
         libft/src/spec_wchar.c
-#        resources/vm_champs/op.c
-#        resources/vm_champs/op.h
-#        resources/op.c
-#        resources/op.h
-        src/asm/asm.c
-        src/asm/ass_to_bytecode.c
-        src/asm/auxiliary.c
-        src/asm/auxiliary2.c
-        src/asm/auxiliary3.c
-        src/asm/data_creation.c
-        src/asm/data_processing.c
-        src/asm/data_processing_arguments.c
-        src/asm/data_processing_classes.c
-        src/asm/pasring.c
-        src/asm/terminates.c
-        src/asm/writing.c libft/src/ft_str_tolower.c src/asm/data_add_to_lst.c src/asm/terminates1.c src/asm/data_free.c)
+#        src/asm/asm.c
+#        src/asm/ass_to_bytecode.c
+#        src/asm/auxiliary.c
+#        src/asm/auxiliary2.c
+#        src/asm/auxiliary3.c
+#        src/asm/data_add_to_lst.c
+#        src/asm/data_creation.c
+#        src/asm/data_free.c
+#        src/asm/data_processing.c
+#        src/asm/data_processing_arguments.c
+#        src/asm/data_processing_classes.c
+#        src/asm/pasring.c
+#        src/asm/terminates.c
+#        src/asm/terminates1.c
+#        src/asm/writing.c
+        src/vm/vm.c
+        inc/corewar.h)

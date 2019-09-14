@@ -187,4 +187,5 @@ add_executable(corewar
 #        src/asm/terminates1.c
 #        src/asm/writing.c
         src/vm/vm.c
-        inc/corewar.h src/common.c)
+        inc/corewar.h
+        src/common.c)

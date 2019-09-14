@@ -12,11 +12,13 @@
 
 #include "corewar.h"
 
+
 void	print_usage(void)
 {
 	ft_printf("Usage: ./corewar [-dump | -d nbr_cycles] [[-n number] [-v] "
 		   "champion1.cor] ...");
 	exit(1);
+
 }
 
 t_corewar	*new_corewar(void)

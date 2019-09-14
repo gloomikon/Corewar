@@ -10,14 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CW_ASM_H
-# define CW_ASM_H
+#ifndef ASM_H
+# define ASM_H
 
 # include "header.h"
 
-# define REGISTER_SYMB	'r'
-
-int		ass_to_bytecode(char *file);
+bool	check_file_extension(char *file, char *ext);
 void	terminate(char *message);
 
 #endif

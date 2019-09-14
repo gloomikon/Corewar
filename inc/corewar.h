@@ -19,6 +19,13 @@
 typedef struct s_corewar	t_corewar;
 typedef struct s_champ		t_champ;
 
+/*
+**	COMMON
+*/
+
+bool	check_file_extension(char *file, char *ext);
+void	terminate(char *message);
+
 struct s_champ
 {
 	int	id;

@@ -12,11 +12,11 @@
 
 #include "corewar.h"
 
-int		print_usage(void)
+void	print_usage(void)
 {
-	ft_printf("Usage: ./corewar [-dump | -d nbr_cycles] [[-n number] [-v]"
-			  "champion1.cor] ...");
-	return (1);
+	ft_printf("Usage: ./corewar [-dump | -d nbr_cycles] [[-n number] [-v] "
+		   "champion1.cor] ...");
+	exit(1);
 }
 
 t_corewar	*new_corewar(void)
@@ -34,17 +34,29 @@ void	init_dump_flag(int *argc, char ***argv, t_corewar *cw)
 		cw->dump_mode = (ft_strequ(**argv, "-dump")) ? 32 : 64;
 		if ((cw->dump_cycles = (int)ft_atoi(*(*argv + 1))) < 0)
 			cw->dump_cycles = -1;
+		(*argv) += 2;
+		(*argc) -= 2;
 	}
 	else
 		print_usage();
 }
 
+void	add_champ(int *argc, char **argv, t_champ **lst, t_corewar *cw)
+{
+
+}
+
 void	parse_args(int argc, char **argv, t_corewar *cw)
 {
+	t_champ *lst;
+
+	lst = NULL;
 	(argv++) && (argc--);
 	while (argc >= 1)
 		if (ft_strequ(*argv, "-dump") || ft_strequ(*argv, "-d"))
 			init_dump_flag(&argc, &argv, cw);
+		else if (check_file_extension(*argv, "cor") || ft_strequ(*argv, "-n"))
+			add_champ(&argc, &argv, &lst, cw);
 }
 
 int		main(int argc, char **argv)
@@ -52,6 +64,7 @@ int		main(int argc, char **argv)
 	t_corewar	*cw;
 
 	if (argc < 2)
-		return (print_usage());
+		print_usage();
 	parse_args(argc, argv, (cw = new_corewar()));
+	printf("dump-mode : %d, dump-cycles : %d\n", cw->dump_mode, cw->dump_cycles);
 }

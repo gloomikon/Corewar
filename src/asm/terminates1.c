@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ass_to_bytecode.h"
+#include "asm.h"
 
 void	terminate_invalid_argument(t_inst *inst, int arg_num, t_entity *entity)
 {

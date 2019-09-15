@@ -7,9 +7,9 @@ include_directories(inc)
 include_directories(libft/inc)
 
 add_executable(corewar
-        inc/asm.h
+        inc/common.h
         inc/asm_instructions.h
-        inc/ass_to_bytecode.h
+        inc/asm.h
         inc/op.h
         libft/inc/header.h
         libft/inc/libft.h
@@ -187,4 +187,4 @@ add_executable(corewar
 #        src/asm/terminates1.c
 #        src/asm/writing.c
         src/vm/vm.c
-        inc/corewar.h src/common.c)
+        inc/corewar.h src/common.c inc/termiante_errors.h)

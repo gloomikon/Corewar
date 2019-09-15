@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ass_to_bytecode.h"
+#include "asm.h"
 
 int		upd_buffer(t_pars *pars)
 {

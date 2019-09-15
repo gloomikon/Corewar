@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ass_to_bytecode.h"
+#include "asm.h"
 
 t_entity	*new_entity(t_pars *pars, t_class class)
 {

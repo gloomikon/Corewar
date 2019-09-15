@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ass_to_bytecode.h"
+#include "asm.h"
 
 bool	is_delimiter(char c)
 {

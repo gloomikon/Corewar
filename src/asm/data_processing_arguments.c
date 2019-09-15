@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ass_to_bytecode.h"
+#include "asm.h"
 
 int8_t	read_and_code_args(t_pars *pars, t_entity **curr, t_inst *inst)
 {

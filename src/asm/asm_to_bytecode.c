@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ass_to_bytecode.c                                  :+:      :+:    :+:   */
+/*   asm_to_bytecode.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: ozhadaie <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/08/28 01:58:09 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/10 19:12:29 by mzhurba          ###   ########.fr       */
+/*   Created: 2019/09/15 17:10:10 by ozhadaie          #+#    #+#             */
+/*   Updated: 2019/09/15 17:10:17 by ozhadaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int		reverse_file_fd(char *file)
 	return (fd);
 }
 
-int		ass_to_bytecode(char *file)
+int		asm_to_bytecode(char *file)
 {
 	t_entity	*curr;
 	t_pars		*pars;

@@ -12,11 +12,19 @@
 
 #include "corewar.h"
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 505bd1108f09ab900ae6a67e00fb08756c3a285c
 void	print_usage(void)
 {
 	ft_printf("Usage: ./corewar [-dump | -d nbr_cycles] [[-n number] [-v] "
 		   "champion1.cor] ...");
 	exit(1);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 505bd1108f09ab900ae6a67e00fb08756c3a285c
 }
 
 t_corewar	*new_corewar(void)
@@ -51,6 +59,7 @@ void	init_dump_flag(int *argc, char ***argv, t_corewar *cw)
 		print_usage();
 }
 
+<<<<<<< HEAD
 t_champ	*find_champ(t_champ *lst, int id)
 {
 	while (lst)
@@ -110,6 +119,9 @@ int		read_from_bytecode(int fd)
 }
 
 t_champ	*new_champ(char *file, int id)
+=======
+void	add_champ(int *argc, char **argv, t_champ **lst, t_corewar *cw)
+>>>>>>> 505bd1108f09ab900ae6a67e00fb08756c3a285c
 {
 	int		fd;
 	t_champ	*champ;
@@ -153,7 +165,11 @@ void	parse_args(int argc, char **argv, t_corewar *cw)
 		if (ft_strequ(*argv, "-dump") || ft_strequ(*argv, "-d"))
 			init_dump_flag(&argc, &argv, cw);
 		else if (check_file_extension(*argv, "cor") || ft_strequ(*argv, "-n"))
+<<<<<<< HEAD
 			proc_champ(&argc, &argv, &lst, cw);
+=======
+			add_champ(&argc, &argv, &lst, cw);
+>>>>>>> 505bd1108f09ab900ae6a67e00fb08756c3a285c
 }
 
 int		main(int argc, char **argv)

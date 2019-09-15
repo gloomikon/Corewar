@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_processing_classes.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: msaliuta <msaliuta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 17:47:05 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/07 20:28:36 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/15 17:58:51 by msaliuta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ void	proc_label(t_pars *pars, t_entity **curr)
 	char	*name;
 	t_label	*label;
 
-	name = ft_strsub((*curr)->content, 0, ft_strlen((*curr)->content) - 1);
+	if (!(name = ft_strsub((*curr)->content, 0,
+						ft_strlen((*curr)->content) - 1)))
+		terminate(MEMORY_ALLOCATION);
 	!(label = find_label(pars->labels, name)) ?
 	add_label(&(pars->labels), new_label(pars->op_pos, name)) : 0;
 	(label && label->op_pos == -1) && (label->op_pos = pars->pos);

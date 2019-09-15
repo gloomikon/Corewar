@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_processing.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: msaliuta <msaliuta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 14:26:45 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/10 19:39:58 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/15 17:59:08 by msaliuta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,15 @@ void	get_data(t_pars *pars, t_entity **curr, int type)
 	if ((*curr)->class != STRING)
 		terminate_syntax(pars, *curr, false);
 	if (type == NAME)
-		pars->name = ft_strdup((*curr)->content);
+	{
+		if (!(pars->name = ft_strdup((*curr)->content)))
+			terminate(MEMORY_ALLOCATION);
+	}
 	else if (type == COMMENT)
-		pars->comment = ft_strdup((*curr)->content);
+	{
+		if (!(pars->comment = ft_strdup((*curr)->content)))
+			terminate(MEMORY_ALLOCATION);
+	}
 	*curr = (*curr)->next;
 	if ((*curr)->class != ENDLINE)
 		terminate_syntax(pars, *curr, false);

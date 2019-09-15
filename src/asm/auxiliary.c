@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   auxiliary.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: msaliuta <msaliuta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 14:27:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/10 16:15:12 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/15 17:56:17 by msaliuta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,14 @@ int		divide_str(char **str, char **row)
 	char *new;
 
 	div = ft_strchr(*str, '\n') + 1;
-	*row = ft_strsub(*str, 0, div - *str);
+	if (!(*row = ft_strsub(*str, 0, div - *str)))
+		terminate(MEMORY_ALLOCATION);
 	if (!ft_strlen(div))
 		ft_strdel(str);
 	else
 	{
-		new = ft_strdup(div);
+		if (!(new = ft_strdup(div)))
+			terminate(MEMORY_ALLOCATION);
 		ft_strdel(str);
 		*str = new;
 	}
@@ -58,7 +60,8 @@ int		read_next_line(int fd, char **row)
 		}
 		buff[size] = '\0';
 		tmp = str;
-		str = ft_strjoin(str, buff);
+		if (!(str = ft_strjoin(str, buff)))
+			terminate(MEMORY_ALLOCATION);
 		ft_strdel(&tmp);
 	}
 	return (divide_str(&str, row));
@@ -68,7 +71,8 @@ char	*join_str(char **s1, char **s2)
 {
 	char	*res;
 
-	res = ft_strjoin(*s1, *s2);
+	if (!(res = ft_strjoin(*s1, *s2)))
+		terminate(MEMORY_ALLOCATION);
 	ft_strdel(s1);
 	ft_strdel(s2);
 	return (res);

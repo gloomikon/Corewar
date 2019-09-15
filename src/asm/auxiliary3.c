@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   auxiliary3.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: msaliuta <msaliuta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/03 14:28:33 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/03 14:28:33 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/15 18:35:04 by msaliuta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,11 @@
 
 int		upd_buffer(t_pars *pars)
 {
+
 	pars->code_size += CHAMP_MAX_SIZE;
-	pars->code = realloc(pars->code, pars->code_size);
+	if (!(pars->code = realloc(pars->code, pars->code_size)))
+		terminate(MEMORY_ALLOCATION);
+
 	return (1);
 }
 

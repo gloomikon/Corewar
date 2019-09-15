@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   writing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: msaliuta <msaliuta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 17:44:52 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/10 16:36:41 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/15 18:35:09 by msaliuta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ void	write_code_to_bytecode(t_pars *pars, int fd)
 	int		len;
 
 	len = 4 + PROG_NAME_LENGTH + 4 + 4 + COMMENT_LENGTH + 4 + pars->pos;
-	bcode = ft_memalloc(sizeof(char) * (len + 1));
+
+	if (!(bcode = ft_memalloc(sizeof(char) * (len + 1))))
+		terminate(MEMORY_ALLOCATION);
 	write_to_bytecode(bcode, 0, COREWAR_EXEC_MAGIC, 4);
 	ft_memcpy(&(bcode[4]), pars->name, ft_strlen(pars->name));
 	write_to_bytecode(bcode, 4 + PROG_NAME_LENGTH + 4, pars->pos, 4);

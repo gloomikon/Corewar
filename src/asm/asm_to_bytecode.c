@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   asm_to_bytecode.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ozhadaie <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: msaliuta <msaliuta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 17:10:10 by ozhadaie          #+#    #+#             */
-/*   Updated: 2019/09/15 17:10:17 by ozhadaie         ###   ########.fr       */
+/*   Updated: 2019/09/15 18:35:04 by msaliuta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	read_file(t_pars *pars)
 	int		res;
 
 	pars->end = new_entity(pars, END);
+
 	while ((res = read_next_line(pars->fd, &line)) > 0
 		&& !(pars->col = 0)
 		&& (++pars->row))
@@ -65,8 +66,10 @@ int		reverse_file_fd(char *file)
 	char	*old;
 
 	ext = ft_strrchr(file, '.');
-	old = ft_strsub(file, 0, ext - file);
-	new = ft_strjoin(old, ft_strequ(ext, ".s") ? ".cor" : ".s");
+	if (!(old = ft_strsub(file, 0, ext - file)))
+		terminate(MEMORY_ALLOCATION);
+	if (!(new = ft_strjoin(old, ft_strequ(ext, ".s") ? ".cor" : ".s")))
+		terminate(MEMORY_ALLOCATION);
 	ft_strdel(&old);
 	fd = open(new, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)

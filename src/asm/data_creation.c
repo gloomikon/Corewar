@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_creation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: msaliuta <msaliuta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 14:42:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/10 16:40:02 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/15 18:35:14 by msaliuta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,18 @@ t_entity	*new_entity(t_pars *pars, t_class class)
 {
 	t_entity	*entity;
 
-	entity = ft_memalloc(sizeof(t_entity));
+
+	if (!(entity = ft_memalloc(sizeof(t_entity))))
+		terminate(MEMORY_ALLOCATION);
+
 	entity->class = class;
 	entity->row = pars->row;
 	entity->col = pars->col;
 	if (entity->class == SEPARATOR)
-		entity->content = ft_strdup(",");
+		if (!(entity->content = ft_strdup(",")))
+			terminate(MEMORY_ALLOCATION);
+	entity->next = NULL;
+
 	return (entity);
 }
 
@@ -29,9 +35,12 @@ t_label		*new_label(int op_pos, char *name)
 {
 	t_label *label;
 
-	label = ft_memalloc(sizeof(t_label));
+
+	if (!(label = ft_memalloc(sizeof(t_label))))
+		terminate(MEMORY_ALLOCATION);
 	label->op_pos = op_pos;
-	label->name = ft_strdup(name);
+	if (!(label->name = ft_strdup(name)))
+		terminate(MEMORY_ALLOCATION);
 	return (label);
 }
 
@@ -39,7 +48,9 @@ t_mention	*new_mention(t_pars *pars, t_entity *entity, size_t size)
 {
 	t_mention *mention;
 
-	mention = malloc(sizeof(t_mention));
+
+	if (!(mention = malloc(sizeof(t_mention))))
+		terminate(MEMORY_ALLOCATION);
 	mention->size = size;
 	mention->pos = pars->pos;
 	mention->op_pos = pars->op_pos;
@@ -53,7 +64,9 @@ t_pars		*new_pars(int fd)
 {
 	t_pars	*pars;
 
-	pars = ft_memalloc(sizeof(t_pars));
+
+	if (!(pars = ft_memalloc(sizeof(t_pars))))
+		terminate(MEMORY_ALLOCATION);
 	pars->fd = fd;
 	return (pars);
 }

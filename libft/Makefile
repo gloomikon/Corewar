@@ -6,7 +6,7 @@
 #    By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/02 13:46:35 by mzhurba           #+#    #+#              #
-#    Updated: 2019/09/10 15:44:04 by mzhurba          ###   ########.fr        #
+#    Updated: 2019/09/16 17:52:30 by mzhurba          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,14 +63,14 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@ar rcs $@ $^
-	@printf "\r                                                               \
-                                                                            \
-                                                                             "
-	@printf "\r$@ created\n"
+	@printf "\r\33[2K$@\t   \033[32;1mcreated\033[0m\n"
 
-$(OBJD)/%.o: $(SRCD)/%.c $(INCS) | $(OBJD)
+$(OBJD)/%.o: $(SRCD)/%.c $(INCS) | $(OBJD) prettyl
 	@$(CMPL) -o $@ -c $< -I$(INCD)
 	@printf "."
+
+prettyl:
+	@printf "Creating $(NAME) "
 
 $(OBJD):
 	@mkdir -p $@
@@ -83,4 +83,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re prettyl

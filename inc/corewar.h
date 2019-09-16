@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 16:46:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/13 16:46:00 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/16 16:46:16 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,7 @@ struct s_corewar
 	int		dump_mode;
 	int		dump_cycles;
 };
+
+t_corewar	*new_corewar(void);
 
 #endif

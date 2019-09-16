@@ -22,11 +22,15 @@ void	get_data(t_pars *pars, t_entity **curr, int type)
 		terminate_syntax(pars, *curr, false);
 	if (type == NAME)
 	{
+		if (ft_strlen((*curr)->content) > PROG_NAME_LENGTH)
+			terminate_big_bio(NAME);
 		if (!(pars->name = ft_strdup((*curr)->content)))
 			terminate(MEMORY_ALLOCATION);
 	}
 	else if (type == COMMENT)
 	{
+		if (ft_strlen((*curr)->content) > COMMENT_LENGTH)
+			terminate_big_bio(COMMENT);
 		if (!(pars->comment = ft_strdup((*curr)->content)))
 			terminate(MEMORY_ALLOCATION);
 	}

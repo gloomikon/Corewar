@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:41:27 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/10 16:42:06 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/16 14:57:35 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	terminate_invalid_argument(t_inst *inst, int arg_num, t_entity *entity)
 	ft_printf("Invalid parameter %d type %s for instruction \"%s\"",
 			arg_num, str, inst->name);
 	ft_strdel(&str);
-	system("leaks asm");
+	system("leaks -q asm");
 	exit(1);
 }
 
@@ -29,13 +29,13 @@ void	terminate_label(t_label *label)
 	ft_printf("No such label %s while attempting to dereference token "
 		"[TOKEN][%03d:%03d] DIRECT_LABEL \"%:%s\"",
 		label->name, label->mentions->row, label->mentions->col, label->name);
-	system("leaks asm");
+	system("leaks -q asm");
 	exit(1);
 }
 
 void	terminate_invalid_parameter_count(t_inst *inst)
 {
 	ft_printf("Invalid parameter count for instruction %s\n", inst->name);
-	system("leaks asm");
+	system("leaks -q asm");
 	exit(1);
 }

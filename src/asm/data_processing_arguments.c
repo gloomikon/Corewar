@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_processing_arguments.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: msaliuta <msaliuta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/06 17:48:57 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/10 16:25:57 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/15 17:58:33 by msaliuta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,9 @@ void	proc_mention(t_pars *pars, t_entity *curr, t_inst *inst)
 
 	start = (curr->class == INDIRECT_LABEL) ? 1 : 2;
 	size = (curr->class == INDIRECT_LABEL) ? IND_SIZE : inst->t_dir_size;
-	name = ft_strsub(curr->content, start, ft_strlen(curr->content) - start);
+	if (!(name = ft_strsub(curr->content, start,
+					ft_strlen(curr->content) - start)))
+		terminate(MEMORY_ALLOCATION);
 	if (!(label = find_label(pars->labels, name)))
 	{
 		label = new_label(-1, name);

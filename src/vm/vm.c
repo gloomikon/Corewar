@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: msaliuta <msaliuta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 16:42:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/13 16:42:00 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/15 18:35:04 by msaliuta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,5 +179,5 @@ int		main(int argc, char **argv)
 	if (argc < 2)
 		print_usage();
 	parse_args(argc, argv, (cw = new_corewar()));
-	printf("dump-mode : %d, dump-cycles : %d\n", cw->dump_mode, cw->dump_cycles);
+
 }

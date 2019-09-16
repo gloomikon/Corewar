@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   auxiliary2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: msaliuta <msaliuta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 14:44:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/03 14:14:38 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/15 17:56:35 by msaliuta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ void	upd_row(char **row, char *ptr)
 {
 	char	*new;
 
-	new = ft_strdup(ptr);
+	if (!(new = ft_strdup(ptr)))
+		terminate(MEMORY_ALLOCATION);
 	ft_strdel(row);
 	*row = new;
 }

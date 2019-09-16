@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_add_to_lst.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: msaliuta <msaliuta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/10 16:40:07 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/10 16:40:07 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/15 18:35:15 by msaliuta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,35 @@ void		add_entity(t_entity **lst, t_entity *new)
 {
 	t_entity	*tmp;
 
+
 	if (*lst)
 	{
+
 		tmp = *lst;
+
 		while (tmp->next)
 			tmp = tmp->next;
+
 		if (!(new->class == ENDLINE && tmp->class == ENDLINE))
+		{
+
 			tmp->next = new;
+		}
 		else
+		{
+
 			free(new);
+		}
+
 	}
 	else
 	{
+
 		if (!(new->class == ENDLINE))
 			*lst = new;
 		else
 			free(new);
+
 	}
 }
 

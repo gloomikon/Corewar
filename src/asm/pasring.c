@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pasring.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: msaliuta <msaliuta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 14:40:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/06 19:52:06 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/15 18:35:20 by msaliuta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int		get_entities(t_pars *pars, char **row)
 {
+
 	if ((*row)[pars->col] == '\n' && (++(pars->col)))
 		add_entity(&(pars->entities), new_entity(pars, ENDLINE));
 	else if ((*row)[pars->col] == SEPARATOR_CHAR && (++(pars->col)))
@@ -31,6 +32,7 @@ int		get_entities(t_pars *pars, char **row)
 					new_entity(pars, INDIRECT_LABEL));
 	else
 		parse_int(pars, *row, pars->col, new_entity(pars, INDIRECT));
+
 	return (1);
 }
 
@@ -44,13 +46,15 @@ void	parse_chars(t_pars *pars, char *row, int start, t_entity *entity)
 		++(pars->col);
 	if ((pars->col - col) && row[pars->col] == LABEL_CHAR && (++(pars->col)))
 	{
-		entity->content = ft_strsub(row, start, pars->col - start);
+		if (!(entity->content = ft_strsub(row, start, pars->col - start)))
+			terminate(MEMORY_ALLOCATION);
 		(entity->class = LABEL);
 		add_entity(&(pars->entities), entity);
 	}
 	else if ((pars->col - col) && is_delimiter(row[pars->col]))
 	{
-		entity->content = ft_strsub(row, start, pars->col - start);
+		if (!(entity->content = ft_strsub(row, start, pars->col - start)))
+			terminate(MEMORY_ALLOCATION);
 		if (entity->class == INDIRECT)
 			entity->class = class_is_register(entity->content) ?
 							REGISTER : INSTRUCTION;
@@ -72,7 +76,8 @@ void	parse_int(t_pars *pars, char *row, int start, t_entity *entity)
 	if ((pars->col - col)
 		&& (entity->class == DIRECT || is_delimiter(row[pars->col])))
 	{
-		entity->content = ft_strsub(row, start, pars->col - start);
+		if (!(entity->content = ft_strsub(row, start, pars->col - start)))
+			terminate(MEMORY_ALLOCATION);
 		add_entity(&(pars->entities), entity);
 	}
 	else if (entity->class != DIRECT)
@@ -94,11 +99,13 @@ void	parse_str(t_pars *pars, char **row, int start, t_entity *entity)
 	size = 1;
 	while (!(end = ft_strchr(*row + start + 1, '"'))
 		&& (size = read_next_line(pars->fd, &str)))
-		*row = join_str(row, &str);
+		if (!(*row = join_str(row, &str)))
+			terminate(MEMORY_ALLOCATION);
 	upd_pars_row_and_col(pars, *row);
 	if (!size)
 		terminate_lexical(pars->row, pars->col);
-	entity->content = ft_strsub(*row, start + 1, end - (*row) - start - 1);
+	if (!(entity->content = ft_strsub(*row, start + 1, end - (*row) - start - 1)))
+		terminate(MEMORY_ALLOCATION);
 	(end - pars->col != *row) ? upd_row(row, end - pars->col) : 0;
 	++(pars->col);
 	add_entity(&(pars->entities), entity);
@@ -106,12 +113,14 @@ void	parse_str(t_pars *pars, char **row, int start, t_entity *entity)
 
 void	parse_command(t_pars *pars, char *row, t_entity *entity)
 {
+
 	entity->col = pars->col + 1;
 	if (!ft_strncmp(row + pars->col, NAME_CMD_STRING,
 			ft_strlen(NAME_CMD_STRING)))
 	{
 		entity->class = COMMAND_NAME;
-		entity->content = ft_strsub(row, pars->col, ft_strlen(NAME_CMD_STRING));
+		if (!(entity->content = ft_strsub(row, pars->col, ft_strlen(NAME_CMD_STRING))))
+			terminate(MEMORY_ALLOCATION);
 		pars->col += ft_strlen(NAME_CMD_STRING);
 		if (ft_strlen(entity->content) > PROG_NAME_LENGTH)
 			terminate_big_bio(NAME);
@@ -119,11 +128,14 @@ void	parse_command(t_pars *pars, char *row, t_entity *entity)
 	else
 	{
 		entity->class = COMMAND_COMMENT;
-		entity->content = ft_strsub(row, pars->col,
-				ft_strlen(COMMENT_CMD_STRING));
+		if (!(entity->content = ft_strsub(row, pars->col,
+				ft_strlen(COMMENT_CMD_STRING))))
+			terminate(MEMORY_ALLOCATION);
 		pars->col += ft_strlen(COMMENT_CMD_STRING);
 		if (ft_strlen(entity->content) > COMMENT_LENGTH)
 			terminate_big_bio(COMMENT);
 	}
+
 	add_entity(&(pars->entities), entity);
+
 }

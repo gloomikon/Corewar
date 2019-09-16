@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 14:46:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/10 16:44:14 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/16 14:57:23 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	terminate_big_bio(int type)
 	ft_printf("Champion %s too long (Max length %d)\n",
 			type == NAME ? "name" : "comment",
 			type == NAME ? PROG_NAME_LENGTH : COMMENT_LENGTH);
-	system("leaks asm");
+	system("leaks -q asm");
 	exit(1);
 }
 
@@ -56,6 +56,6 @@ void	terminate_instruction(t_entity *entity)
 {
 	ft_printf("Invalid instruction at token [TOKEN][%03d:%03d] "
 		"INSTRUCTION \"%s\"", entity->row, entity->col, entity->content);
-	system("leaks asm");
+	system("leaks -q asm");
 	exit(1);
 }

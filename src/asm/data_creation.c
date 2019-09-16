@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_creation.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msaliuta <msaliuta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 14:42:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/15 18:35:14 by msaliuta         ###   ########.fr       */
+/*   Updated: 2019/09/16 14:51:27 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@ t_entity	*new_entity(t_pars *pars, t_class class)
 {
 	t_entity	*entity;
 
-
 	if (!(entity = ft_memalloc(sizeof(t_entity))))
 		terminate(MEMORY_ALLOCATION);
-
 	entity->class = class;
 	entity->row = pars->row;
 	entity->col = pars->col;
@@ -27,14 +25,12 @@ t_entity	*new_entity(t_pars *pars, t_class class)
 		if (!(entity->content = ft_strdup(",")))
 			terminate(MEMORY_ALLOCATION);
 	entity->next = NULL;
-
 	return (entity);
 }
 
 t_label		*new_label(int op_pos, char *name)
 {
 	t_label *label;
-
 
 	if (!(label = ft_memalloc(sizeof(t_label))))
 		terminate(MEMORY_ALLOCATION);
@@ -47,7 +43,6 @@ t_label		*new_label(int op_pos, char *name)
 t_mention	*new_mention(t_pars *pars, t_entity *entity, size_t size)
 {
 	t_mention *mention;
-
 
 	if (!(mention = malloc(sizeof(t_mention))))
 		terminate(MEMORY_ALLOCATION);
@@ -63,7 +58,6 @@ t_mention	*new_mention(t_pars *pars, t_entity *entity, size_t size)
 t_pars		*new_pars(int fd)
 {
 	t_pars	*pars;
-
 
 	if (!(pars = ft_memalloc(sizeof(t_pars))))
 		terminate(MEMORY_ALLOCATION);

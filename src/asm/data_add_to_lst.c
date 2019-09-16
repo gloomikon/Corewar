@@ -16,35 +16,22 @@ void		add_entity(t_entity **lst, t_entity *new)
 {
 	t_entity	*tmp;
 
-
 	if (*lst)
 	{
-
 		tmp = *lst;
-
 		while (tmp->next)
 			tmp = tmp->next;
-
 		if (!(new->class == ENDLINE && tmp->class == ENDLINE))
-		{
-
 			tmp->next = new;
-		}
 		else
-		{
-
 			free(new);
-		}
-
 	}
 	else
 	{
-
 		if (!(new->class == ENDLINE))
 			*lst = new;
 		else
 			free(new);
-
 	}
 }
 

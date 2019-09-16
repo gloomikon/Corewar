@@ -42,7 +42,6 @@ void	read_file(t_pars *pars)
 	int		res;
 
 	pars->end = new_entity(pars, END);
-
 	while ((res = read_next_line(pars->fd, &line)) > 0
 		&& !(pars->col = 0)
 		&& (++pars->row))

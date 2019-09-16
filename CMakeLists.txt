@@ -187,9 +187,6 @@ add_executable(corewar
 #        src/asm/terminates1.c
 #        src/asm/writing.c
         src/vm/vm.c
-<<<<<<< HEAD
-        inc/corewar.h src/common.c inc/termiante_errors.h)
-=======
         inc/corewar.h
-        src/common.c)
->>>>>>> 505bd1108f09ab900ae6a67e00fb08756c3a285c
+        src/common.c
+        inc/terminate_errors.h src/vm/data_creation.c)

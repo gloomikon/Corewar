@@ -3,47 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   vm.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: msaliuta <msaliuta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 16:42:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/15 18:35:04 by msaliuta         ###   ########.fr       */
+/*   Updated: 2019/09/16 16:51:36 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 505bd1108f09ab900ae6a67e00fb08756c3a285c
 void	print_usage(void)
 {
-	ft_printf("Usage: ./corewar [-dump | -d nbr_cycles] [[-n number] [-v] "
-		   "champion1.cor] ...");
+	ft_printf("Usage: ./corewar [-dump | -d nbr_cycles] [[-n number] [-v]"
+				"champion1.cor] ...\n");
 	exit(1);
-<<<<<<< HEAD
-=======
-
->>>>>>> 505bd1108f09ab900ae6a67e00fb08756c3a285c
 }
 
-t_corewar	*new_corewar(void)
-{
-	t_corewar	*corewar;
-	int			i;
 
-	if (!(corewar = ft_memalloc(sizeof(t_corewar))))
-		terminate(MEMORY_ALLOCATION);
-	if (!(corewar->map = ft_memalloc(sizeof(uint8_t) * MEM_SIZE)))
-		terminate(MEMORY_ALLOCATION);
-	if (!(corewar->champs = malloc(sizeof(t_champ*) * MAX_PLAYERS)))
-		terminate(MEMORY_ALLOCATION);
-	i = -1;
-	while (++i < MAX_PLAYERS)
-		if (!(corewar->champs[i] = ft_memalloc(sizeof(t_champ))))
-			terminate(MEMORY_ALLOCATION);
-	return corewar;
-}
 
 void	init_dump_flag(int *argc, char ***argv, t_corewar *cw)
 {
@@ -59,7 +35,6 @@ void	init_dump_flag(int *argc, char ***argv, t_corewar *cw)
 		print_usage();
 }
 
-<<<<<<< HEAD
 t_champ	*find_champ(t_champ *lst, int id)
 {
 	while (lst)
@@ -119,9 +94,6 @@ int		read_from_bytecode(int fd)
 }
 
 t_champ	*new_champ(char *file, int id)
-=======
-void	add_champ(int *argc, char **argv, t_champ **lst, t_corewar *cw)
->>>>>>> 505bd1108f09ab900ae6a67e00fb08756c3a285c
 {
 	int		fd;
 	t_champ	*champ;
@@ -165,11 +137,7 @@ void	parse_args(int argc, char **argv, t_corewar *cw)
 		if (ft_strequ(*argv, "-dump") || ft_strequ(*argv, "-d"))
 			init_dump_flag(&argc, &argv, cw);
 		else if (check_file_extension(*argv, "cor") || ft_strequ(*argv, "-n"))
-<<<<<<< HEAD
 			proc_champ(&argc, &argv, &lst, cw);
-=======
-			add_champ(&argc, &argv, &lst, cw);
->>>>>>> 505bd1108f09ab900ae6a67e00fb08756c3a285c
 }
 
 int		main(int argc, char **argv)
@@ -179,5 +147,4 @@ int		main(int argc, char **argv)
 	if (argc < 2)
 		print_usage();
 	parse_args(argc, argv, (cw = new_corewar()));
-
 }

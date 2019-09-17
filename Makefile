@@ -33,7 +33,8 @@ CRWB:=	corewar
 CRWH:=	$(addprefix $(INCD)/, op.h corewar.h)
 CRWSD:=	$(SRCD)/vm
 CRWOD:=	$(OBJD)/vm
-CRWS:=	data_creation.c vm.c
+CRWS:=	data_creation.c vm.c auxiliary.c data_add_to_lst.c parse_flags.c\
+        reading_bytecode.c
 CRWO:=	$(addprefix $(CRWOD)/, $(patsubst %.c, %.o, $(CRWS))) $(CMNO)
 
 #======================================ASM=====================================#

@@ -189,4 +189,4 @@ add_executable(corewar
         src/vm/vm.c
         inc/corewar.h
         src/common.c
-        inc/terminate_errors.h src/vm/data_creation.c src/vm/reading_bytecode.c src/vm/parse_flags.c src/vm/auxiliary.c src/vm/data_add_to_lst.c)
+        inc/terminate_errors.h src/vm/data_creation.c src/vm/reading_bytecode.c src/vm/parse_flags.c src/vm/auxiliary.c src/vm/data_add_to_lst.c src/vm/display.c inc/corewar_instructions.h)

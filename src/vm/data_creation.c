@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 15:47:57 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/17 16:11:34 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/19 20:36:51 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_corewar	*new_corewar(void)
 		terminate(MEMORY_ALLOCATION);
 	if (!(corewar->champs = ft_memalloc(sizeof(t_champ*) * MAX_PLAYERS)))
 		terminate(MEMORY_ALLOCATION);
+	corewar->cycles_to_die = CYCLE_TO_DIE;
+	corewar->dump_cycles = -1;
 	return (corewar);
 }
 

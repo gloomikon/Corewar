@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 16:46:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/17 19:48:32 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/19 20:36:51 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,12 @@ typedef struct s_carriage	t_carriage;
 bool	check_file_extension(char *file, char *ext);
 void	terminate(char *message);
 
+const uint8_t			g_arg_code[3] = {
+		T_REG,
+		T_DIR,
+		T_IND
+};
+
 /*
 **	STRUCTS
 */
@@ -39,6 +45,10 @@ struct s_carriage
 	bool		carry;
 	int			pc;
 	int			*reg;
+	int			cycles_to_ex;
+	uint8_t		instruction;
+	uint8_t		args_types[3];
+	int			step;
 	t_carriage	*next;
 };
 
@@ -57,6 +67,11 @@ struct s_corewar
 	uint8_t		*map;
 	int			dump_mode;
 	int			dump_cycles;
+	int			cycles;
+	int			cycles_after_check;
+	int			cycles_to_die;
+	int			checks;
+	int			lives;
 	t_champ		**champs;
 	int			champs_num;
 	t_carriage	*carriages;
@@ -105,5 +120,14 @@ void	add_carriage(t_carriage **lst, t_carriage *new);
 void	print_usage(void);
 t_champ	*find_champ(t_champ *lst, int id);
 void	list_to_array(t_champ *lst, t_corewar *cw);
+
+/*
+**	DISPLAY FUNCTIONS
+*/
+
+int		display_start_message(t_champ **champ);
+void	display_map(int mode, uint8_t *map);
+
+
 
 #endif

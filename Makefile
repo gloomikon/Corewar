@@ -6,7 +6,7 @@
 #    By: ozhadaie <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/09 19:17:27 by ozhadaie          #+#    #+#              #
-#    Updated: 2019/09/16 17:53:57 by mzhurba          ###   ########.fr        #
+#    Updated: 2019/09/19 15:54:30 by mzhurba          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,11 +30,11 @@ CMNO:=	$(addprefix $(OBJD)/, $(patsubst %.c, %.o, $(CMNS)))
 #======================================VM======================================#
 
 CRWB:=	corewar
-CRWH:=	$(addprefix $(INCD)/, op.h corewar.h)
+CRWH:=	$(addprefix $(INCD)/, op.h corewar.h common.h corewar_instruction.h)
 CRWSD:=	$(SRCD)/vm
 CRWOD:=	$(OBJD)/vm
 CRWS:=	data_creation.c vm.c auxiliary.c data_add_to_lst.c parse_flags.c\
-        reading_bytecode.c
+		reading_bytecode.c display.c
 CRWO:=	$(addprefix $(CRWOD)/, $(patsubst %.c, %.o, $(CRWS))) $(CMNO)
 
 #======================================ASM=====================================#

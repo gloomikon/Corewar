@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 15:47:57 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/19 20:36:51 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/20 16:20:15 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_corewar	*new_corewar(void)
 		terminate(MEMORY_ALLOCATION);
 	corewar->cycles_to_die = CYCLE_TO_DIE;
 	corewar->dump_cycles = -1;
+	corewar->debug_cycles = -1;
 	return (corewar);
 }
 
@@ -66,4 +67,36 @@ t_carriage	*new_carriage(t_champ *champ, int pc)
 	carriage->reg[0] = -(champ->id);
 	carriage->champ = champ;
 	return (carriage);
+}
+
+t_carriage	*dup_carriage(t_carriage *carriage, int address)
+{
+	int			i;
+	t_carriage	*new;
+
+	address += carriage->pc;
+	new = new_carriage(carriage->champ, calculate_address(address));
+	new->carry = carriage->carry;
+	new->live_cycle = carriage->live_cycle;
+	i = -1;
+	while (++i < REG_NUMBER)
+		new->reg[i] = carriage->reg[i];
+	return (new);
+}
+
+void		create_start_data(t_corewar *cw)
+{
+	uint32_t	pc;
+	int			id;
+
+	pc = 0;
+	id = -1;
+	while (++id < cw->champs_num)
+	{
+		ft_memcpy(&(cw->map[pc]), cw->champs[id]->code,
+				cw->champs[id]->size);
+		add_carriage(&(cw->carriages), new_carriage(cw->champs[id], pc));
+		++(cw->carriages_num);
+		pc += MEM_SIZE / cw->champs_num;
+	}
 }

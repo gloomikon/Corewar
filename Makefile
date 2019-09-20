@@ -6,7 +6,7 @@
 #    By: ozhadaie <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/09 19:17:27 by ozhadaie          #+#    #+#              #
-#    Updated: 2019/09/19 15:54:30 by mzhurba          ###   ########.fr        #
+#    Updated: 2019/09/20 17:43:04 by mzhurba          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,16 +26,19 @@ CMNH:=	$(addprefix $(INCD)/, common.h)
 CMNS:=	common.c
 CMNO:=	$(addprefix $(OBJD)/, $(patsubst %.c, %.o, $(CMNS)))
 
-
 #======================================VM======================================#
 
 CRWB:=	corewar
-CRWH:=	$(addprefix $(INCD)/, op.h corewar.h common.h corewar_instruction.h)
+CRWH:=	$(addprefix $(INCD)/, op.h corewar.h common.h corewar_instruction.h\
+										terminate_errors.h)
 CRWSD:=	$(SRCD)/vm
 CRWOD:=	$(OBJD)/vm
 CRWS:=	data_creation.c vm.c auxiliary.c data_add_to_lst.c parse_flags.c\
-		reading_bytecode.c display.c
-CRWO:=	$(addprefix $(CRWOD)/, $(patsubst %.c, %.o, $(CRWS))) $(CMNO)
+		reading_bytecode.c display.c battle.c carriage_kill.c counting.c\
+		validation.c\
+		inst_1_4.c inst_5_8.c inst_9_12.c inst_13_16.c\
+		common.c
+CRWO:=	$(addprefix $(CRWOD)/, $(patsubst %.c, %.o, $(CRWS)))
 
 #======================================ASM=====================================#
 
@@ -47,42 +50,34 @@ ASMOD:=	$(OBJD)/$(ASMB)
 ASMS:=	asm.c asm_to_bytecode.c auxiliary.c auxiliary2.c auxiliary3.c\
 		data_creation.c data_add_to_lst.c data_processing.c\
 		data_processing_arguments.c data_processing_classes.c pasring.c\
-		terminates.c terminates1.c writing.c data_free.c
-ASMO:=	$(addprefix $(ASMOD)/, $(patsubst %.c, %.o, $(ASMS))) $(CMNO)
+		terminates.c terminates1.c writing.c data_free.c\
+		common.c
+ASMO:=	$(addprefix $(ASMOD)/, $(patsubst %.c, %.o, $(ASMS)))
 
 #==================================DEPENDENCIES================================#
-
 all: $(LFTA) $(ASMB) $(CRWB)
 
 $(ASMB): $(ASMO) $(LFTA)
 	@$(CMPL) -o $@ $^ $(addprefix -I, $(INCD) $(LFTI))
 	@printf "\r\33[2K$@\t   \033[32;1mcreated\033[0m\n"
 
-prettya:
-	@printf "$(ASMB)\t\033[33;1mcreating\033[0m "
-
-$(CRWB): $(CRWO) $(LFTA)
+$(CRWB): $(CRWO) $(LFTA) | $(CRWOD)
 	@$(CMPL) -o $@ $^ $(addprefix -I, $(INCD) $(LFTI))
 	@printf "\r\33[2K$@\t   \033[32;1mcreated\033[0m\n"
 
-prettyc:
-	@printf "$(CRWB)\t\033[33;1mcreating\033[0m "
-
-$(ASMOD)/%.o: $(ASMSD)/%.c $(ASMH) | $(ASMOD)# prettya
+$(CRWOD)/%.o: $(CRWSD)/%.c | $(CRWOD)
+	@printf "\r\33[2K$(CRWB)\t   \033[33;1mcompile \033[0m$@"
 	@$(CMPL) -o $@ -c $< $(addprefix -I, $(INCD) $(LFTI))
-	@printf "."
 
-$(CRWOD)/%.o: $(CRWSD)/%.c $(CRWH) | $(CRWOD)# prettyc
+$(ASMOD)/%.o: $(ASMSD)/%.c $(ASMH) | $(ASMOD)
+	@printf "\r\33[2K$(ASMB)\t   \033[33;1mcompile \033[0m$@"
 	@$(CMPL) -o $@ -c $< $(addprefix -I, $(INCD) $(LFTI))
-	@printf "."
 
-$(OBJD)/%.o: $(SRCD)/%.c $(CMNH) | $(OBJD)
-	@$(CMPL) -o $@ -c $< $(addprefix -I, $(INCD) $(LFTI))
+#$(OBJD)/%.o: $(SRCD)/%.c $(CMNH) | $(OBJD)
+#	@printf "COMMON ASDASDASDASDSA SOSATCompiling $@\n"
+#	@$(CMPL) -o $@ -c $< $(addprefix -I, $(INCD) $(LFTI))
 
 #=====================================RULES====================================#
-
-$(OBJD):
-	@mkdir -p $@
 
 $(CRWOD):
 	@mkdir -p $@
@@ -106,4 +101,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re prettya prettyc
+.PHONY: all clean fclean re

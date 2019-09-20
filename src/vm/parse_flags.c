@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 14:58:08 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/17 16:09:10 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/20 17:53:40 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,15 @@ void	parse_args(int argc, char **argv, t_corewar *cw)
 	while (argc >= 1)
 		if (ft_strequ(*argv, "-dump") || ft_strequ(*argv, "-d"))
 			init_dump_flag(&argc, &argv, cw);
+		else if (ft_strequ(*argv, "-debug32")
+			|| ft_strequ(*argv, "-debug64"))
+			init_debug_flag(&argc, &argv, cw);
+		else if (ft_strequ(*argv, "-a"))
+			init_aff_flag(&argc, &argv, cw);
 		else if (check_file_extension(*argv, "cor") || ft_strequ(*argv, "-n"))
 			proc_champ(&argc, &argv, &lst, cw);
+		else
+			display_usage();
 	list_to_array(lst, cw);
 }
 
@@ -37,7 +44,30 @@ void	init_dump_flag(int *argc, char ***argv, t_corewar *cw)
 		(*argc) -= 2;
 	}
 	else
-		print_usage();
+		display_usage();
+}
+
+void	init_aff_flag(int *argc, char ***argv, t_corewar *cw)
+{
+	if (cw->aff == true)
+		display_usage();
+	cw->aff = true;
+	++(*argv);
+	--(*argc);
+}
+
+void	init_debug_flag(int *argc, char ***argv, t_corewar *cw)
+{
+	if (cw->debug_mode == 0 && (*argc > 1) && ft_isnumber(*(*argv + 1), 10))
+	{
+		cw->debug_mode = (ft_strequ(**argv, "-debug32")) ? 32 : 64;
+		if ((cw->debug_cycles = (int)ft_atoi(*(*argv + 1))) < 0)
+			cw->debug_cycles = -1;
+		(*argv) += 2;
+		(*argc) -= 2;
+	}
+	else
+		display_usage();
 }
 
 void	proc_champ(int *argc, char ***argv, t_champ **lst, t_corewar *cw)
@@ -52,7 +82,7 @@ void	proc_champ(int *argc, char ***argv, t_champ **lst, t_corewar *cw)
 			|| (id = (int)ft_atoi(*(*argv + 1))) > MAX_PLAYERS || id < 1
 			|| find_champ(*lst, id)
 			|| !check_file_extension(*(*argv + 2), "cor"))
-			print_usage();
+			display_usage();
 		add_champ(lst, new_champ(*(*argv + 2), id));
 		++(cw->champs_num)	;
 		(*argv) += 3;
@@ -66,5 +96,5 @@ void	proc_champ(int *argc, char ***argv, t_champ **lst, t_corewar *cw)
 		--(*argc);
 	}
 	else
-		print_usage();
+		display_usage();
 }

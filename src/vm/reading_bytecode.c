@@ -27,6 +27,21 @@ int		convert_to_int(uint8_t *bytes, size_t size)
 	return (res);
 }
 
+int		get_int(uint8_t *map, int address, int size)
+{
+	int	i;
+	int	res;
+
+	i = 0;
+	res = 0;
+	while (size)
+	{
+		res += map[calculate_address(address + size - 1)] << (i++ * 8);
+		--size;
+	}
+	return (res);
+}
+
 int		read_from_bytecode(int fd)
 {
 	uint8_t		buff[4];

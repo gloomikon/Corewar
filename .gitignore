@@ -3,10 +3,6 @@
 .idea/
 cmake-build-debug/
 .DS_Store
-asm
-test.s
-corewar
-test.cor
 
 # Prerequisites
 *.d

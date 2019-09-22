@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 11:04:02 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/20 11:14:31 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/22 20:22:50 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ void	update_cycles_to_die(t_corewar *cw)
 	{
 		cw->cycles_to_die -= CYCLE_DELTA;
 		cw->checks = 0;
+		if (cw->verbose & CYCLES)
+			verbose_cycles(cw->cycles_to_die);
 	}
-//	reset_lives(cw); for visualisator?
+	cw->lives = 0;
 	cw->cycles_after_check = 0;
 }
 
@@ -38,9 +40,13 @@ void	kill_carriages(t_corewar *cw)
 	{
 		if (dead((del = curr), cw))
 		{
+			--(cw->carriages_num);
 			curr = curr->next;
 			(cw->carriages == del) && (cw->carriages = curr);
 			(prev != NULL) && (prev->next = curr);
+			if (cw->verbose & DEATHS)
+				verbose_death(del, cw);
+			free(del->reg);
 			free(del);
 		}
 		else

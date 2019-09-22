@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 12:06:33 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/20 15:37:17 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/22 18:56:02 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	inst_live(t_corewar *cw, t_carriage *carriage)
 	t_champ	*champ;
 	int		id;
 
+	champ = NULL;
 	++(cw->lives);
 	carriage->step += 1;
 	id = get_inst_argument(carriage, 0, false, cw);
@@ -27,6 +28,10 @@ void	inst_live(t_corewar *cw, t_carriage *carriage)
 		champ->live_cycle = cw->cycles;
 		cw->last = champ;
 	}
+	if (cw->verbose & OPS)
+		ft_printf("P %4d | live %d\n", carriage->id, id);
+	if ((cw->verbose & LIVES) && champ)
+		ft_printf("Player %d (%s) is said to be alive\n", -id, champ->name);
 }
 
 void	inst_ld(t_corewar *cw, t_carriage *carriage)
@@ -40,6 +45,8 @@ void	inst_ld(t_corewar *cw, t_carriage *carriage)
 	reg = cw->map[calculate_address(carriage->pc + carriage->step)];
 	carriage->reg[reg - 1] = value;
 	carriage->step += 1;
+	if (cw->verbose & OPS)
+		ft_printf("P %4d | ld %d r%d\n", carriage->id, value, reg);
 }
 
 void	inst_st(t_corewar *cw, t_carriage *carriage)
@@ -55,7 +62,7 @@ void	inst_st(t_corewar *cw, t_carriage *carriage)
 	if (carriage->args_types[1] != T_REG)
 	{
 		address = get_int(cw->map, carriage->step + carriage->pc, IND_SIZE);
-		write_to_bytecode(cw->map, carriage->pc + (address & IDX_MOD), value,
+		write_to_bytecode(cw->map, carriage->pc + (address % IDX_MOD), value,
 														DIR_SIZE);
 		carriage->step += 2;
 	}
@@ -65,6 +72,8 @@ void	inst_st(t_corewar *cw, t_carriage *carriage)
 		carriage->reg[address - 1] = value;
 		carriage->step += 1;
 	}
+	if (cw->verbose & OPS)
+		ft_printf("P %4d | st r%d %d\n", carriage->id, reg, address);
 }
 
 void	inst_add(t_corewar *cw, t_carriage *carriage)
@@ -84,4 +93,6 @@ void	inst_add(t_corewar *cw, t_carriage *carriage)
 	carriage->carry = val ? false : true;
 	carriage->reg[reg3 - 1] = val;
 	++(carriage->step);
+	if (cw->verbose & OPS)
+		ft_printf("P %4d | add r%d r%d r%d\n", carriage->id, reg1, reg2, reg3);
 }

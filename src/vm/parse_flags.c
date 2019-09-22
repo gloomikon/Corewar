@@ -6,32 +6,11 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 14:58:08 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/20 17:53:40 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/22 20:26:36 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
-
-void	parse_args(int argc, char **argv, t_corewar *cw)
-{
-	t_champ *lst;
-
-	lst = NULL;
-	(argv++) && (argc--);
-	while (argc >= 1)
-		if (ft_strequ(*argv, "-dump") || ft_strequ(*argv, "-d"))
-			init_dump_flag(&argc, &argv, cw);
-		else if (ft_strequ(*argv, "-debug32")
-			|| ft_strequ(*argv, "-debug64"))
-			init_debug_flag(&argc, &argv, cw);
-		else if (ft_strequ(*argv, "-a"))
-			init_aff_flag(&argc, &argv, cw);
-		else if (check_file_extension(*argv, "cor") || ft_strequ(*argv, "-n"))
-			proc_champ(&argc, &argv, &lst, cw);
-		else
-			display_usage();
-	list_to_array(lst, cw);
-}
 
 void	init_dump_flag(int *argc, char ***argv, t_corewar *cw)
 {
@@ -54,6 +33,19 @@ void	init_aff_flag(int *argc, char ***argv, t_corewar *cw)
 	cw->aff = true;
 	++(*argv);
 	--(*argc);
+}
+
+void	init_verbose_flag(int *argc, char ***argv, t_corewar *cw)
+{
+	if (cw->verbose == 0 && (*argc > 1) && ft_isnumber(*(*argv + 1), 10))
+	{
+		if ((cw->verbose = (int)ft_atoi(*(*argv + 1))) < 0)
+			display_usage();
+		(*argv) += 2;
+		(*argc) -= 2;
+	}
+	else
+		display_usage();
 }
 
 void	init_debug_flag(int *argc, char ***argv, t_corewar *cw)

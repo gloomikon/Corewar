@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 14:53:41 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/17 15:44:12 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/22 20:25:54 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,30 +15,40 @@
 int		convert_to_int(uint8_t *bytes, size_t size)
 {
 	int		move;
+	bool	neg;
 	int		res;
 
-	move = 0;
 	res = 0;
+	move = 0;
+	neg = bytes[0] & 0x80;
 	while (size)
 	{
-		res += bytes[size - 1] << (move++ * 8);
+		res += (!neg) ?
+				bytes[size - 1] << (move++ * 8) :
+				(bytes[size - 1] ^ 0xFF) << (move++ * 8);
 		--size;
 	}
+	res = (neg) ? ~res : res;
 	return (res);
 }
 
 int		get_int(uint8_t *map, int address, int size)
 {
-	int	i;
-	int	res;
+	int		i;
+	int		res;
+	bool	neg;
 
 	i = 0;
 	res = 0;
+	neg = map[calculate_address(address)] & 0x80;
 	while (size)
 	{
-		res += map[calculate_address(address + size - 1)] << (i++ * 8);
+		res += (!neg) ?
+			map[calculate_address(address + size - 1)] << (i++ * 8) :
+			(map[calculate_address(address + size - 1)] ^ 0xFF) << (i++ * 8);
 		--size;
 	}
+	res = (neg) ? ~res : res;
 	return (res);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 10:53:15 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/20 18:10:51 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/22 19:21:49 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int		run_battle(t_corewar *cw)
 {
 	while (cw->carriages_num)
 	{
-		printf("%d cycles\n", cw->cycles);
 		if (cw->cycles == cw->dump_cycles)
 		{
 			display_map(cw->dump_mode, cw->map);
@@ -43,6 +42,8 @@ void	execute_one_cycle(t_corewar *cw)
 
 	++(cw->cycles_after_check) && ++(cw->cycles);
 	carriage = cw->carriages;
+	if (cw->verbose & CYCLES)
+		ft_printf("It is now cycle %d\n", cw->cycles);
 	while (carriage)
 		execute_instruction(carriage, cw) && (carriage = carriage->next);
 }
@@ -68,6 +69,8 @@ int		execute_instruction(t_carriage *carriage, t_corewar *cw)
 				inst->func(cw, carriage);
 			else
 				carriage->step += step(carriage, inst);
+			if (carriage->step && (cw->verbose & PC))
+				verbose_pc(carriage, cw->map);
 		}
 		else
 			carriage->step = 1;

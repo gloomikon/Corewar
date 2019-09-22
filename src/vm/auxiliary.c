@@ -53,7 +53,7 @@ void	get_inst_args(t_inst *inst,
 	int8_t	code;
 
 	if (inst->args_types_code == false)
-		carriage->args_types[0] = T_REG;
+		carriage->args_types[0] = T_DIR;
 	else
 	{
 		code = cw->map[calculate_address(carriage->pc + 1)];

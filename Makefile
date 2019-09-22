@@ -6,7 +6,7 @@
 #    By: ozhadaie <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/09 19:17:27 by ozhadaie          #+#    #+#              #
-#    Updated: 2019/09/20 17:43:04 by mzhurba          ###   ########.fr        #
+#    Updated: 2019/09/22 19:10:16 by mzhurba          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ INCD:=	inc
 SRCD:=	src
 OBJD:=	obj
 
-CMPL:=	gcc #$(addprefix -W, all extra error)
+CMPL:=	gcc #-g -fsanitize=address# $(addprefix -W, all extra error) 
 
 #====================================COMMON====================================#
 
@@ -37,7 +37,7 @@ CRWS:=	data_creation.c vm.c auxiliary.c data_add_to_lst.c parse_flags.c\
 		reading_bytecode.c display.c battle.c carriage_kill.c counting.c\
 		validation.c\
 		inst_1_4.c inst_5_8.c inst_9_12.c inst_13_16.c\
-		common.c
+		common.c verbose.c
 CRWO:=	$(addprefix $(CRWOD)/, $(patsubst %.c, %.o, $(CRWS)))
 
 #======================================ASM=====================================#

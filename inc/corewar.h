@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 16:46:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/20 17:30:59 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/22 18:52:08 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@
 # include "header.h"
 # include "op.h"
 # include "common.h"
+
+# define LIVES	(1 << 0)
+# define CYCLES	(1 << 1)
+# define OPS	(1 << 2)
+# define DEATHS	(1 << 3)
+# define PC		(1 << 4)
 
 typedef struct s_corewar	t_corewar;
 typedef struct s_champ		t_champ;
@@ -65,6 +71,7 @@ struct s_corewar
 	int			champs_num;
 	t_champ		*last;
 	bool		aff;
+	int			verbose;
 	int			dump_mode;
 	int			dump_cycles;
 	int			debug_mode;
@@ -88,6 +95,7 @@ void			init_debug_flag(int *argc, char ***argv, t_corewar *cw);
 void			proc_champ(int *argc, char ***argv, t_champ **lst,
 												t_corewar *cw);
 void			init_aff_flag(int *argc, char ***argv, t_corewar *cw);
+void			init_verbose_flag(int *argc, char ***argv, t_corewar *cw);
 
 /*
 **	READING FROM .COR
@@ -173,6 +181,15 @@ void			display_usage(void);
 int				display_start_message(t_champ **champ);
 void			display_map(int mode, uint8_t *map);
 void			display_result(t_corewar *cw);
+
+/*
+**	VERBOSE FUNCTIONS
+*/
+
+void	verbose_death(t_carriage *del, t_corewar *cw);
+void	verbose_cycles(int cycles);
+void	verbose_pc(t_carriage *carriage, uint8_t *map);
+
 
 
 #endif

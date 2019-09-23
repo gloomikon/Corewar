@@ -18,7 +18,7 @@ INCD:=	inc
 SRCD:=	src
 OBJD:=	obj
 
-CMPL:=	gcc #-g -fsanitize=address# $(addprefix -W, all extra error) 
+CMPL:=	gcc -lncurses#-g -fsanitize=address# $(addprefix -W, all extra error) 
 
 #====================================COMMON====================================#
 

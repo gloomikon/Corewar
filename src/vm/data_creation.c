@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 15:47:57 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/22 20:17:39 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/23 12:38:49 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,19 +84,15 @@ t_carriage	*dup_carriage(t_carriage *carriage, int address)
 	return (new);
 }
 
-void		create_start_data(t_corewar *cw)
-{
-	uint32_t	pc;
-	int			id;
 
-	pc = 0;
-	id = -1;
-	while (++id < cw->champs_num)
-	{
-		ft_memcpy(&(cw->map[pc]), cw->champs[id]->code,
-				cw->champs[id]->size);
-		add_carriage(&(cw->carriages), new_carriage(cw->champs[id], pc));
-		++(cw->carriages_num);
-		pc += MEM_SIZE / cw->champs_num;
-	}
+t_visual	*new_visual(void)
+{
+	t_visual	*visual;
+
+	if (!(visual = ft_memalloc(sizeof(t_visual))))
+		terminate(MEMORY_ALLOCATION);
+	visual->speed = SPEED;
+	if (!(visual->map = ft_memalloc(sizeof(t_attr) * MEM_SIZE)))
+		terminate(MEMORY_ALLOCATION);
+	return (visual);
 }

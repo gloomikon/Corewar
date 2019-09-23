@@ -25,7 +25,6 @@ void	inst_live(t_corewar *cw, t_carriage *carriage)
 	if (id >= -(cw->champs_num) && id <= -1)
 	{
 		champ = cw->champs[-id - 1];
-		champ->live_cycle = cw->cycles;
 		cw->last = champ;
 	}
 	if (cw->verbose & OPS)

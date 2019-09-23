@@ -186,7 +186,24 @@ add_executable(corewar
 #        src/asm/terminates.c
 #        src/asm/terminates1.c
 #        src/asm/writing.c
-        src/vm/vm.c
         inc/corewar.h
-        src/common.c
-        inc/terminate_errors.h src/vm/data_creation.c src/vm/reading_bytecode.c src/vm/parse_flags.c src/vm/auxiliary.c src/vm/data_add_to_lst.c src/vm/display.c inc/corewar_instructions.h src/vm/battle.c src/vm/validation.c src/vm/counting.c src/vm/carriage_kill.c src/vm/inst_1_4.c src/vm/inst_5_8.c src/vm/inst_9_12.c src/vm/inst_13_16.c src/vm/verbose.c)
+        inc/corewar_instructions.h
+        inc/terminate_errors.h
+        src/vm/vm.c
+        src/vm/data_creation.c
+        src/vm/reading_bytecode.c
+        src/vm/parse_flags.c
+        src/vm/parse_flags1.c
+        src/vm/auxiliary.c
+        src/vm/data_add_to_lst.c
+        src/vm/display.c
+        src/vm/battle.c
+        src/vm/validation.c
+        src/vm/counting.c
+        src/vm/carriage_kill.c
+        src/vm/inst_1_4.c
+        src/vm/inst_5_8.c
+        src/vm/inst_9_12.c
+        src/vm/inst_13_16.c
+        src/vm/verbose.c
+        src/vm/visualize.c)

@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 16:46:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/22 18:52:08 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/23 19:51:37 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@
 # include "header.h"
 # include "op.h"
 # include "common.h"
+# include <ncurses.h>
+# include <time.h>
+
+/*
+**	==================================COREWAR===================================
+*/
 
 # define LIVES	(1 << 0)
 # define CYCLES	(1 << 1)
@@ -27,11 +33,13 @@ typedef struct s_corewar	t_corewar;
 typedef struct s_champ		t_champ;
 typedef struct s_carriage	t_carriage;
 typedef struct s_inst		t_inst;
+typedef struct s_visual		t_visual;
+typedef struct s_attr		t_attr;
 
-static uint8_t			g_arg_code[3] = {
-		T_REG,
-		T_DIR,
-		T_IND
+static uint8_t	g_arg_code[3] = {
+	T_REG,
+	T_DIR,
+	T_IND
 };
 
 /*
@@ -55,13 +63,12 @@ struct s_carriage
 
 struct s_champ
 {
-	int		id;
-	char	*name;
-	char	*comment;
-	uint8_t	*code;
-	int		size;
-	int		live_cycle;
-	t_champ	*next;
+	int			id;
+	char		*name;
+	char		*comment;
+	uint8_t		*code;
+	int			size;
+	t_champ		*next;
 };
 
 struct s_corewar
@@ -83,6 +90,7 @@ struct s_corewar
 	int			cycles_after_check;
 	int			checks;
 	int			lives;
+	t_visual	*visual;
 };
 
 /*
@@ -93,9 +101,10 @@ void			parse_args(int argc, char **argv, t_corewar *cw);
 void			init_dump_flag(int *argc, char ***argv, t_corewar *cw);
 void			init_debug_flag(int *argc, char ***argv, t_corewar *cw);
 void			proc_champ(int *argc, char ***argv, t_champ **lst,
-												t_corewar *cw);
+						t_corewar *cw);
 void			init_aff_flag(int *argc, char ***argv, t_corewar *cw);
 void			init_verbose_flag(int *argc, char ***argv, t_corewar *cw);
+void			init_visual_flag(int *argc, char ***argv, t_corewar *cw);
 
 /*
 **	READING FROM .COR
@@ -116,6 +125,7 @@ t_champ			*new_champ(char *file, int id);
 t_carriage		*new_carriage(t_champ *champ, int pc);
 void			create_start_data(t_corewar *cw);
 t_carriage		*dup_carriage(t_carriage *carriage, int address);
+t_visual		*new_visual(void);
 
 /*
 **	BATTLE
@@ -130,9 +140,9 @@ void			move_carriage(t_carriage *carriage, t_corewar *cw);
 **	CARRIAGE KILL
 */
 
-void	update_cycles_to_die(t_corewar *cw);
-void	kill_carriages(t_corewar *cw);
-bool	dead(t_carriage *carriage, t_corewar *cw);
+void			update_cycles_to_die(t_corewar *cw);
+void			kill_carriages(t_corewar *cw);
+bool			dead(t_carriage *carriage, t_corewar *cw);
 
 
 /*
@@ -159,11 +169,11 @@ void			add_carriage(t_carriage **lst, t_carriage *new);
 t_champ			*find_champ(t_champ *lst, int id);
 void			list_to_array(t_champ *lst, t_corewar *cw);
 void			get_inst_args(t_inst *inst, t_carriage *carriage,
-													t_corewar *cw);
+							t_corewar *cw);
 int				get_inst_argument(t_carriage *carriage, uint8_t pos, bool mod,
-							 						t_corewar *cw);
+									t_corewar *cw);
 void			write_to_bytecode(uint8_t *map, int address,
-									int value, int size);
+								int value, int size);
 
 /*
 **	COUNTING
@@ -186,9 +196,81 @@ void			display_result(t_corewar *cw);
 **	VERBOSE FUNCTIONS
 */
 
-void	verbose_death(t_carriage *del, t_corewar *cw);
-void	verbose_cycles(int cycles);
-void	verbose_pc(t_carriage *carriage, uint8_t *map);
+void			verbose_death(t_carriage *del, t_corewar *cw);
+void			verbose_cycles(int cycles);
+void			verbose_pc(t_carriage *carriage, uint8_t *map);
+
+
+/*
+**	================================VISUALIZATION===============================
+*/
+
+# define WIDTH	(64 * 3 + 5)
+# define HEIGHT	(MEM_SIZE / 64 + 4)
+
+# define GREY_COLOR		254
+# define PINK_COLOR		219
+# define PEACH_COLOR	215
+# define GRASS_COLOR	193
+# define SKY_COLOR		147
+
+# define DEFAULT	1
+# define PINK		2
+# define PEACH		3
+# define GRASS		5
+# define SKY		8
+# define C_DEFAULT	13
+# define C_PINK		21
+# define C_PEACH	34
+# define C_GRASS	55
+# define C_SKY		89
+# define L_PINK		144
+# define L_PEACH	233
+# define L_GRASS	377
+# define L_SKY		610
+
+static int	g_colors[15] = {
+		COLOR_PAIR(DEFAULT),
+		COLOR_PAIR(PINK),
+		COLOR_PAIR(PEACH),
+		COLOR_PAIR(GRASS),
+		COLOR_PAIR(SKY),
+		COLOR_PAIR(C_DEFAULT),
+		COLOR_PAIR(C_PINK),
+		COLOR_PAIR(C_PEACH),
+		COLOR_PAIR(C_GRASS),
+		COLOR_PAIR(C_SKY),
+		COLOR_PAIR(L_PINK),
+		COLOR_PAIR(L_PEACH),
+		COLOR_PAIR(L_GRASS),
+		COLOR_PAIR(L_SKY)
+};
+
+# define ESCAPE	27
+
+# define SPEED	50
+
+struct s_visual
+{
+	bool	pause;
+	t_attr	*map;
+	WINDOW	*menu;
+	WINDOW	*win;
+	WINDOW	*info;
+	int		speed;
+	int		btn;
+	clock_t	time;
+};
+
+struct s_attr
+{
+	int		ind;
+	int		wait_cycle_live;
+	int		wait_cycle_st;
+	t_champ	*champ;
+};
+
+void	visualize(t_corewar *cw);
 
 
 

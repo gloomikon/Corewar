@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 12:59:33 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/23 15:12:38 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/23 20:50:00 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	set_carriages(t_corewar *cw)
 	while (carriage)
 	{
 		visualize_carriage(carriage, cw);
+		carriage = carriage->next;
 	}
 }
 
@@ -86,7 +87,8 @@ void	prepare(t_corewar *cw)
 	initscr();
 	keypad(stdscr, true);
 	nodelay(stdscr, true);
-	curs_set(false);
+	curs_set(0);
+	refresh();
 	cbreak();
 	noecho();
 	use_default_colors();
@@ -99,18 +101,61 @@ void	prepare(t_corewar *cw)
 	set_carriages(cw);
 }
 
-void	visualize_map(t_corewar *cw)
+int		get_attr(t_corewar *cw, t_attr *attr, int cycles)
+{
+	(cw->cycles != cycles && cw->cycles_to_die > 0
+	&& attr->wait_cycle_live > 0)
+	&& --(attr->wait_cycle_live);
+	(cw->cycles != cycles && cw->cycles_to_die > 0
+	 && attr->wait_cycle_st > 0)
+	&& --(attr->wait_cycle_st);
+	if (attr->wait_cycle_live)
+		return (g_colors[(attr->champ->id - 1) % 4 + 10] | A_BOLD);
+	if (attr->wait_cycle_st)
+		return (g_colors[attr->ind] | A_BOLD);
+	return (g_colors[attr->ind]);
+}
+
+void	visualize_win(t_corewar *cw)
+{
+	int			i;
+	int			j;
+	static int	cycles = 0;
+	int			attr;
+
+	i = -1;
+	while (++i < 64 && (j = -1))
+	{
+		wmove(cw->visual->win, i + 2, 3);
+		while (++j < 64)
+		{
+			attr = get_attr(cw, &(cw->visual->map[i * 64 + j]), cycles);
+			wattron(cw->visual->win, attr);
+			wprintw(cw->visual->win, "%.2x", cw->map[i * 64 + j]);
+			wattroff(cw->visual->win, attr);
+			wprintw(cw->visual->win, " ");
+		}
+		wprintw(cw->visual->win, "\n");
+	}
+	cycles = cw->cycles;
+}
+
+void	visualize_all(t_corewar *cw)
 {
 	werase(cw->visual->win);
 	werase(cw->visual->info);
+	visualize_win(cw);
 
+	box(cw->visual->win, 0, 0);
+	wrefresh(cw->visual->win);
 }
 
 void	draw_help(t_corewar *cw)
 {
-	werase(cw->visual->menu);
+//	werase(cw->visual->menu);
 //	wattr_on(cw->visual->menu, A_BOLD);
 	mvwprintw(cw->visual->menu, 1, 1, "Start / Pause - SPACE");
+	box(cw->visual->menu, 0, 0);
 	wrefresh(cw->visual->menu);
 }
 
@@ -119,8 +164,8 @@ void	visualize(t_corewar *cw)
 	delete_whitespaces(cw);
 	prepare(cw);
 	draw_help(cw);
-	while ((cw->visual->btn = getch()) != 27)
+	while ((cw->visual->btn = getch()) != ESCAPE)
 	{
-		visualize_map(cw);
+		visualize_all(cw);
 	}
 }

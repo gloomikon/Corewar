@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "corewar.h"
-#include "corewar_instructions.h"
 
 void		create_start_data(t_corewar *cw)
 {

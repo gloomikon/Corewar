@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 16:46:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/23 15:02:21 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/23 19:51:37 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,25 @@ void			verbose_pc(t_carriage *carriage, uint8_t *map);
 # define L_GRASS	377
 # define L_SKY		610
 
+static int	g_colors[15] = {
+		COLOR_PAIR(DEFAULT),
+		COLOR_PAIR(PINK),
+		COLOR_PAIR(PEACH),
+		COLOR_PAIR(GRASS),
+		COLOR_PAIR(SKY),
+		COLOR_PAIR(C_DEFAULT),
+		COLOR_PAIR(C_PINK),
+		COLOR_PAIR(C_PEACH),
+		COLOR_PAIR(C_GRASS),
+		COLOR_PAIR(C_SKY),
+		COLOR_PAIR(L_PINK),
+		COLOR_PAIR(L_PEACH),
+		COLOR_PAIR(L_GRASS),
+		COLOR_PAIR(L_SKY)
+};
+
+# define ESCAPE	27
+
 # define SPEED	50
 
 struct s_visual
@@ -245,7 +264,10 @@ struct s_visual
 
 struct s_attr
 {
-	int	ind;
+	int		ind;
+	int		wait_cycle_live;
+	int		wait_cycle_st;
+	t_champ	*champ;
 };
 
 void	visualize(t_corewar *cw);

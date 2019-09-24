@@ -6,13 +6,13 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 16:42:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/23 12:42:44 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/24 20:37:54 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void		create_start_data(t_corewar *cw)
+void	create_start_data(t_corewar *cw)
 {
 	uint32_t	pc;
 	int			id;
@@ -22,7 +22,7 @@ void		create_start_data(t_corewar *cw)
 	while (++id < cw->champs_num)
 	{
 		ft_memcpy(&(cw->map[pc]), cw->champs[id]->code,
-				  cw->champs[id]->size);
+				cw->champs[id]->size);
 		add_carriage(&(cw->carriages), new_carriage(cw->champs[id], pc));
 		++(cw->carriages_num);
 		pc += MEM_SIZE / cw->champs_num;
@@ -58,6 +58,7 @@ int		main(int argc, char **argv)
 		display_start_message(cw->champs) && run_battle(cw);
 		display_result(cw);
 	}
+	free_memory(&cw);
 	system("leaks -q corewar");
 	return (0);
 }

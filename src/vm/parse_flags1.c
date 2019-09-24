@@ -22,7 +22,7 @@ void	parse_args(int argc, char **argv, t_corewar *cw)
 		if (ft_strequ(*argv, "-dump") || ft_strequ(*argv, "-d"))
 			init_dump_flag(&argc, &argv, cw);
 		else if (ft_strequ(*argv, "-debug32")
-				 || ft_strequ(*argv, "-debug64"))
+				|| ft_strequ(*argv, "-debug64"))
 			init_debug_flag(&argc, &argv, cw);
 		else if (ft_strequ(*argv, "-a"))
 			init_aff_flag(&argc, &argv, cw);

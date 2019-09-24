@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 16:35:52 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/22 19:09:21 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/24 18:22:08 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void	inst_lfork(t_corewar *cw, t_carriage *carriage)
 	address = get_inst_argument(carriage, 0, true, cw);
 	add_carriage(&(cw->carriages), dup_carriage(carriage, address));
 	++(cw->carriages_num);
-	ft_printf("P %4d | lfork %d (%d)\n",
+	if (cw->verbose & OPS)
+		ft_printf("P %4d | lfork %d (%d)\n",
 			carriage->id, address, carriage->pc + address);
 }
 

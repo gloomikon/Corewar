@@ -26,8 +26,10 @@ uint32_t	arg_size(uint8_t arg, t_inst *inst)
 		return (1);
 	else if (arg & T_DIR)
 		return (inst->t_dir_size);
-	else
+	else if (arg & T_IND)
 		return (2);
+	else
+		return (0);
 }
 
 uint32_t	step(t_carriage *carriage, t_inst *inst)

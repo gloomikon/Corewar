@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 16:12:06 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/22 20:24:29 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/24 20:48:29 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,12 @@ void	inst_zjmp(t_corewar *cw, t_carriage *carriage)
 	address = get_inst_argument(carriage, 0, true, cw);
 	if (carriage->carry == true)
 	{
+		if (cw->visual)
+			dull_carriage(carriage, cw);
 		carriage->pc = calculate_address(carriage->pc + (address % IDX_MOD));
 		carriage->step = 0;
+		if (cw->visual)
+			highlight_carriage(carriage, cw);
 	}
 	if (cw->verbose & OPS)
 		ft_printf("P %4d | zjmp %d %s\n",
@@ -65,6 +69,8 @@ void	inst_sti(t_corewar *cw, t_carriage *carriage)
 	address2 = get_inst_argument(carriage, 2, true, cw);
 	write_to_bytecode(cw->map, carriage->pc + (address1 + address2) % IDX_MOD,
 			val, DIR_SIZE);
+	(cw->visual) && upd_map_ind(cw, carriage, carriage->pc +
+	(address1 + address2) % IDX_MOD, DIR_SIZE);
 	if (cw->verbose & OPS)
 		ft_printf("P %4d | sti r%d %d %d\n",
 				carriage->id, reg, address1, address2) &&

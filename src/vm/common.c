@@ -24,6 +24,6 @@ bool	check_file_extension(char *file, char *ext)
 void	terminate(char *message)
 {
 	ft_printf("ERROR: %s\n", message);
-	system("leaks -q asm");
+	system("leaks -q corewar");
 	exit(0);
 }

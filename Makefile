@@ -6,7 +6,7 @@
 #    By: ozhadaie <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/09 19:17:27 by ozhadaie          #+#    #+#              #
-#    Updated: 2019/09/24 16:39:54 by mzhurba          ###   ########.fr        #
+#    Updated: 2019/09/24 20:59:26 by mzhurba          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ CRWS=	auxiliary.c\
 		data_add_to_lst.c\
 		data_creation.c\
 		display.c\
+		memory_free.c\
 		inst_13_16.c\
 		inst_1_4.c\
 		inst_5_8.c\
@@ -50,6 +51,12 @@ CRWS=	auxiliary.c\
 		validation.c\
 		verbose.c\
 		visualize.c\
+		visualize_auxiliary.c\
+		visualize_prepare.c\
+		visualize_proc.c\
+		visualize_win.c\
+		visualize_menu.c\
+		visualize_info.c\
 		vm.c
 CRWO=	$(addprefix $(CRWOD)/, $(patsubst %.c, %.o, $(CRWS)))
 

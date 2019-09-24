@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 12:06:33 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/22 18:56:02 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/24 20:50:24 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ void	inst_live(t_corewar *cw, t_carriage *carriage)
 	{
 		champ = cw->champs[-id - 1];
 		cw->last = champ;
+		champ->live = cw->cycles;
+		(cw->visual)
+		&& (cw->visual->map[carriage->pc].wait_cycle_live = 50)
+		&& (cw->visual->map[carriage->pc].champ = champ);
 	}
 	if (cw->verbose & OPS)
 		ft_printf("P %4d | live %d\n", carriage->id, id);
@@ -64,6 +68,8 @@ void	inst_st(t_corewar *cw, t_carriage *carriage)
 		write_to_bytecode(cw->map, carriage->pc + (address % IDX_MOD), value,
 														DIR_SIZE);
 		carriage->step += 2;
+		(cw->visual) && upd_map_ind(cw, carriage,
+				carriage->pc + (address % IDX_MOD), DIR_SIZE);
 	}
 	else
 	{

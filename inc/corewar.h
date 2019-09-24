@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 16:46:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/23 19:51:37 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/24 20:56:09 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ struct s_champ
 	char		*comment;
 	uint8_t		*code;
 	int			size;
+	int			live;
 	t_champ		*next;
 };
 
@@ -126,6 +127,15 @@ t_carriage		*new_carriage(t_champ *champ, int pc);
 void			create_start_data(t_corewar *cw);
 t_carriage		*dup_carriage(t_carriage *carriage, int address);
 t_visual		*new_visual(void);
+
+/*
+**	MEMORY FREE
+*/
+
+void	free_memory(t_corewar **cw);
+void	free_carriage(t_carriage **carriage);
+void	free_champ(t_champ **champ);
+
 
 /*
 **	BATTLE
@@ -208,11 +218,11 @@ void			verbose_pc(t_carriage *carriage, uint8_t *map);
 # define WIDTH	(64 * 3 + 5)
 # define HEIGHT	(MEM_SIZE / 64 + 4)
 
-# define GREY_COLOR		254
-# define PINK_COLOR		219
-# define PEACH_COLOR	215
-# define GRASS_COLOR	193
-# define SKY_COLOR		147
+# define GREY_COLOR		242
+# define PINK_COLOR		201
+# define PEACH_COLOR	202
+# define GRASS_COLOR	118
+# define SKY_COLOR		39
 
 # define DEFAULT	1
 # define PINK		2
@@ -246,7 +256,8 @@ static int	g_colors[15] = {
 		COLOR_PAIR(L_SKY)
 };
 
-# define ESCAPE	27
+# define ESCAPE		27
+# define SPACE		' '
 
 # define SPEED	50
 
@@ -271,7 +282,36 @@ struct s_attr
 };
 
 void	visualize(t_corewar *cw);
+void	battle_vs(t_corewar *cw);
+void	proc_btn(t_visual *visual, int carriages);
+int		upd_map_ind(t_corewar *cw, t_carriage *carriage, int address, int size);
 
+/*
+**	PREPARING
+*/
+
+void	prepare(t_corewar *cw);
+void	delete_whitespaces(t_corewar *cw);
+void	set_colors(void);
+void	set_carriages(t_corewar *cw);
+void	set_map(t_corewar *cw);
+
+/*
+**	AUXILIARY
+*/
+
+int		get_attr(t_corewar *cw, t_attr *attr, int cycles);
+void	exit_visual(t_corewar *cw);
+void	highlight_carriage(t_carriage *carriage, t_corewar *cw);
+void	dull_carriage(t_carriage *carriage, t_corewar *cw);
+
+/*
+**	VISUALIZER
+*/
+void	visualize_all(t_corewar *cw);
+void	visualize_win(t_corewar *cw);
+void	visualize_info(t_corewar *cw);
+void	visualize_menu(t_corewar *cw);
 
 
 #endif

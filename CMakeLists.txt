@@ -206,4 +206,4 @@ add_executable(corewar
         src/vm/inst_9_12.c
         src/vm/inst_13_16.c
         src/vm/verbose.c
-        src/vm/visualize.c)
+        src/vm/visualize.c src/vm/memory_free.c src/vm/visualize_prepare.c src/vm/visualize_proc.c src/vm/visualize_auxiliary.c src/vm/visualize_win.c src/vm/visualize_info.c src/vm/visualize_menu.c)

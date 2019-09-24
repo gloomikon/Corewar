@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 15:47:57 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/23 12:38:49 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/24 17:29:48 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ t_carriage	*dup_carriage(t_carriage *carriage, int address)
 	return (new);
 }
 
-
 t_visual	*new_visual(void)
 {
 	t_visual	*visual;
@@ -92,6 +91,7 @@ t_visual	*new_visual(void)
 	if (!(visual = ft_memalloc(sizeof(t_visual))))
 		terminate(MEMORY_ALLOCATION);
 	visual->speed = SPEED;
+	visual->pause = false;
 	if (!(visual->map = ft_memalloc(sizeof(t_attr) * MEM_SIZE)))
 		terminate(MEMORY_ALLOCATION);
 	return (visual);

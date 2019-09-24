@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/23 12:59:33 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/23 20:50:00 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/24 16:16:08 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,8 +152,7 @@ void	visualize_all(t_corewar *cw)
 
 void	draw_help(t_corewar *cw)
 {
-//	werase(cw->visual->menu);
-//	wattr_on(cw->visual->menu, A_BOLD);
+	wattron(cw->visual->menu, A_BOLD);
 	mvwprintw(cw->visual->menu, 1, 1, "Start / Pause - SPACE");
 	box(cw->visual->menu, 0, 0);
 	wrefresh(cw->visual->menu);

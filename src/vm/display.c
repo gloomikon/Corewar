@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 13:16:40 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/20 11:56:04 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/24 15:14:28 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	display_map(int mode, uint8_t *map)
 	while ((i += mode) < MEM_SIZE && (j = -1))
 	{
 		ft_printf("%.4p : ", i);
-		while (++j < mode)
+		while ((i + ++j < MEM_SIZE) && j < mode)
 			ft_printf("%.2x ", map[i + j]);
 		ft_printf("\n");
 	}

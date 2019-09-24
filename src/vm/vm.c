@@ -58,6 +58,7 @@ int		main(int argc, char **argv)
 		display_start_message(cw->champs) && run_battle(cw);
 		display_result(cw);
 	}
+	ft_printf("END\n");
 	system("leaks -q corewar");
 	return (0);
 }

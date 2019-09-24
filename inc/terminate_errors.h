@@ -19,7 +19,7 @@
 # define FILE_INVALID		"File is invalid"
 # define INVALID_MAGIC		"Invalid magic header"
 # define NULL_BYTES			"No NULL bytes"
-# define CODE_SIZE			"Champion's code size if invalid"
+# define CODE_SIZE			"Champion's code size is invalid"
 # define CHAMPS_NUM			"Invalid number of champions"
 
 #endif

@@ -18,22 +18,22 @@ void	play_sound(bool finish)
 
 	if (finish)
 	{
-		system("pkill afplay");
-		system ("afplay mp3/victory.mp3 &> /dev/null &");
+		system("pkill vlc");
+		system ("vlc mp3/victory.mp3 &> /dev/null &");
 	}
 	else
 	{
 		i = (i + 1) % 5;
 		if (i == 0)
-			system ("afplay mp3/1.mp3 &> /dev/null &");
+			system ("vlc mp3/1.mp3 &> /dev/null &");
 		else if (i == 1)
-			system ("afplay mp3/2.mp3 &> /dev/null &");
+			system ("vlc mp3/2.mp3 &> /dev/null &");
 		else if (i == 2)
-			system ("afplay mp3/3.mp3 &> /dev/null &");
+			system ("vlc mp3/3.mp3 &> /dev/null &");
 		else if (i == 3)
-			system ("afplay mp3/4.mp3 &> /dev/null &");
+			system ("vlc mp3/4.mp3 &> /dev/null &");
 		else if (i == 4)
-			system ("afplay mp3/5.mp3 &> /dev/null &");
+			system ("vlc mp3/5.mp3 &> /dev/null &");
 	}
 }
 

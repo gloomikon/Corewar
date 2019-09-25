@@ -67,7 +67,7 @@ $(NAME): $(OBJS)
 
 $(OBJD)/%.o: $(SRCD)/%.c $(INCS) | $(OBJD)
 	@$(CMPL) -o $@ -c $< -I$(INCD)
-	@printf "\r\33[2Klibft\t   \033[33;1mcompile \033[0m$@"
+	@printf "\r\33[2Klibft\t   \033[33;1mcompile \033[0m$(<:$(SRCD)/%.c=%)"
 
 $(OBJD):
 	@mkdir -p $@

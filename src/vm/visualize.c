@@ -15,7 +15,7 @@
 void	visualize(t_corewar *cw)
 {
 	prepare(cw);
-	system ("afplay mp3/music.mp3 &> /dev/null &");
+	system ("vlc mp3/music.mp3 &> /dev/null &");
 	while ((cw->visual->btn = getch()) != ESCAPE)
 	{
 		proc_btn(cw->visual, cw->carriages_num);

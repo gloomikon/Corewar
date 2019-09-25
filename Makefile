@@ -102,11 +102,11 @@ $(CRWB): $(CRWO) $(LFTA)
 
 $(ASMOD)/%.o: $(ASMSD)/%.c $(ASMH)
 	@$(CMPL) -o $@ -c $< $(addprefix -I, $(INCD) $(LFTI))
-	@printf "\r\33[2K$(ASMB)\t   \033[33;1mcompile \033[0m$@"
+	@printf "\r\33[2K$(ASMB)\t   \033[33;1mcompile \033[0m$(<:$(ASMSD)/%.c=%)"
 
 $(CRWOD)/%.o: $(CRWSD)/%.c $(CRWH)
 	@$(CMPL) -o $@ -c $< $(addprefix -I, $(INCD) $(LFTI))
-	@printf "\r\33[2K$(CRWB)\t   \033[33;1mcompile \033[0m$@"
+	@printf "\r\33[2K$(CRWB)\t   \033[33;1mcompile \033[0m$(<:$(CRWSD)/%.c=%)"
 
 $(ASMO): | $(ASMOD)
 

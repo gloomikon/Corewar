@@ -3,6 +3,7 @@
 .idea/
 cmake-build-debug/
 .DS_Store
+*.cor
 
 # Prerequisites
 *.d

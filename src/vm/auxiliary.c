@@ -29,6 +29,8 @@ void	list_to_array(t_champ *lst, t_corewar *cw)
 	int		id;
 	t_champ	*old;
 
+	if (!lst)
+		display_usage();
 	old = lst;
 	while (lst)
 	{

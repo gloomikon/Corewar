@@ -6,15 +6,15 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 15:49:45 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/20 16:43:40 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/25 17:44:08 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef COREWAR_INSTRUCTIONS_H
 # define COREWAR_INSTRUCTIONS_H
 
-#include "header.h"
-#include "corewar.h"
+# include "header.h"
+# include "corewar.h"
 
 typedef struct s_inst	t_inst;
 
@@ -47,7 +47,6 @@ void	inst_lld(t_corewar *cw, t_carriage *carriage);
 void	inst_lldi(t_corewar *cw, t_carriage *carriage);
 void	inst_lfork(t_corewar *cw, t_carriage *carriage);
 void	inst_aff(t_corewar *cw, t_carriage *carriage);
-
 
 static t_inst		g_inst[16] = {
 	{

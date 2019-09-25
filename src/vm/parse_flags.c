@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 14:58:08 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/22 20:26:36 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/25 18:02:07 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	proc_champ(int *argc, char ***argv, t_champ **lst, t_corewar *cw)
 
 	if (cw->champs_num == MAX_PLAYERS)
 		terminate(CHAMPS_NUM);
-	if (ft_strequ(**argv, "-n") && (*argc > 2))
+	if (ft_strequ(**argv, "-n") && (*argc > 2) && !(id = 0))
 	{
 		if (ft_isnumber(*(*argv + 1), 10) == false
 			|| (id = (int)ft_atoi(*(*argv + 1))) > MAX_PLAYERS || id < 1

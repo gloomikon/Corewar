@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 16:46:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/25 15:45:42 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/25 17:52:40 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static uint8_t	g_arg_code[3] = {
 **	STRUCTS
 */
 
-struct s_carriage
+struct			s_carriage
 {
 	uint32_t	id;
 	t_champ		*champ;
@@ -61,7 +61,7 @@ struct s_carriage
 	t_carriage	*next;
 };
 
-struct s_champ
+struct			s_champ
 {
 	int			id;
 	char		*name;
@@ -72,7 +72,7 @@ struct s_champ
 	t_champ		*next;
 };
 
-struct s_corewar
+struct			s_corewar
 {
 	uint8_t		*map;
 	t_champ		**champs;
@@ -132,10 +132,9 @@ t_visual		*new_visual(void);
 **	MEMORY FREE
 */
 
-void	free_memory(t_corewar **cw);
-void	free_carriage(t_carriage **carriage);
-void	free_champ(t_champ **champ);
-
+void			free_memory(t_corewar **cw);
+void			free_carriage(t_carriage **carriage);
+void			free_champ(t_champ **champ);
 
 /*
 **	BATTLE
@@ -154,15 +153,13 @@ void			update_cycles_to_die(t_corewar *cw);
 void			kill_carriages(t_corewar *cw);
 bool			dead(t_carriage *carriage, t_corewar *cw);
 
-
 /*
-*	VALIDATION
+**	VALIDATION
 */
 
 bool			args_valid(t_carriage *carriage, t_inst *inst, t_corewar *cw);
 bool			args_types_valid(t_carriage *carriage, t_inst *inst);
 bool			t_reg(int pc, int step, t_corewar *cw);
-
 
 /*
 **	DATA ADD TO LIST
@@ -170,7 +167,6 @@ bool			t_reg(int pc, int step, t_corewar *cw);
 
 void			add_champ(t_champ **lst, t_champ *new);
 void			add_carriage(t_carriage **lst, t_carriage *new);
-
 
 /*
 ** AUXILIARY
@@ -210,7 +206,6 @@ void			verbose_death(t_carriage *del, t_corewar *cw);
 void			verbose_cycles(int cycles);
 void			verbose_pc(t_carriage *carriage, uint8_t *map);
 
-
 /*
 **	================================VISUALIZATION===============================
 */
@@ -240,20 +235,20 @@ void			verbose_pc(t_carriage *carriage, uint8_t *map);
 # define L_SKY		14
 
 static int	g_colors[14] = {
-		COLOR_PAIR(DEFAULT),
-		COLOR_PAIR(PINK),
-		COLOR_PAIR(PEACH),
-		COLOR_PAIR(GRASS),
-		COLOR_PAIR(SKY),
-		COLOR_PAIR(C_DEFAULT),
-		COLOR_PAIR(C_PINK),
-		COLOR_PAIR(C_PEACH),
-		COLOR_PAIR(C_GRASS),
-		COLOR_PAIR(C_SKY),
-		COLOR_PAIR(L_PINK),
-		COLOR_PAIR(L_PEACH),
-		COLOR_PAIR(L_GRASS),
-		COLOR_PAIR(L_SKY)
+	COLOR_PAIR(DEFAULT),
+	COLOR_PAIR(PINK),
+	COLOR_PAIR(PEACH),
+	COLOR_PAIR(GRASS),
+	COLOR_PAIR(SKY),
+	COLOR_PAIR(C_DEFAULT),
+	COLOR_PAIR(C_PINK),
+	COLOR_PAIR(C_PEACH),
+	COLOR_PAIR(C_GRASS),
+	COLOR_PAIR(C_SKY),
+	COLOR_PAIR(L_PINK),
+	COLOR_PAIR(L_PEACH),
+	COLOR_PAIR(L_GRASS),
+	COLOR_PAIR(L_SKY)
 };
 
 # define ESCAPE		27
@@ -261,57 +256,57 @@ static int	g_colors[14] = {
 
 # define SPEED	50
 
-struct s_visual
+struct			s_visual
 {
-	bool	pause;
-	t_attr	*map;
-	WINDOW	*menu;
-	WINDOW	*win;
-	WINDOW	*info;
-	int		speed;
-	int		btn;
-	clock_t	time;
+	bool		pause;
+	t_attr		*map;
+	WINDOW		*menu;
+	WINDOW		*win;
+	WINDOW		*info;
+	int			speed;
+	int			btn;
+	clock_t		time;
 };
 
-struct s_attr
+struct			s_attr
 {
-	int		ind;
-	int		wait_cycle_live;
-	int		wait_cycle_st;
-	t_champ	*champ;
+	int			ind;
+	int			wait_cycle_live;
+	int			wait_cycle_st;
+	t_champ		*champ;
 };
 
-void	visualize(t_corewar *cw);
-void	battle_vs(t_corewar *cw);
-void	proc_btn(t_visual *visual, int carriages);
-int		upd_map_ind(t_corewar *cw, t_carriage *carriage, int address, int size);
+void			visualize(t_corewar *cw);
+void			battle_vs(t_corewar *cw);
+void			proc_btn(t_visual *visual, int carriages);
+int				upd_map_ind(t_corewar *cw, t_carriage *carriage,
+											int address, int size);
 
 /*
 **	PREPARING
 */
 
-void	prepare(t_corewar *cw);
-void	delete_whitespaces(t_corewar *cw);
-void	set_colors(void);
-void	set_carriages(t_corewar *cw);
-void	set_map(t_corewar *cw);
+void			prepare(t_corewar *cw);
+void			delete_whitespaces(t_corewar *cw);
+void			set_colors(void);
+void			set_carriages(t_corewar *cw);
+void			set_map(t_corewar *cw);
 
 /*
 **	AUXILIARY
 */
 
-int		get_attr(t_corewar *cw, t_attr *attr, int cycles);
-void	exit_visual(t_corewar *cw);
-void	highlight_carriage(t_carriage *carriage, t_corewar *cw);
-void	dull_carriage(t_carriage *carriage, t_corewar *cw);
+int				get_attr(t_corewar *cw, t_attr *attr, int cycles);
+void			exit_visual(t_corewar *cw);
+void			highlight_carriage(t_carriage *carriage, t_corewar *cw);
+void			dull_carriage(t_carriage *carriage, t_corewar *cw);
 
 /*
 **	VISUALIZER
 */
-void	visualize_all(t_corewar *cw);
-void	visualize_win(t_corewar *cw);
-void	visualize_info(t_corewar *cw);
-void	visualize_menu(t_corewar *cw);
-
+void			visualize_all(t_corewar *cw);
+void			visualize_win(t_corewar *cw);
+void			visualize_info(t_corewar *cw);
+void			visualize_menu(t_corewar *cw);
 
 #endif

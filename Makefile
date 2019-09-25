@@ -6,7 +6,7 @@
 #    By: ozhadaie <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/09 19:17:27 by ozhadaie          #+#    #+#              #
-#    Updated: 2019/09/24 20:59:26 by mzhurba          ###   ########.fr        #
+#    Updated: 2019/09/25 17:59:11 by mzhurba          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ INCD:=	inc
 SRCD:=	src
 OBJD:=	obj
 
-CMPL:=	gcc # $(addprefix -W, all extra error) 
+CMPL:=	gcc $(addprefix -W, all extra error) 
 
 #======================================VM======================================#
 

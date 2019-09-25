@@ -171,21 +171,21 @@ add_executable(corewar
         libft/src/spec_return.c
         libft/src/spec_unsint.c
         libft/src/spec_wchar.c
-#        src/asm/asm.c
-#        src/asm/ass_to_bytecode.c
-#        src/asm/auxiliary.c
-#        src/asm/auxiliary2.c
-#        src/asm/auxiliary3.c
-#        src/asm/data_add_to_lst.c
-#        src/asm/data_creation.c
-#        src/asm/data_free.c
-#        src/asm/data_processing.c
-#        src/asm/data_processing_arguments.c
-#        src/asm/data_processing_classes.c
-#        src/asm/pasring.c
-#        src/asm/terminates.c
-#        src/asm/terminates1.c
-#        src/asm/writing.c
+        src/asm/asm.c
+        src/asm/ass_to_bytecode.c
+        src/asm/auxiliary.c
+        src/asm/auxiliary2.c
+        src/asm/auxiliary3.c
+        src/asm/data_add_to_lst.c
+        src/asm/data_creation.c
+        src/asm/data_free.c
+        src/asm/data_processing.c
+        src/asm/data_processing_arguments.c
+        src/asm/data_processing_classes.c
+        src/asm/pasring.c
+        src/asm/terminates.c
+        src/asm/terminates1.c
+        src/asm/writing.c
         inc/corewar.h
         inc/corewar_instructions.h
         inc/terminate_errors.h

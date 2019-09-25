@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 16:42:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/24 20:37:54 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/25 21:03:02 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int		main(int argc, char **argv)
 	}
 	else
 	{
-		display_start_message(cw->champs) && run_battle(cw);
+		display_start_message(cw->champs);
+		run_battle(cw);
 		display_result(cw);
 	}
 	free_memory(&cw);

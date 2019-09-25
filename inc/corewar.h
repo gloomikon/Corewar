@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 16:46:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/24 20:56:09 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/25 15:45:42 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -227,19 +227,19 @@ void			verbose_pc(t_carriage *carriage, uint8_t *map);
 # define DEFAULT	1
 # define PINK		2
 # define PEACH		3
-# define GRASS		5
-# define SKY		8
-# define C_DEFAULT	13
-# define C_PINK		21
-# define C_PEACH	34
-# define C_GRASS	55
-# define C_SKY		89
-# define L_PINK		144
-# define L_PEACH	233
-# define L_GRASS	377
-# define L_SKY		610
+# define GRASS		4
+# define SKY		5
+# define C_DEFAULT	6
+# define C_PINK		7
+# define C_PEACH	8
+# define C_GRASS	9
+# define C_SKY		10
+# define L_PINK		11
+# define L_PEACH	12
+# define L_GRASS	13
+# define L_SKY		14
 
-static int	g_colors[15] = {
+static int	g_colors[14] = {
 		COLOR_PAIR(DEFAULT),
 		COLOR_PAIR(PINK),
 		COLOR_PAIR(PEACH),

@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 19:24:23 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/24 20:44:59 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/25 15:46:11 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	dull_carriage(t_carriage *carriage, t_corewar *cw)
 	int	ind;
 
 	ind = cw->visual->map[carriage->pc].ind;
-	if (ind <= 4 && ind >= 0)
+	if (ind <= 9 && ind >= 5)
 		cw->visual->map[carriage->pc].ind = ind - 5;
 }
 

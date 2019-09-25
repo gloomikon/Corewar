@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 20:34:59 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/24 20:35:43 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/25 16:40:50 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,33 @@ void	champs(t_corewar *cw)
 	}
 }
 
+void	winner(t_corewar *cw)
+{
+	wattron(cw->visual->info, COLOR_PAIR(GRASS) | A_BOLD);
+	mvwprintw(cw->visual->info, 23 + 5 * cw->champs_num, 18, "=== WINNER ===");
+	wattroff(cw->visual->info, COLOR_PAIR(GRASS) | A_BOLD);
+	wattron(cw->visual->info, g_colors[(cw->last->id - 1) % 4 + 1]);
+	mvwprintw(cw->visual->info, 25 + 5 * cw->champs_num, 9, "Player number:");
+	wattroff(cw->visual->info, g_colors[(cw->last->id - 1) % 4 + 1]);
+	mvwprintw(cw->visual->info, 25 + 5 * cw->champs_num, 24, "%d",
+			cw->last->id);
+	wattron(cw->visual->info, g_colors[(cw->last->id - 1) % 4 + 1]);
+	mvwprintw(cw->visual->info, 26 + 5 * cw->champs_num, 9, "Name:");
+	wattroff(cw->visual->info, g_colors[(cw->last->id - 1) % 4 + 1]);
+	mvwprintw(cw->visual->info, 26 + 5 * cw->champs_num, 24, "%-.22s",
+			cw->last->name);
+	wattron(cw->visual->info, g_colors[(cw->last->id - 1) % 4 + 1]);
+	mvwprintw(cw->visual->info, 27 + 5 * cw->champs_num, 9, "Comment:");
+	wattroff(cw->visual->info, g_colors[(cw->last->id - 1) % 4 + 1]);
+	mvwprintw(cw->visual->info, 27 + 5 * cw->champs_num, 24, "%-.22s",
+			cw->last->comment);
+	wattron(cw->visual->info, g_colors[(cw->last->id - 1) % 4 + 1]);
+	mvwprintw(cw->visual->info, 28 + 5 * cw->champs_num, 9, "Last live:");
+	wattroff(cw->visual->info, g_colors[(cw->last->id - 1) % 4 + 1]);
+	mvwprintw(cw->visual->info, 28 + 5 * cw->champs_num, 24, "%d",
+			cw->last->live);
+}
+
 void	visualize_info(t_corewar *cw)
 {
 	wattron(cw->visual->info, A_BOLD);
@@ -77,4 +104,6 @@ void	visualize_info(t_corewar *cw)
 	mvwprintw(cw->visual->info, 20, 9, "Lives num:\t\t%d",
 			cw->lives);
 	champs(cw);
+	if (cw->carriages_num == 0)
+		winner(cw);
 }

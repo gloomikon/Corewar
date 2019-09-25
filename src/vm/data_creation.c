@@ -91,7 +91,7 @@ t_visual	*new_visual(void)
 	if (!(visual = ft_memalloc(sizeof(t_visual))))
 		terminate(MEMORY_ALLOCATION);
 	visual->speed = SPEED;
-	visual->pause = false;
+	visual->pause = true;
 	if (!(visual->map = ft_memalloc(sizeof(t_attr) * MEM_SIZE)))
 		terminate(MEMORY_ALLOCATION);
 	return (visual);

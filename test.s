@@ -1,4 +1,9 @@
-.name "Kolumbia"
-.comment "Some test"
+.name ""
+.comment ""
 
-live %69
+
+ltilil:
+%45
+    live %:label
+
+label:

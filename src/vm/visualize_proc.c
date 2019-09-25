@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 19:22:21 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/25 17:21:32 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/25 17:43:27 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,21 @@ void	play_sound(bool finish)
 	if (finish)
 	{
 		system("pkill afplay");
-		system ("afplay mp3/victory.mp3 &> /dev/null &");
+		system("afplay mp3/victory.mp3 &> /dev/null &");
 	}
 	else
 	{
 		i = (i + 1) % 5;
 		if (i == 0)
-			system ("afplay mp3/1.mp3 &> /dev/null &");
+			system("afplay mp3/1.mp3 &> /dev/null &");
 		else if (i == 1)
-			system ("afplay mp3/2.mp3 &> /dev/null &");
+			system("afplay mp3/2.mp3 &> /dev/null &");
 		else if (i == 2)
-			system ("afplay mp3/3.mp3 &> /dev/null &");
+			system("afplay mp3/3.mp3 &> /dev/null &");
 		else if (i == 3)
-			system ("afplay mp3/4.mp3 &> /dev/null &");
+			system("afplay mp3/4.mp3 &> /dev/null &");
 		else if (i == 4)
-			system ("afplay mp3/5.mp3 &> /dev/null &");
+			system("afplay mp3/5.mp3 &> /dev/null &");
 	}
 }
 
@@ -100,6 +100,7 @@ void	visualize_all(t_corewar *cw)
 	wrefresh(cw->visual->info);
 	wrefresh(cw->visual->menu);
 }
+
 int		upd_map_ind(t_corewar *cw, t_carriage *carriage, int address, int size)
 {
 	int	ind;

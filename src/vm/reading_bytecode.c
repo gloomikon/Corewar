@@ -55,7 +55,7 @@ int		get_int(uint8_t *map, int address, int size)
 int		read_from_bytecode(int fd)
 {
 	uint8_t		buff[4];
-	size_t		size;
+	int			size;
 
 	size = read(fd, &buff, 4);
 	if (size == -1)

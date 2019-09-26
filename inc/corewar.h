@@ -3,8 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   corewar.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
+/*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */ /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 16:46:00 by mzhurba           #+#    #+#             */
 /*   Updated: 2019/09/25 17:52:40 by mzhurba          ###   ########.fr       */
 /*                                                                            */
@@ -233,6 +232,7 @@ void			verbose_pc(t_carriage *carriage, uint8_t *map);
 # define L_PEACH	12
 # define L_GRASS	13
 # define L_SKY		14
+# define RED		15
 
 static int	g_colors[14] = {
 	COLOR_PAIR(DEFAULT),

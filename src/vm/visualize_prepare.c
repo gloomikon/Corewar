@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 19:19:59 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/25 15:51:53 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/26 16:53:59 by ozhadaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	set_colors(void)
 	init_pair(L_PEACH, COLOR_WHITE, PEACH_COLOR);
 	init_pair(L_GRASS, COLOR_WHITE, GRASS_COLOR);
 	init_pair(L_SKY, COLOR_WHITE, SKY_COLOR);
+	init_pair(RED, COLOR_RED, COLOR_BLACK);
 }
 
 void	set_carriages(t_corewar *cw)

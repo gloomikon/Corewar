@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 15:47:57 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/26 15:48:56 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/26 16:51:11 by ozhadaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ t_visual	*new_visual(void)
 	if (!(visual = ft_memalloc(sizeof(t_visual))))
 		terminate(MEMORY_ALLOCATION);
 	visual->speed = SPEED;
-	visual->pause = true;
+	visual->pause = false;
 	if (!(visual->map = ft_memalloc(sizeof(t_attr) * MEM_SIZE)))
 		terminate(MEMORY_ALLOCATION);
 	return (visual);

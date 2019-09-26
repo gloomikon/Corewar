@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 20:34:59 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/25 16:40:50 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/26 16:53:29 by ozhadaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,13 @@ void	game_status(t_corewar *cw)
 {
 	mvwprintw(cw->visual->info, 2, 18, "=== INFO ===");
 	mvwprintw(cw->visual->info, 5, 9, "Game status:\t");
-	if (cw->visual->pause)
+	if (cw->carriages_num == 0)
+	{
+		wattron(cw->visual->info, COLOR_PAIR(RED));
+		mvwprintw(cw->visual->info, 5, 32, "Finished");
+		wattroff(cw->visual->info, COLOR_PAIR(RED));
+	}
+	else if (cw->visual->pause)
 	{
 		wattron(cw->visual->info, COLOR_PAIR(PINK));
 		mvwprintw(cw->visual->info, 5, 32, "Paused");

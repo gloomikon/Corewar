@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 15:47:57 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/24 17:29:48 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/26 15:48:56 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ t_carriage	*new_carriage(t_champ *champ, int pc)
 	static uint32_t	carrige_id;
 
 	if (!(carriage = ft_memalloc(sizeof(t_carriage))))
-		terminate(MEMORY_ALLOCATION);
-	if (!(carriage->reg = ft_memalloc(sizeof(int) * REG_NUMBER)))
 		terminate(MEMORY_ALLOCATION);
 	carriage->id = ++carrige_id;
 	carriage->pc = pc;

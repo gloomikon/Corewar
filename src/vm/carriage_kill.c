@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 11:04:02 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/24 20:43:44 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/26 15:49:14 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	kill_carriages(t_corewar *cw)
 				verbose_death(del, cw);
 			if (cw->visual)
 				dull_carriage(del, cw);
-			free(del->reg);
 			free(del);
 		}
 		else

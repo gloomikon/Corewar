@@ -84,7 +84,7 @@ uint8_t	*read_code(int fd, int code_size)
 	int		size;
 	uint8_t	tmp;
 
-	if (!(code = malloc(sizeof(uint8_t) * code_size)))
+	if (!(code = ft_memalloc(sizeof(uint8_t) * code_size)))
 		terminate(MEMORY_ALLOCATION);
 	size = read(fd, code, code_size);
 	if (size != code_size)

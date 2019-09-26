@@ -17,7 +17,7 @@ void	terminate_invalid_argument(t_inst *inst, int arg_num, t_entity *entity)
 	char	*str;
 
 	str = ft_str_tolower(g_class[entity->class]);
-	ft_printf("Invalid parameter %d type %s for instruction \"%s\"",
+	ft_printf("Invalid parameter %d type %s for instruction \"%s\"\n",
 			arg_num, str, inst->name);
 	ft_strdel(&str);
 	system("leaks -q asm");
@@ -27,7 +27,7 @@ void	terminate_invalid_argument(t_inst *inst, int arg_num, t_entity *entity)
 void	terminate_label(t_label *label)
 {
 	ft_printf("No such label %s while attempting to dereference token "
-		"[TOKEN][%03d:%03d] DIRECT_LABEL \"%:%s\"",
+		"[TOKEN][%03d:%03d] DIRECT_LABEL \"%:%s\"\n",
 		label->name, label->mentions->row, label->mentions->col, label->name);
 	system("leaks -q asm");
 	exit(1);

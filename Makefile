@@ -6,7 +6,7 @@
 #    By: ozhadaie <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/09 19:17:27 by ozhadaie          #+#    #+#              #
-#    Updated: 2019/09/25 17:59:11 by mzhurba          ###   ########.fr        #
+#    Updated: 2019/09/26 16:18:29 by mzhurba          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,11 +102,11 @@ $(CRWB): $(CRWO) $(LFTA)
 
 $(ASMOD)/%.o: $(ASMSD)/%.c $(ASMH)
 	@$(CMPL) -o $@ -c $< $(addprefix -I, $(INCD) $(LFTI))
-	@printf "\r\33[2K$(ASMB)\t   \033[33;1mcompile \033[0m$@"
+	@printf "\r\33[2K$(ASMB)\t   \033[33;1mcompile \033[0m$(<:$(ASMSD)/%.c=%) "
 
 $(CRWOD)/%.o: $(CRWSD)/%.c $(CRWH)
 	@$(CMPL) -o $@ -c $< $(addprefix -I, $(INCD) $(LFTI))
-	@printf "\r\33[2K$(CRWB)\t   \033[33;1mcompile \033[0m$@"
+	@printf "\r\33[2K$(CRWB)\t   \033[33;1mcompile \033[0m$(<:$(CRWSD)/%.c=%) "
 
 $(ASMO): | $(ASMOD)
 

@@ -52,7 +52,7 @@ struct			s_carriage
 	t_champ		*champ;
 	bool		carry;
 	int			pc;
-	int			*reg;
+	int			reg[REG_NUMBER];
 	int			cycles_to_ex;
 	int			live_cycle;
 	uint8_t		instruction;

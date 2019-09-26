@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/15 17:10:10 by ozhadaie          #+#    #+#             */
-/*   Updated: 2019/09/24 16:55:26 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/26 16:07:44 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	read_file(t_pars *pars)
 	res == -1 ? terminate("An error occurred while opening file") : 0;
 }
 
-int		reverse_file_fd(char *file)
+int		reverse_file_fd(t_pars *pars, char *file)
 {
 	int		fd;
 	char	*new;
@@ -73,6 +73,12 @@ int		reverse_file_fd(char *file)
 	fd = open(new, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
 		terminate("Can not create file =(");
+	if (ft_strlen(pars->name) == 0)
+		ft_printf("WARNING : Champion without name!\n");
+	if (ft_strlen(pars->comment) == 0)
+		ft_printf("WARNING : Champion without comment!\n");
+	if (pars->pos == 0)
+		ft_printf("WARNING : Champion without code!\n");
 	ft_printf("Writing output program to %s\n", new);
 	ft_strdel(&new);
 	return (fd);
@@ -90,7 +96,7 @@ int		asm_to_bytecode(char *file)
 	curr = pars->entities;
 	get_champ_bio(pars, &curr);
 	read_and_proc_entities(pars, &curr);
-	fd = reverse_file_fd(file);
+	fd = reverse_file_fd(pars, file);
 	write_code_to_bytecode(pars, fd);
 	free_pars(&pars);
 	return (1);

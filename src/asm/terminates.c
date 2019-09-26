@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/01 14:46:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/16 14:57:23 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/26 16:02:22 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	terminate_syntax(t_pars *pars, t_entity *entity, bool suggestion)
 {
 	if (suggestion)
 		ft_printf("Syntax error - unexpected end of input "
-			"(Perhaps you forgot to end with a newline ?)");
+			"(Perhaps you forgot to end with a newline ?)\n");
 	else
 	{
 		pars->end->col = pars->col + 1;
@@ -55,7 +55,7 @@ void	terminate_big_bio(int type)
 void	terminate_instruction(t_entity *entity)
 {
 	ft_printf("Invalid instruction at token [TOKEN][%03d:%03d] "
-		"INSTRUCTION \"%s\"", entity->row, entity->col, entity->content);
+		"INSTRUCTION \"%s\"\n", entity->row, entity->col, entity->content);
 	system("leaks -q asm");
 	exit(1);
 }

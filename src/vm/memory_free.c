@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/24 18:03:23 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/24 18:03:23 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/26 15:49:14 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	free_champ(t_champ **champ)
 
 void	free_carriage(t_carriage **carriage)
 {
-	free((*carriage)->reg);
 	free(*carriage);
 }
 

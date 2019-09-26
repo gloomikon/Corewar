@@ -44,7 +44,7 @@ t_mention	*new_mention(t_pars *pars, t_entity *entity, size_t size)
 {
 	t_mention *mention;
 
-	if (!(mention = malloc(sizeof(t_mention))))
+	if (!(mention = ft_memalloc(sizeof(t_mention))))
 		terminate(MEMORY_ALLOCATION);
 	mention->size = size;
 	mention->pos = pars->pos;

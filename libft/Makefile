@@ -6,7 +6,7 @@
 #    By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/07/02 13:46:35 by mzhurba           #+#    #+#              #
-#    Updated: 2019/09/20 17:43:18 by mzhurba          ###   ########.fr        #
+#    Updated: 2019/09/26 16:18:20 by mzhurba          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,11 +63,11 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	@ar rcs $@ $^
-	@printf "\r\33[2K$@\t   \033[32;1mcreated\033[0m\n"
+	@printf "\r\33[2K$(@:%.a=%)\t   \033[32;1mcreated\033[0m\n"
 
 $(OBJD)/%.o: $(SRCD)/%.c $(INCS) | $(OBJD)
 	@$(CMPL) -o $@ -c $< -I$(INCD)
-	@printf "\r\33[2Klibft\t   \033[33;1mcompile \033[0m$@"
+	@printf "\r\33[2Klibft\t   \033[33;1mcompile \033[0m$(@:$(OBJD)/%.o=%) "
 
 $(OBJD):
 	@mkdir -p $@

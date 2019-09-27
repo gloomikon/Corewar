@@ -6,7 +6,7 @@
 /*   By: msaliuta <msaliuta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/08/27 20:01:56 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/15 17:56:15 by msaliuta         ###   ########.fr       */
+/*   Updated: 2019/09/27 19:40:33 by ozhadaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,9 @@ int		main(int argc, char **argv)
 		if (check_file_extension(argv[1], "s") && asm_to_bytecode(argv[1]))
 			file = true;
 		if (file == false)
-		{
-			system("leaks -q asm");
 			return (ft_printf("ERROR :Invalid filename\n"));
-		}
 	}
 	if (file == false)
-	{
-		system("leaks -q asm");
 		return (ft_printf("Usage: ./asm champ.s\n"));
-	}
-	system("leaks -q asm");
 	return (0);
 }

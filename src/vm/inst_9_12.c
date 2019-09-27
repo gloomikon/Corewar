@@ -85,7 +85,8 @@ void	inst_fork(t_corewar *cw, t_carriage *carriage)
 
 	carriage->step += 1;
 	address = get_inst_argument(carriage, 0, true, cw);
-	add_carriage(&(cw->carriages), dup_carriage(carriage, address % IDX_MOD));
+	add_carriage(&(cw->carriages),
+			dup_carriage(carriage, address % IDX_MOD, cw));
 	++(cw->carriages_num);
 	if (cw->verbose & OPS)
 		ft_printf("P %4d | fork %d (%d)\n",

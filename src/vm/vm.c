@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 16:42:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/25 21:03:02 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/27 11:55:45 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	create_start_data(t_corewar *cw)
 	{
 		ft_memcpy(&(cw->map[pc]), cw->champs[id]->code,
 				cw->champs[id]->size);
-		add_carriage(&(cw->carriages), new_carriage(cw->champs[id], pc));
+		add_carriage(&(cw->carriages), new_carriage(cw->champs[id], pc, cw));
 		++(cw->carriages_num);
 		pc += MEM_SIZE / cw->champs_num;
 	}
@@ -59,7 +59,7 @@ int		main(int argc, char **argv)
 		run_battle(cw);
 		display_result(cw);
 	}
-	free_memory(&cw);
+//	free_memory(&cw);
 	system("leaks -q corewar");
 	return (0);
 }

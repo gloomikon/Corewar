@@ -48,7 +48,7 @@ void	kill_carriages(t_corewar *cw)
 				verbose_death(del, cw);
 			if (cw->visual)
 				dull_carriage(del, cw);
-			free(del);
+//			free(del);
 		}
 		else
 			(prev = curr)

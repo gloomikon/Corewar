@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 15:47:57 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/26 16:51:11 by ozhadaie         ###   ########.fr       */
+/*   Updated: 2019/09/27 11:54:24 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_champ		*new_champ(char *file, int id)
 	return (champ);
 }
 
-t_carriage	*new_carriage(t_champ *champ, int pc)
+t_carriage	*new_carriage(t_champ *champ, int pc, t_corewar *cw)
 {
 	t_carriage		*carriage;
 	static uint32_t	carrige_id;
@@ -64,16 +64,24 @@ t_carriage	*new_carriage(t_champ *champ, int pc)
 	carriage->pc = pc;
 	carriage->reg[0] = -(champ->id);
 	carriage->champ = champ;
+	if (cw->carriages_curr == cw->carriages_max)
+	{
+		cw->carriages_max += 1000;
+		if (!(cw->all_carriages = realloc(cw->all_carriages,
+				sizeof(t_carriage*) * cw->carriages_max)))
+			terminate(MEMORY_ALLOCATION);
+	}
+//	cw->all_carriages[cw->carriages_curr++] = carriage;
 	return (carriage);
 }
 
-t_carriage	*dup_carriage(t_carriage *carriage, int address)
+t_carriage	*dup_carriage(t_carriage *carriage, int address, t_corewar *cw)
 {
 	int			i;
 	t_carriage	*new;
 
 	address += carriage->pc;
-	new = new_carriage(carriage->champ, calculate_address(address));
+	new = new_carriage(carriage->champ, calculate_address(address), cw);
 	new->carry = carriage->carry;
 	new->live_cycle = carriage->live_cycle;
 	i = -1;

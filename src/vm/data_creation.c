@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 15:47:57 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/27 11:54:24 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/27 12:47:57 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_corewar	*new_corewar(void)
 		terminate(MEMORY_ALLOCATION);
 	if (!(corewar->map = ft_memalloc(sizeof(uint8_t) * MEM_SIZE)))
 		terminate(MEMORY_ALLOCATION);
-	if (!(corewar->champs = ft_memalloc(sizeof(t_champ*) * MAX_PLAYERS)))
+	if (!(corewar->champs = ft_memalloc(sizeof(t_champ*) * MAX_PLAYERS + 1)))
 		terminate(MEMORY_ALLOCATION);
 	corewar->cycles_to_die = CYCLE_TO_DIE;
 	corewar->dump_cycles = -1;
@@ -55,23 +55,23 @@ t_champ		*new_champ(char *file, int id)
 
 t_carriage	*new_carriage(t_champ *champ, int pc, t_corewar *cw)
 {
-	t_carriage		*carriage;
-	static uint32_t	carrige_id;
+	t_carriage	*carriage;
+	static int	carriage_id = 0;
 
 	if (!(carriage = ft_memalloc(sizeof(t_carriage))))
 		terminate(MEMORY_ALLOCATION);
-	carriage->id = ++carrige_id;
+	carriage->id = ++carriage_id;
 	carriage->pc = pc;
 	carriage->reg[0] = -(champ->id);
 	carriage->champ = champ;
-	if (cw->carriages_curr == cw->carriages_max)
+	if (carriage_id > cw->carriages_max)
 	{
 		cw->carriages_max += 1000;
 		if (!(cw->all_carriages = realloc(cw->all_carriages,
 				sizeof(t_carriage*) * cw->carriages_max)))
 			terminate(MEMORY_ALLOCATION);
 	}
-//	cw->all_carriages[cw->carriages_curr++] = carriage;
+	cw->all_carriages[carriage_id - 1] = carriage;
 	return (carriage);
 }
 

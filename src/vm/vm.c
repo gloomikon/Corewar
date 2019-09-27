@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/13 16:42:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/27 11:55:45 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/27 13:09:20 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ int		main(int argc, char **argv)
 		run_battle(cw);
 		display_result(cw);
 	}
-//	free_memory(&cw);
 	system("leaks -q corewar");
 	return (0);
 }

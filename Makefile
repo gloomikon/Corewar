@@ -40,7 +40,6 @@ CRWS=	auxiliary.c\
 		data_add_to_lst.c\
 		data_creation.c\
 		display.c\
-		memory_free.c\
 		inst_13_16.c\
 		inst_1_4.c\
 		inst_5_8.c\

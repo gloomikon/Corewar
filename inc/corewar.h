@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/26 19:30:07 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/26 19:30:12 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/27 12:20:42 by mzhurba          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static uint8_t	g_arg_code[3] = {
 
 struct			s_carriage
 {
-	uint32_t	id;
+	int			id;
 	t_champ		*champ;
 	bool		carry;
 	int			pc;
@@ -86,7 +86,9 @@ struct			s_corewar
 	int			debug_cycles;
 	int			cycles;
 	t_carriage	*carriages;
+	t_carriage	**all_carriages;
 	int			carriages_num;
+	int			carriages_max;
 	int			cycles_to_die;
 	int			cycles_after_check;
 	int			checks;
@@ -123,9 +125,9 @@ int				get_int(uint8_t *map, int address, int size);
 
 t_corewar		*new_corewar(void);
 t_champ			*new_champ(char *file, int id);
-t_carriage		*new_carriage(t_champ *champ, int pc);
+t_carriage		*new_carriage(t_champ *champ, int pc, t_corewar *cw);
 void			create_start_data(t_corewar *cw);
-t_carriage		*dup_carriage(t_carriage *carriage, int address);
+t_carriage		*dup_carriage(t_carriage *carriage, int address, t_corewar *cw);
 t_visual		*new_visual(void);
 
 /*

@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/20 10:53:15 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/27 12:47:24 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/27 19:53:25 by ozhadaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int		run_battle(t_corewar *cw)
 		if (cw->cycles == cw->dump_cycles)
 		{
 			display_map(cw->dump_mode, cw->map);
-			system("leaks -q corewar");
 			exit(0);
 		}
 		if (cw->debug_cycles > 0 && (cw->cycles % cw->debug_cycles) == 0)

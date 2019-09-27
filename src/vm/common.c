@@ -6,7 +6,7 @@
 /*   By: mzhurba <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/14 18:36:00 by mzhurba           #+#    #+#             */
-/*   Updated: 2019/09/14 18:36:00 by mzhurba          ###   ########.fr       */
+/*   Updated: 2019/09/27 19:52:24 by ozhadaie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,5 @@ bool	check_file_extension(char *file, char *ext)
 void	terminate(char *message)
 {
 	ft_printf("ERROR: %s\n", message);
-	system("leaks -q corewar");
 	exit(0);
 }
